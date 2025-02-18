@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Junior Developer Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#3B82F6',
+                            dark: '#1E40AF',
+                        },
+                        secondary: {
+                            DEFAULT: '#10B981',
+                            dark: '#047857',
+                        }
+                    },
+                    animation: {
+                        'bounce-slow': 'bounce 2s infinite',
+                        'fade-in': 'fadeIn 1s ease-out',
+                        'slide-up': 'slideUp 0.7s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-900 font-sans leading-relaxed">
+    <!-- Header -->
+    <header class="fixed w-full flex justify-between items-center p-4 bg-white bg-opacity-90 z-50 shadow-md">
+        <div class="text-xl font-bold text-primary hover:text-primary-dark transition-colors">Junior Dev</div>
+        <nav class="hidden md:block animate-fade-in">
+            <ul class="flex space-x-6">
+                <li><a href="#home" class="text-gray-800 hover:text-primary transition-colors">Home</a></li>
+                <li><a href="#about" class="text-gray-800 hover:text-primary transition-colors">About</a></li>
+                <li><a href="#skills" class="text-gray-800 hover:text-primary transition-colors">Skills</a></li>
+                <li><a href="#projects" class="text-gray-800 hover:text-primary transition-colors">Projects</a></li>
+                <li><a href="#contact" class="text-gray-800 hover:text-primary transition-colors">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="md:hidden flex flex-col cursor-pointer menu-toggle">
+            <span class="w-6 h-0.5 bg-primary my-1 transform transition duration-300"></span>
+            <span class="w-6 h-0.5 bg-primary my-1 transform transition duration-300"></span>
+            <span class="w-6 h-0.5 bg-primary my-1 transform transition duration-300"></span>
+        </div>
+    </header>
+
+    <!-- Home Section -->
+    <section id="home" class="min-h-screen flex flex-col justify-center items-center text-center p-8 animate-fade-in">
+        <h1 class="text-5xl font-bold mb-4 text-primary animate-bounce-slow">Junior Developer</h1>
+        <p class="text-xl text-gray-700 mb-8">Crafting digital experiences with code and creativity</p>
+        <div class="flex space-x-4">
+            <a href="#projects" class="px-6 py-2 border-2 border-primary text-primary hover:bg-primary hover:text-white transition-colors">View Projects</a>
+            <a href="#contact" class="px-6 py-2 border-2 border-secondary text-secondary hover:bg-secondary hover:text-white transition-colors">Contact Me</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="min-h-screen flex flex-col justify-center p-8 animate-slide-up">
+        <div class="text-4xl font-bold text-center mb-12 text-primary">About Me</div>
+        <div class="flex flex-col md:flex-row gap-8">
+            <div class="flex-1">
+                <p class="text-lg text-gray-700">
+                    I'm a passionate junior developer with a keen eye for creating 
+                    clean, efficient, and user-friendly web applications. My journey 
+                    in tech is driven by curiosity, continuous learning, and a desire 
+                    to solve real-world problems through innovative coding solutions.
+                </p>
+            </div>
+            <div class="flex-1 flex gap-4">
+                <div class="text-center p-4 border border-primary/20 flex-1 hover:shadow-md transition-shadow">
+                    <h3 class="text-xl font-bold text-primary">Education</h3>
+                    <p>Computer Science</p>
+                    <small class="text-gray-600">University Name, 2023</small>
+                </div>
+                <div class="text-center p-4 border border-secondary/20 flex-1 hover:shadow-md transition-shadow">
+                    <h3 class="text-xl font-bold text-secondary">Experience</h3>
+                    <p>1+ Years</p>
+                    <small class="text-gray-600">Personal & Internship Projects</small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="min-h-screen flex flex-col justify-center p-8 animate-slide-up">
+        <div class="text-4xl font-bold text-center mb-12 text-primary">Skills</div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="p-6 border border-primary/20 text-center hover:shadow-lg transition-all group">
+                <h3 class="text-xl font-bold mb-4 text-primary group-hover:text-primary-dark">Frontend</h3>
+                <ul class="space-y-2 text-gray-700">
+                    <li class="hover:text-primary transition-colors">HTML</li>
+                    <li class="hover:text-primary transition-colors">CSS</li>
+                    <li class="hover:text-primary transition-colors">JavaScript</li>
+                    <li class="hover:text-primary transition-colors">React</li>
+                </ul>
+            </div>
+            <div class="p-6 border border-secondary/20 text-center hover:shadow-lg transition-all group">
+                <h3 class="text-xl font-bold mb-4 text-secondary group-hover:text-secondary-dark">Backend</h3>
+                <ul class="space-y-2 text-gray-700">
+                    <li class="hover:text-secondary transition-colors">Node.js</li>
+                    <li class="hover:text-secondary transition-colors">Express</li>
+                    <li class="hover:text-secondary transition-colors">MongoDB</li>
+                    <li class="hover:text-secondary transition-colors">Python</li>
+                </ul>
+            </div>
+            <div class="p-6 border border-primary/20 text-center hover:shadow-lg transition-all group">
+                <h3 class="text-xl font-bold mb-4 text-primary group-hover:text-primary-dark">Tools</h3>
+                <ul class="space-y-2 text-gray-700">
+                    <li class="hover:text-primary transition-colors">Git</li>
+                    <li class="hover:text-primary transition-colors">VS Code</li>
+                    <li class="hover:text-primary transition-colors">Docker</li>
+                    <li class="hover:text-primary transition-colors">Webpack</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="min-h-screen flex flex-col justify-center p-8 animate-slide-up">
+        <div class="text-4xl font-bold text-center mb-12 text-primary">Projects</div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="p-6 border border-primary/20 text-center hover:shadow-lg transition-all group">
+                <h3 class="text-xl font-bold mb-4 text-primary group-hover:text-primary-dark">Task Management App</h3>
+                <p class="mb-4 text-gray-700">Full-stack productivity application with real-time collaboration</p>
+                <div class="flex justify-center space-x-2 mb-4">
+                    <span class="bg-primary/10 text-primary px-2 py-1 rounded">React</span>
+                    <span class="bg-secondary/10 text-secondary px-2 py-1 rounded">Firebase</span>
+                </div>
+                <div class="flex justify-center space-x-4">
+                    <a href="#" class="px-4 py-2 border-2 border-primary text-primary hover:bg-primary hover:text-white transition-colors">GitHub</a>
+                    <a href="#" class="px-4 py-2 border-2 border-secondary text-secondary hover:bg-secondary hover:text-white transition-colors">Live Demo</a>
+                </div>
+            </div>
+            <div class="p-6 border border-secondary/20 text-center hover:shadow-lg transition-all group">
+                <h3 class="text-xl font-bold mb-4 text-secondary group-hover:text-secondary-dark">E-Commerce Platform</h3>
+                <p class="mb-4 text-gray-700">Responsive online store with payment integration</p>
+                <div class="flex justify-center space-x-2 mb-4">
+                    <span class="bg-primary/10 text-primary px-2 py-1 rounded">Next.js</span>
+                    <span class="bg-secondary/10 text-secondary px-2 py-1 rounded">Stripe</span>
+                </div>
+                <div class="flex justify-center space-x-4">
+                    <a href="#" class="px-4 py-2 border-2 border-primary text-primary hover:bg-primary hover:text-white transition-colors">GitHub</a>
+                    <a href="#" class="px-4 py-2 border-2 border-secondary text-secondary hover:bg-secondary hover:text-white transition-colors">Live Demo</a>
+                </div>
+            </div>
+            <div class="p-6 border border-primary/20 text-center hover:shadow-lg transition-all group">
+                <h3 class="text-xl font-bold mb-4 text-primary group-hover:text-primary-dark">Weather Forecast App</h3>
+                <p class="mb-4 text-gray-700">Geolocation-based weather tracking application</p>
+                <div class="flex justify-center space-x-2 mb-4">
+                    <span class="bg-primary/10 text-primary px-2 py-1 rounded">JavaScript</span>
+                    <span class="bg-secondary/10 text-secondary px-2 py-1 rounded">API</span>
+                </div>
+                <div class="flex justify-center space-x-4">
+                    <a href="#" class="px-4 py-2 border-2 border-primary text-primary hover:bg-primary hover:text-white transition-colors">GitHub</a>
+                    <a href="#" class="px-4 py-2 border-2 border-secondary text-secondary hover:bg-secondary hover:text-white transition-colors">Live Demo</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="min-h-screen flex flex-col justify-center p-8 animate-slide-up">
+        <div class="text-4xl font-bold text-center mb-12 text-primary">Contact Me</div>
+        <form class="max-w-md mx-auto flex flex-col space-y-4">
+            <input type="text" placeholder="Your Name" class="p-2 border border-primary/30 focus:ring-2 focus:ring-primary/50 outline-none" required>
+            <input type="email" placeholder="Your Email" class="p-2 border border-primary/30 focus:ring-2 focus:ring-primary/50 outline-none" required>
+            <textarea placeholder="Your Message" class="p-2 border border-primary/30 resize-y min-h-[150px] focus:ring-2 focus:ring-primary/50 outline-none" required></textarea>
+            <button type="submit" class="px-6 py-2 bg-primary text-white hover:bg-primary-dark transition-colors">Send Message</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 p-8 text-center">
+        <div class="flex justify-center space-x-6 mb-4">
+            <a href="#" class="text-primary hover:text-primary-dark transition-colors">GitHub</a>
+            <a href="#" class="text-primary hover:text-primary-dark transition-colors">LinkedIn</a>
+            <a href="#" class="text-primary hover:text-primary-dark transition-colors">Twitter</a>
+        </div>
+        <p class="text-gray-700">&copy; 2024 Junior Developer. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // JavaScript untuk toggle menu pada mobile
+        const menuToggle = document.querySelector('.menu-toggle');
+        const nav = document.querySelector('nav');
+
+        menuToggle.addEventListener('click', () => {
+            nav.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
