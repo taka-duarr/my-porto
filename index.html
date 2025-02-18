@@ -64,6 +64,15 @@
             <span class="w-6 h-0.5 bg-primary my-1 transform transition duration-300"></span>
             <span class="w-6 h-0.5 bg-primary my-1 transform transition duration-300"></span>
         </div>
+        <script>
+            // JavaScript untuk toggle menu pada mobile
+            const menuToggle = document.querySelector('.menu-toggle');
+            const nav = document.querySelector('nav');
+    
+            menuToggle.addEventListener('click', () => {
+                nav.classList.toggle('hidden');
+            });
+        </script>
     </header>
 
     <!-- Home Section -->
@@ -201,14 +210,6 @@
         <p class="text-gray-700">&copy; 2024 Junior Developer. All rights reserved.</p>
     </footer>
 
-    <script>
-        // JavaScript untuk toggle menu pada mobile
-        const menuToggle = document.querySelector('.menu-toggle');
-        const nav = document.querySelector('nav');
-
-        menuToggle.addEventListener('click', () => {
-            nav.classList.toggle('hidden');
-        });
-    </script>
+   
 </body>
 </html>
