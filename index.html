@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Junior Developer Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script>    
         tailwind.config = {
-            theme: {
+            theme: {    
                 extend: {
                     colors: {
                         primary: {
-                            DEFAULT: '#3B82F6',
+                            DEFAULT: '',
                             dark: '#1E40AF',
                         },
                         secondary: {
@@ -46,8 +47,9 @@
 </head>
 <body class="bg-white text-gray-900 font-sans leading-relaxed">
     <!-- Header -->
-    <header class="fixed w-full flex justify-between items-center p-4 bg-white bg-opacity-90 z-50 shadow-md">
-        <div class="text-xl font-bold text-primary hover:text-primary-dark transition-colors">Junior Dev</div>
+    <header class="fixed w-full flex justify-between items-center p-4 bg-gray-100 bg-opacity-90 z-50 shadow-md">
+       
+        <div class= "fa-solid fa-code " >  Dev </div>
         <nav class="hidden md:block animate-fade-in">
             <ul class="flex space-x-6">
                 <li><a href="#home" class="text-gray-800 hover:text-primary transition-colors">Home</a></li>
