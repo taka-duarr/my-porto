@@ -1,17 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
-.hamburger-active > span:nth-child(1) {
-  @apply  rotate-45;
-}
-.hamburger-active > span:nth-child(2) {
-    @apply scale-0;
-  }
-  .hamburger-active > span:nth-child(3) {
-    @apply  rotate-45;
-  }
-
+/* toggle */
   #hamburger span {
     transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
@@ -28,6 +16,7 @@
     transform: rotate(-50deg) translate(10px, -10px);
 }
 
+/* header */
 #header.fixed {
     position: fixed;
     top: 0;
@@ -39,4 +28,8 @@
     
     
 }
+
+
+
+
 
