@@ -6,6 +6,8 @@
     <title>Junior Developer Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="input.css">
+
     <script>
         tailwind.config = {
             theme: {
@@ -39,6 +41,19 @@
             }
         }
     </script>
+    <script>
+        window.onscroll = function() {
+            const header = document.querySelector('header');
+            const fixedNav = header.offsetTop;
+            if(window.pageYOffset > fixedNav) {
+                header.classList.add('fixed');
+
+            }else {
+                header.classList.remove('fixed');
+            }
+        };
+    </script>
+   
     <style>
         html {
             scroll-behavior: smooth;
@@ -47,23 +62,68 @@
 </head>
 <body class="bg-white text-gray-900 font-sans leading-relaxed">
     <!-- Header -->
-    <header class="fixed w-full flex justify-between items-center p-4 bg-white bg-opacity-90 z-50 shadow-md">
+     <header id="header" class = " absolute top-0 left-0 w-full flex items-center z-10 p-4">
+        <div class="container">
+            <div class="flex items-center justify-between relative">
+                <div class="px-4">
+                    <i class="fa-solid fa-code text-2xl"></i>
+                </div>
+                <div class="flex items-center px-4">
+                    <button id="hamburger" name="hamburger" type="button" class="block absolute right-4 lg:hidden">
+                        <span class="w-[30px] h-[2px] bg-black my-2 block transition duration-300"></span>
+                        <span class="w-[30px] h-[2px] bg-black my-2 block transition duration-300"></span>
+                        <span class="w-[30px] h-[2px] bg-black my-2 block transition duration-300 "></span>
+                    </button>
+                    <nav id="nav-menu" class="hidden absolute py-5 bg-white shadow-lg rounded-lg max-w-[250px] w-full right-4 top-full lg:block lg:static lg:bg-transparent lg:max-w-full lg:shadow-none lg:rounded-none lg:py-0 lg:w-auto">
+                        <ul class="block lg:flex ">
+                            <li class="group">
+                                <a href="#home" class="text-base text-black py-2 mx-8 flex group-hover:text-gray-600">Home</a>
+                            </li>
+                            <li class="group">
+                                <a href="#skills" class="text-base text-black py-2 mx-8 flex  group-hover:text-gray-600 ">Skills</a>
+                            </li>
+                            <li class="group">
+                                <a href="#projects" class="text-base text-black py-2 mx-8 flex  group-hover:text-gray-600">Project</a>
+                            </li>
+                            <li class="group">
+                                <a href="#contact" class="text-base text-black py-2 mx-8 flex  group-hover:text-gray-600">Contact</a>
+                            </li>
+                            
+                            
+                        </ul> 
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <script>
+            // JavaScript untuk toggle menu pada mobile
+            const hamburger = document.querySelector('#hamburger');
+            const navMenu = document.querySelector('#nav-menu');
+    
+            hamburger.addEventListener('click', function() {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('hidden');
+            });
+        </script>
+     </header>
+    <!-- <header class="fixed w-full flex justify-between items-center p-4 bg-white bg-opacity-90 z-50 shadow-md">
         <div  class="text-1xl font-bold text-black hover:text-black"> <i class="fa-solid fa-code"></i> Firman Ardiansyah </div>
         
         <nav class="hidden md:block animate-fade-in">
-            <ul class="flex space-x-6">
-                <li><a href="#home" class="text-gray-800 hover:text-primary transition-colors">Home</a></li>
-                <li><a href="#about" class="text-gray-800 hover:text-primary transition-colors">About</a></li>
-                <li><a href="#skills" class="text-gray-800 hover:text-primary transition-colors">Skills</a></li>
-                <li><a href="#projects" class="text-gray-800 hover:text-primary transition-colors">Projects</a></li>
-                <li><a href="#contact" class="text-gray-800 hover:text-primary transition-colors">Contact</a></li>
+            <ul class="flex space-x-6 ">
+                <li><a href="#home" class="text-gray-800 hover:text-black transition-colors">Home</a></li>
+                <li><a href="#about" class="text-gray-800 hover:text-black transition-colors">About</a></li>
+                <li><a href="#skills" class="text-gray-800 hover:text-black transition-colors">Skills</a></li>
+                <li><a href="#projects" class="text-gray-800 hover:text-black transition-colors">Projects</a></li>
+                <li><a href="#contact" class="text-gray-800 hover:text-black transition-colors">Contact</a></li>
             </ul> 
         </nav>
         <div class="md:hidden flex flex-col cursor-pointer menu-toggle">
-            <span class="w-6 h-0.5 bg-primary my-1 transform transition duration-300"></span>
-            <span class="w-6 h-0.5 bg-primary my-1 transform transition duration-300"></span>
-            <span class="w-6 h-0.5 bg-primary my-1 transform transition duration-300"></span>
+            <span class="w-6 h-0.5 bg-black my-1 transform transition duration-300"></span>
+            <span class="w-6 h-0.5 bg-black my-1 transform transition duration-300"></span>
+            <span class="w-6 h-0.5 bg-black my-1 transform transition duration-300"></span>
         </div>
+        
         <script>
             // JavaScript untuk toggle menu pada mobile
             const menuToggle = document.querySelector('.menu-toggle');
@@ -73,7 +133,7 @@
                 nav.classList.toggle('hidden');
             });
         </script>
-    </header>
+    </header> -->
 
     <!-- Home Section -->
     <section id="home" class="min-h-screen flex flex-col md:flex-row justify-center items-center text-center md:text-left p-8 animate-fade-in">
@@ -103,24 +163,26 @@
 
     <!-- About Section -->
     <section id="about" class="min-h-screen flex flex-col justify-center p-8 animate-slide-up">
-        <div class="text-4xl font-bold text-center mb-12 text-primary">About Me</div>
+        <div class="text-4xl font-bold text-center mb-12 text-black">About Me</div>
         <div class="flex flex-col md:flex-row gap-8">
             <div class="flex-1">
                 <p class="text-lg text-gray-700">
-                    I'm a passionate junior developer with a keen eye for creating 
-                    clean, efficient, and user-friendly web applications. My journey 
-                    in tech is driven by curiosity, continuous learning, and a desire 
-                    to solve real-world problems through innovative coding solutions.
+                    I'm Firman Ardiansyah, a junior developer from 
+                Institut Teknologi Adhi Tama Surabaya.  
+                Passionate about web development, I enjoy crafting clean, 
+                efficient, and user-friendly applications.  
+                With a strong curiosity and a commitment to continuous learning,  
+                I strive to solve real-world problems through innovative coding solutions.
                 </p>
             </div>
             <div class="flex-1 flex gap-4">
-                <div class="text-center p-4 border border-primary/20 flex-1 hover:shadow-md transition-shadow">
-                    <h3 class="text-xl font-bold text-primary">Education</h3>
-                    <p>Computer Science</p>
-                    <small class="text-gray-600">University Name, 2023</small>
+                <div class="text-center p-4 border border-black/20 flex-1 hover:shadow-md transition-shadow">
+                    <h3 class="text-xl font-bold text-black">Education</h3>
+                    <p>Informatic engineering</p>
+                    <small class="text-gray-600">Adhi Tama Institute of Technology, 2023</small>
                 </div>
                 <div class="text-center p-4 border border-secondary/20 flex-1 hover:shadow-md transition-shadow">
-                    <h3 class="text-xl font-bold text-secondary">Experience</h3>
+                    <h3 class="text-xl font-bold text-black">Experience</h3>
                     <p>1+ Years</p>
                     <small class="text-gray-600">Personal & Internship Projects</small>
                 </div>
