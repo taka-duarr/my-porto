@@ -1,0 +1,109 @@
+    <!-- PROJECTS WINDOW -->
+    <div class="window" id="win-projects" data-app="projects" style="display:none; top:100px; left:160px; width:800px; height:560px;">
+      <div class="win-titlebar">
+        <div class="win-controls">
+          <button class="win-btn win-close" data-win="projects" title="Close"></button>
+          <button class="win-btn win-minimize" data-win="projects" title="Minimize"></button>
+          <button class="win-btn win-maximize" data-win="projects" title="Maximize"></button>
+        </div>
+        <span class="win-title"><i class="fas fa-folder-open"></i> &nbsp;Projects — Files</span>
+        <div class="win-title-spacer"></div>
+      </div>
+      <div class="win-body">
+        <div class="sidebar-nav">
+          <div class="sidebar-section">Filter</div>
+          <div class="sidebar-item active" onclick="filterProjects('all')"><i class="fas fa-th"></i> All Projects</div>
+          <div class="sidebar-item" onclick="filterProjects('php')"><i class="fab fa-php"></i> PHP / Laravel</div>
+          <div class="sidebar-item" onclick="filterProjects('js')"><i class="fab fa-js"></i> JavaScript</div>
+        </div>
+        <div class="win-content projects-content">
+          <div class="projects-toolbar">
+            <span class="toolbar-title">Selected Work</span>
+            <span class="toolbar-count" id="proj-count">3 items</span>
+          </div>
+          <div class="projects-grid" id="projects-grid">
+            <!-- Project 1 -->
+            <div class="proj-card" data-tags="php laravel mysql js">
+              <div class="proj-img-wrap">
+                <img src="../new porto/img/img3.png" alt="E-Kelontong" class="proj-img" onerror="this.parentElement.style.background='linear-gradient(135deg,#E95420,#8E44AD)'" />
+                <div class="proj-overlay">
+                  <a href="https://github.com/taka-duarr/E-kelontong.git" target="_blank" class="proj-link-btn"><i class="fab fa-github"></i></a>
+                  <a href="https://firman.pbo24itats.co-id.id" target="_blank" class="proj-link-btn proj-link-live"><i class="fas fa-external-link-alt"></i></a>
+                </div>
+              </div>
+              <div class="proj-info">
+                <div class="proj-header">
+                  <h3 class="proj-name">E-Kelontong Platform</h3>
+                  <span class="proj-featured">★ Featured</span>
+                </div>
+                <p class="proj-desc">A comprehensive e-commerce solution for local grocery stores. Features inventory management, user auth, and integrated payment gateways.</p>
+                <div class="proj-tech-row">
+                  <span class="tech-pill">PHP</span>
+                  <span class="tech-pill">Laravel</span>
+                  <span class="tech-pill">MySQL</span>
+                  <span class="tech-pill">JavaScript</span>
+                  <span class="tech-pill">CSS3</span>
+                </div>
+                <div class="proj-links-row">
+                  <a href="https://github.com/taka-duarr/E-kelontong.git" target="_blank" class="proj-btn"><i class="fab fa-github"></i> Code</a>
+                  <a href="https://firman.pbo24itats.co-id.id" target="_blank" class="proj-btn proj-btn-accent"><i class="fas fa-arrow-up-right-from-square"></i> Live</a>
+                </div>
+              </div>
+            </div>
+            <!-- Project 2 -->
+            <div class="proj-card" data-tags="php laravel mysql">
+              <div class="proj-img-wrap">
+                <img src="../new porto/img/img4.png" alt="ITATS Event" class="proj-img" onerror="this.parentElement.style.background='linear-gradient(135deg,#1A5276,#2ECC71)'" />
+                <div class="proj-overlay">
+                  <a href="https://github.com/taka-duarr/Ivent.git" target="_blank" class="proj-link-btn"><i class="fab fa-github"></i></a>
+                  <a href="http://arilganteng.my.id" target="_blank" class="proj-link-btn proj-link-live"><i class="fas fa-external-link-alt"></i></a>
+                </div>
+              </div>
+              <div class="proj-info">
+                <div class="proj-header">
+                  <h3 class="proj-name">ITATS Event Platform</h3>
+                  <span class="proj-year">2024</span>
+                </div>
+                <p class="proj-desc">A dedicated platform for campus event management. Streamlines user registration, event scheduling, and participant tracking.</p>
+                <div class="proj-tech-row">
+                  <span class="tech-pill">PHP</span>
+                  <span class="tech-pill">Laravel</span>
+                  <span class="tech-pill">MySQL</span>
+                  <span class="tech-pill">CSS3</span>
+                </div>
+                <div class="proj-links-row">
+                  <a href="https://github.com/taka-duarr/Ivent.git" target="_blank" class="proj-btn"><i class="fab fa-github"></i> Code</a>
+                  <a href="http://arilganteng.my.id" target="_blank" class="proj-btn proj-btn-accent"><i class="fas fa-arrow-up-right-from-square"></i> Live</a>
+                </div>
+              </div>
+            </div>
+            <!-- Project 3 -->
+            <div class="proj-card" data-tags="html css js">
+              <div class="proj-img-wrap">
+                <img src="../new porto/img/img5.png" alt="Classroom Clone" class="proj-img" onerror="this.parentElement.style.background='linear-gradient(135deg,#27AE60,#2980B9)'" />
+                <div class="proj-overlay">
+                  <a href="https://github.com/taka-duarr/copy-classroom.git" target="_blank" class="proj-link-btn"><i class="fab fa-github"></i></a>
+                  <a href="https://taka-duarr.github.io/copy-classroom/login.html" target="_blank" class="proj-link-btn proj-link-live"><i class="fas fa-external-link-alt"></i></a>
+                </div>
+              </div>
+              <div class="proj-info">
+                <div class="proj-header">
+                  <h3 class="proj-name">Classroom UI Clone</h3>
+                  <span class="proj-year">2023</span>
+                </div>
+                <p class="proj-desc">A pixel-perfect frontend recreation of the ITATS classroom portal. Demonstrates UI replication and CSS architecture skills.</p>
+                <div class="proj-tech-row">
+                  <span class="tech-pill">HTML5</span>
+                  <span class="tech-pill">CSS3</span>
+                  <span class="tech-pill">JavaScript</span>
+                </div>
+                <div class="proj-links-row">
+                  <a href="https://github.com/taka-duarr/copy-classroom.git" target="_blank" class="proj-btn"><i class="fab fa-github"></i> Code</a>
+                  <a href="https://taka-duarr.github.io/copy-classroom/login.html" target="_blank" class="proj-btn proj-btn-accent"><i class="fas fa-arrow-up-right-from-square"></i> Live</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

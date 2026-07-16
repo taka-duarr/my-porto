@@ -1,0 +1,56 @@
+    <!-- CONTACT WINDOW -->
+    <div class="window" id="win-contact" data-app="contact" style="display:none; top:90px; left:150px; width:680px; height:500px;">
+      <div class="win-titlebar">
+        <div class="win-controls">
+          <button class="win-btn win-close" data-win="contact" title="Close"></button>
+          <button class="win-btn win-minimize" data-win="contact" title="Minimize"></button>
+          <button class="win-btn win-maximize" data-win="contact" title="Maximize"></button>
+        </div>
+        <span class="win-title"><i class="fas fa-envelope"></i> &nbsp;Contact Me</span>
+        <div class="win-title-spacer"></div>
+      </div>
+      <div class="win-body">
+        <div class="sidebar-nav">
+          <div class="sidebar-section">Connect</div>
+          <div class="sidebar-item"><a href="https://github.com/taka-duarr" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
+          <div class="sidebar-item"><a href="https://www.linkedin.com/in/firman-ardiansyah-700786284" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a></div>
+          <div class="sidebar-item"><a href="https://www.instagram.com/lord_takaa" target="_blank"><i class="fab fa-instagram"></i> Instagram</a></div>
+          <div class="sidebar-item"><a href="https://www.youtube.com/@TakaCarryUs" target="_blank"><i class="fab fa-youtube"></i> YouTube</a></div>
+          <div class="sidebar-item"><a href="https://wa.me/081357398265" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a></div>
+        </div>
+        <div class="win-content contact-content">
+          <div class="contact-header">
+            <h2>Get in Touch</h2>
+            <p>Have a project in mind or just want to say hi? Drop a message below!</p>
+          </div>
+          <div class="contact-quick-info">
+            <div class="contact-info-chip"><i class="fas fa-envelope"></i> firman@example.com</div>
+            <div class="contact-info-chip"><i class="fab fa-whatsapp"></i> +62 813-5739-8265</div>
+            <div class="contact-info-chip"><i class="fas fa-map-marker-alt"></i> Surabaya, Indonesia</div>
+          </div>
+          <form class="contact-form" id="contact-form" onsubmit="handleContactForm(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="cf-name">Your Name</label>
+                <input type="text" id="cf-name" placeholder="Jhon Doe" required />
+              </div>
+              <div class="form-group">
+                <label for="cf-email">Email Address</label>
+                <input type="email" id="cf-email" placeholder="you@example.com" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="cf-subject">Subject</label>
+              <input type="text" id="cf-subject" placeholder="Project Inquiry / Collaboration" />
+            </div>
+            <div class="form-group">
+              <label for="cf-message">Message</label>
+              <textarea id="cf-message" rows="4" placeholder="Tell me about your project..." required></textarea>
+            </div>
+            <button type="submit" class="contact-submit-btn">
+              <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>

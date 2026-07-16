@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Firman Ardiansyah — Full Stack Developer</title>
+  <meta name="description" content="Portfolio of Firman Ardiansyah, a Full Stack Developer from Surabaya specializing in PHP, Laravel, JavaScript, and React." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div id="cursor" class="cursor"></div>
+  <div id="cursor-follower" class="cursor-follower"></div>
+
+  <!-- Noise overlay -->
+  <div class="noise-overlay"></div>
+
+  <!-- ═══════════════════════════════ NAVBAR ═══════════════════════════════ -->
+  <header id="header">
+    <div class="nav-container">
+      <a href="#home" class="nav-logo" id="nav-logo">
+        <span class="logo-bracket">{</span>
+        <span class="logo-text">FA</span>
+        <span class="logo-bracket">}</span>
+      </a>
+
+      <nav class="nav-links" id="nav-links">
+        <a href="#home"    class="nav-link" data-text="Home">Home</a>
+        <a href="#about"   class="nav-link" data-text="About">About</a>
+        <a href="#skills"  class="nav-link" data-text="Skills">Skills</a>
+        <a href="#projects" class="nav-link" data-text="Projects">Projects</a>
+        <a href="#contact" class="nav-link" data-text="Contact">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="#contact" class="btn-nav magnetic">Let's Talk</a>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Overlay Nav -->
+  <div class="mobile-nav-overlay glass-mobile-nav" id="mobile-nav-overlay">
+    <nav class="mobile-nav-links">
+      <a href="#home"    class="mobile-nav-link" data-index="01">Home</a>
+      <a href="#about"   class="mobile-nav-link" data-index="02">About</a>
+      <a href="#skills"  class="mobile-nav-link" data-index="03">Skills</a>
+      <a href="#projects" class="mobile-nav-link" data-index="04">Projects</a>
+      <a href="#contact" class="mobile-nav-link" data-index="05">Contact</a>
+    </nav>
+    <div class="mobile-nav-footer">
+      <a href="https://github.com/taka-duarr" target="_blank"><i class="fab fa-github"></i></a>
+      <a href="https://www.linkedin.com/in/firman-ardiansyah-700786284" target="_blank"><i class="fab fa-linkedin"></i></a>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
+    <section id="home" class="hero-section">
+      <!-- Canvas Particle Background -->
+      <canvas id="hero-canvas"></canvas>
+
+      <!-- Grid lines decoration -->
+      <div class="grid-overlay"></div>
+
+      <!-- Ambient Blobs for Glassmorphism -->
+      <div class="blob blob-hero-1"></div>
+      <div class="blob blob-hero-2"></div>
+      <div class="blob blob-hero-3"></div>
+
+      <div class="hero-container">
+        <!-- Text Side -->
+        <div class="hero-text-side">
+          <div class="hero-badge" id="hero-badge">
+            <span class="badge-dot"></span>
+            <span>Available for Work</span>
+          </div>
+
+          <h1 class="hero-title" id="hero-title">
+            <span class="hero-line">Crafting</span>
+            <span class="hero-line">Digital</span>
+            <span class="hero-line accent-text">Experiences.</span>
+          </h1>
+
+          <p class="hero-sub" id="hero-sub">
+            I'm <strong>Firman Ardiansyah</strong> — a Full Stack Developer from Surabaya who turns complex problems into elegant, scalable web solutions.
+          </p>
+
+          <div class="hero-cta" id="hero-cta">
+            <a href="#projects" class="btn-primary magnetic">
+              <span>View My Work</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+            <a href="#contact" class="btn-ghost magnetic">
+              <span>Say Hello</span>
+            </a>
+          </div>
+
+          <div class="hero-socials" id="hero-socials">
+            <a href="https://wa.me/081357398265" target="_blank" class="social-pill magnetic" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://github.com/taka-duarr" target="_blank" class="social-pill magnetic" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/firman-ardiansyah-700786284" target="_blank" class="social-pill magnetic" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.youtube.com/@TakaCarryUs" target="_blank" class="social-pill magnetic" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.instagram.com/lord_takaa" target="_blank" class="social-pill magnetic" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+
+        <!-- Image Side -->
+        <div class="hero-image-side" id="hero-image-side">
+          <div class="profile-frame">
+            <div class="profile-frame-border"></div>
+            <div class="profile-frame-glow"></div>
+            <img src="img/img1.jpg" alt="Firman Ardiansyah" class="profile-photo" id="profile-photo" />
+            <!-- Floating tags -->
+            <div class="float-tag tag-1 magnetic">
+              <i class="fab fa-laravel"></i>
+              <span>Laravel</span>
+            </div>
+            <div class="float-tag tag-2 magnetic">
+              <i class="fab fa-react"></i>
+              <span>React</span>
+            </div>
+            <div class="float-tag tag-3 magnetic">
+              <i class="fas fa-database"></i>
+              <span>MySQL</span>
+            </div>
+          </div>
+
+          <!-- Stat cards -->
+          <div class="hero-stats">
+            <div class="stat-chip">
+              <span class="stat-num" data-target="3">0</span>
+              <span class="stat-unit">+</span>
+              <span class="stat-label">Projects</span>
+            </div>
+            <div class="stat-chip">
+              <span class="stat-num" data-target="1">0</span>
+              <span class="stat-unit">yr+</span>
+              <span class="stat-label">Experience</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scroll-hint" id="scroll-hint">
+        <div class="scroll-line"></div>
+        <span>Scroll</span>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════ ABOUT ═══════════════════════════════ -->
+    <section id="about" class="about-section section">
+      <!-- Ambient Blobs -->
+      <div class="blob blob-about-1"></div>
+      <div class="blob blob-about-2"></div>
+      <div class="section-container">
+
+        <div class="section-label reveal-up">
+          <span class="label-line"></span>
+          <span>About Me</span>
+        </div>
+
+        <div class="about-grid">
+          <!-- Left: Text -->
+          <div class="about-text-col reveal-up">
+            <h2 class="section-heading">
+              The person <br/>
+              <span class="accent-text">behind the code.</span>
+            </h2>
+            <p class="about-para">
+              Hi! I'm Firman — a passionate Full Stack Developer currently pursuing Informatic Engineering at <strong>Institut Teknologi Adhi Tama Surabaya (ITATS)</strong>, class of 2023.
+            </p>
+            <p class="about-para">
+              I don't just write code; I architect digital experiences. My journey started with curiosity and has evolved into a commitment to building software that's not only functional but genuinely delightful to use.
+            </p>
+
+            <div class="about-traits">
+              <div class="trait-tag reveal-up"><i class="fas fa-lightbulb"></i> Problem Solving</div>
+              <div class="trait-tag reveal-up"><i class="fas fa-users"></i> Team Collaboration</div>
+              <div class="trait-tag reveal-up"><i class="fas fa-infinity"></i> Continuous Learning</div>
+              <div class="trait-tag reveal-up"><i class="fas fa-paint-brush"></i> Clean UI/UX</div>
+            </div>
+          </div>
+
+          <!-- Right: Bento Cards -->
+          <div class="about-bento">
+            <!-- Education Card -->
+            <div class="bento-card education-card reveal-up">
+              <div class="bento-card-icon">
+                <i class="fas fa-graduation-cap"></i>
+              </div>
+              <h3>Education</h3>
+              <div class="edu-item">
+                <p class="edu-degree">Informatic Engineering</p>
+                <p class="edu-school">Institut Teknologi Adhi Tama Surabaya</p>
+                <span class="edu-year">2023 — Present</span>
+              </div>
+            </div>
+
+            <!-- Experience Card -->
+            <div class="bento-card experience-card reveal-up">
+              <div class="bento-card-icon">
+                <i class="fas fa-code"></i>
+              </div>
+              <h3>Experience</h3>
+              <div class="exp-bar-wrap">
+                <div class="exp-bar" data-width="70"></div>
+              </div>
+              <p class="exp-label">1+ Years of hands-on development</p>
+              <small>Personal & Internship Projects</small>
+            </div>
+
+            <!-- Location Card -->
+            <div class="bento-card location-card reveal-up">
+              <i class="fas fa-map-marker-alt location-icon"></i>
+              <h3>Based In</h3>
+              <p class="location-city">Surabaya</p>
+              <p class="location-country">Indonesia 🇮🇩</p>
+              <span class="remote-badge">Open to Remote</span>
+            </div>
+
+            <!-- Metrics Card -->
+            <div class="bento-card metrics-card reveal-up">
+              <div class="metric-row">
+                <div class="metric">
+                  <span class="metric-num count-up" data-target="3">0</span>
+                  <span class="metric-plus">+</span>
+                  <span class="metric-label">Projects Shipped</span>
+                </div>
+                <div class="metric-divider"></div>
+                <div class="metric">
+                  <span class="metric-num count-up" data-target="100">0</span>
+                  <span class="metric-plus">%</span>
+                  <span class="metric-label">Commitment</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════ SKILLS ═══════════════════════════════ -->
+    <section id="skills" class="skills-section section">
+      <!-- Ambient Blobs -->
+      <div class="blob blob-skills-1"></div>
+      <div class="blob blob-skills-2"></div>
+      <div class="section-container">
+
+        <div class="skills-header">
+          <div class="section-label reveal-up">
+            <span class="label-line"></span>
+            <span>Expertise</span>
+          </div>
+          <h2 class="section-heading reveal-up">
+            Tools I <span class="accent-text">master.</span>
+          </h2>
+          <p class="section-sub reveal-up">The technical stack powering every project I build — chosen for performance, reliability, and developer happiness.</p>
+        </div>
+
+        <div class="skills-layout">
+          <!-- Left: Category Tabs -->
+          <div class="skills-categories reveal-up">
+            <button class="skill-cat-btn active" data-cat="frontend">
+              <i class="fas fa-laptop-code"></i>
+              <span>Frontend</span>
+            </button>
+            <button class="skill-cat-btn" data-cat="backend">
+              <i class="fas fa-server"></i>
+              <span>Backend</span>
+            </button>
+            <button class="skill-cat-btn" data-cat="tools">
+              <i class="fas fa-tools"></i>
+              <span>Tools</span>
+            </button>
+          </div>
+
+          <!-- Right: Skills Grid -->
+          <div class="skills-grid-wrap reveal-up">
+            <!-- Frontend -->
+            <div class="skills-panel active" id="cat-frontend">
+              <div class="skill-card-grid">
+                <div class="skill-card magnetic">
+                  <i class="fab fa-html5" style="color:#E34F26"></i>
+                  <span>HTML5</span>
+                  <div class="skill-progress"><div class="skill-fill" data-w="90"></div></div>
+                  <span class="skill-pct">90%</span>
+                </div>
+                <div class="skill-card magnetic">
+                  <i class="fab fa-css3-alt" style="color:#264DE4"></i>
+                  <span>CSS3</span>
+                  <div class="skill-progress"><div class="skill-fill" data-w="85"></div></div>
+                  <span class="skill-pct">85%</span>
+                </div>
+                <div class="skill-card magnetic">
+                  <i class="fab fa-js" style="color:#F7DF1E"></i>
+                  <span>JavaScript</span>
+                  <div class="skill-progress"><div class="skill-fill" data-w="80"></div></div>
+                  <span class="skill-pct">80%</span>
+                </div>
+                <div class="skill-card magnetic">
+                  <i class="fab fa-react" style="color:#61DAFB"></i>
+                  <span>React</span>
+                  <div class="skill-progress"><div class="skill-fill" data-w="75"></div></div>
+                  <span class="skill-pct">75%</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Backend -->
+            <div class="skills-panel" id="cat-backend">
+              <div class="skill-card-grid">
+                <div class="skill-card magnetic">
+                  <i class="fab fa-php" style="color:#777BB4"></i>
+                  <span>PHP</span>
+                  <div class="skill-progress"><div class="skill-fill" data-w="85"></div></div>
+                  <span class="skill-pct">85%</span>
+                </div>
+                <div class="skill-card magnetic">
+                  <i class="fas fa-leaf" style="color:#FF2D20"></i>
+                  <span>Laravel</span>
+                  <div class="skill-progress"><div class="skill-fill" data-w="80"></div></div>
+                  <span class="skill-pct">80%</span>
+                </div>
+                <div class="skill-card magnetic">
+                  <i class="fas fa-database" style="color:#4479A1"></i>
+                  <span>MySQL</span>
+                  <div class="skill-progress"><div class="skill-fill" data-w="80"></div></div>
+                  <span class="skill-pct">80%</span>
+                </div>
+                <div class="skill-card magnetic">
+                  <i class="fab fa-java" style="color:#ED8B00"></i>
+                  <span>Java</span>
+                  <div class="skill-progress"><div class="skill-fill" data-w="70"></div></div>
+                  <span class="skill-pct">70%</span>
+                </div>
+                <div class="skill-card magnetic">
+                  <i class="fab fa-python" style="color:#3776AB"></i>
+                  <span>Python</span>
+                  <div class="skill-progress"><div class="skill-fill" data-w="65"></div></div>
+                  <span class="skill-pct">65%</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tools -->
+            <div class="skills-panel" id="cat-tools">
+              <div class="skill-card-grid">
+                <div class="skill-card magnetic">
+                  <i class="fab fa-git-alt" style="color:#F05032"></i>
+                  <span>Git</span>
+                  <div class="skill-progress"><div class="skill-fill" data-w="80"></div></div>
+                  <span class="skill-pct">80%</span>
+                </div>
+                <div class="skill-card magnetic">
+                  <i class="fab fa-github" style="color:#e4e2e3"></i>
+                  <span>GitHub</span>
+                  <div class="skill-progress"><div class="skill-fill" data-w="80"></div></div>
+                  <span class="skill-pct">80%</span>
+                </div>
+                <div class="skill-card magnetic">
+                  <i class="fas fa-code" style="color:#007ACC"></i>
+                  <span>VS Code</span>
+                  <div class="skill-progress"><div class="skill-fill" data-w="90"></div></div>
+                  <span class="skill-pct">90%</span>
+                </div>
+                <div class="skill-card magnetic">
+                  <i class="fas fa-rocket" style="color:#E06D53"></i>
+                  <span>Figma</span>
+                  <div class="skill-progress"><div class="skill-fill" data-w="60"></div></div>
+                  <span class="skill-pct">60%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════ PROJECTS ═══════════════════════════════ -->
+    <section id="projects" class="projects-section section">
+      <!-- Ambient Blobs -->
+      <div class="blob blob-projects-1"></div>
+      <div class="blob blob-projects-2"></div>
+      <div class="section-container">
+
+        <div class="section-label reveal-up">
+          <span class="label-line"></span>
+          <span>Selected Work</span>
+        </div>
+
+        <div class="projects-header reveal-up">
+          <h2 class="section-heading">
+            What I've <span class="accent-text">built.</span>
+          </h2>
+          <p class="section-sub">A curated selection of projects that showcase my range — from full-stack platforms to frontend clones with meticulous attention to detail.</p>
+        </div>
+
+        <div class="projects-list">
+
+          <!-- Project 1: Featured -->
+          <article class="project-item featured reveal-up" id="proj-1">
+            <div class="project-num">01</div>
+            <div class="project-image-wrap">
+              <img src="img/img3.png" alt="E-Kelontong Platform" class="project-img" />
+              <div class="project-img-overlay">
+                <div class="project-overlay-links">
+                  <a href="https://github.com/taka-duarr/E-kelontong.git" target="_blank" class="overlay-btn magnetic"><i class="fab fa-github"></i> Code</a>
+                  <a href="https://firman.pbo24itats.co-id.id" target="_blank" class="overlay-btn overlay-btn-primary magnetic"><i class="fas fa-external-link-alt"></i> Live</a>
+                </div>
+              </div>
+            </div>
+            <div class="project-info">
+              <div class="project-meta">
+                <span class="featured-badge">★ Featured</span>
+                <span class="project-year">2024</span>
+              </div>
+              <h3 class="project-title">E-Kelontong Platform</h3>
+              <p class="project-desc">A comprehensive e-commerce solution built for local grocery stores. Features seamless inventory management, user authentication, and integrated payment gateways — designed to empower small business owners in the digital economy.</p>
+              <div class="project-tech-list">
+                <span class="tech-chip">PHP</span>
+                <span class="tech-chip">Laravel</span>
+                <span class="tech-chip">MySQL</span>
+                <span class="tech-chip">JavaScript</span>
+                <span class="tech-chip">CSS3</span>
+              </div>
+              <div class="project-links-row">
+                <a href="https://github.com/taka-duarr/E-kelontong.git" target="_blank" class="project-link-btn magnetic"><i class="fab fa-github"></i> Source Code</a>
+                <a href="https://firman.pbo24itats.co-id.id" target="_blank" class="project-link-btn project-link-btn-accent magnetic"><i class="fas fa-arrow-up-right-from-square"></i> Live Demo</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 2 -->
+          <article class="project-item reveal-up" id="proj-2">
+            <div class="project-num">02</div>
+            <div class="project-image-wrap">
+              <img src="img/img4.png" alt="ITATS Event" class="project-img" />
+              <div class="project-img-overlay">
+                <div class="project-overlay-links">
+                  <a href="https://github.com/taka-duarr/Ivent.git" target="_blank" class="overlay-btn magnetic"><i class="fab fa-github"></i> Code</a>
+                  <a href="http://arilganteng.my.id" target="_blank" class="overlay-btn overlay-btn-primary magnetic"><i class="fas fa-external-link-alt"></i> Live</a>
+                </div>
+              </div>
+            </div>
+            <div class="project-info">
+              <div class="project-meta">
+                <span class="project-year">2024</span>
+              </div>
+              <h3 class="project-title">ITATS Event Platform</h3>
+              <p class="project-desc">A dedicated platform for campus event management at ITATS. Streamlines user registration, event scheduling, and participant tracking — making campus events more organized and accessible for everyone.</p>
+              <div class="project-tech-list">
+                <span class="tech-chip">PHP</span>
+                <span class="tech-chip">Laravel</span>
+                <span class="tech-chip">MySQL</span>
+                <span class="tech-chip">CSS3</span>
+              </div>
+              <div class="project-links-row">
+                <a href="https://github.com/taka-duarr/Ivent.git" target="_blank" class="project-link-btn magnetic"><i class="fab fa-github"></i> Source Code</a>
+                <a href="http://arilganteng.my.id" target="_blank" class="project-link-btn project-link-btn-accent magnetic"><i class="fas fa-arrow-up-right-from-square"></i> Live Demo</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 3 -->
+          <article class="project-item reveal-up" id="proj-3">
+            <div class="project-num">03</div>
+            <div class="project-image-wrap">
+              <img src="img/img5.png" alt="Copy Classroom" class="project-img" />
+              <div class="project-img-overlay">
+                <div class="project-overlay-links">
+                  <a href="https://github.com/taka-duarr/copy-classroom.git" target="_blank" class="overlay-btn magnetic"><i class="fab fa-github"></i> Code</a>
+                  <a href="https://taka-duarr.github.io/copy-classroom/login.html" target="_blank" class="overlay-btn overlay-btn-primary magnetic"><i class="fas fa-external-link-alt"></i> Live</a>
+                </div>
+              </div>
+            </div>
+            <div class="project-info">
+              <div class="project-meta">
+                <span class="project-year">2023</span>
+              </div>
+              <h3 class="project-title">Classroom UI Clone</h3>
+              <p class="project-desc">A pixel-perfect frontend recreation of the ITATS classroom portal. Demonstrates strong attention to detail in UI replication, responsive layout engineering, and CSS architecture — built entirely with vanilla technologies.</p>
+              <div class="project-tech-list">
+                <span class="tech-chip">HTML5</span>
+                <span class="tech-chip">CSS3</span>
+                <span class="tech-chip">JavaScript</span>
+              </div>
+              <div class="project-links-row">
+                <a href="https://github.com/taka-duarr/copy-classroom.git" target="_blank" class="project-link-btn magnetic"><i class="fab fa-github"></i> Source Code</a>
+                <a href="https://taka-duarr.github.io/copy-classroom/login.html" target="_blank" class="project-link-btn project-link-btn-accent magnetic"><i class="fas fa-arrow-up-right-from-square"></i> Live Demo</a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════ CONTACT ═══════════════════════════════ -->
+    <section id="contact" class="contact-section section">
+      <!-- Ambient Blobs -->
+      <div class="blob blob-contact-1"></div>
+      <div class="blob blob-contact-2"></div>
+      <div class="section-container">
+
+        <div class="contact-wrapper">
+          <!-- Left Info -->
+          <div class="contact-info-col reveal-up">
+            <div class="section-label">
+              <span class="label-line"></span>
+              <span>Contact</span>
+            </div>
+            <h2 class="section-heading">
+              Let's build <br/>
+              <span class="accent-text">something great.</span>
+            </h2>
+            <p class="about-para">
+              Have a project in mind, need a collaborator, or just want to connect? My inbox is always open. I'll get back to you as soon as possible.
+            </p>
+
+            <div class="contact-details-list">
+              <div class="contact-detail-item">
+                <div class="contact-detail-icon">
+                  <i class="fas fa-envelope"></i>
+                </div>
+                <div>
+                  <p class="contact-detail-label">Email</p>
+                  <a href="mailto:firman@example.com" class="contact-detail-value">firman@example.com</a>
+                </div>
+              </div>
+              <div class="contact-detail-item">
+                <div class="contact-detail-icon">
+                  <i class="fas fa-phone"></i>
+                </div>
+                <div>
+                  <p class="contact-detail-label">WhatsApp</p>
+                  <a href="https://wa.me/081357398265" target="_blank" class="contact-detail-value">+62 813-5739-8265</a>
+                </div>
+              </div>
+              <div class="contact-detail-item">
+                <div class="contact-detail-icon">
+                  <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div>
+                  <p class="contact-detail-label">Location</p>
+                  <p class="contact-detail-value">Surabaya, Indonesia</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-socials">
+              <a href="https://github.com/taka-duarr" target="_blank" class="contact-social-link magnetic"><i class="fab fa-github"></i></a>
+              <a href="https://www.linkedin.com/in/firman-ardiansyah-700786284" target="_blank" class="contact-social-link magnetic"><i class="fab fa-linkedin"></i></a>
+              <a href="https://www.instagram.com/lord_takaa" target="_blank" class="contact-social-link magnetic"><i class="fab fa-instagram"></i></a>
+              <a href="https://www.youtube.com/@TakaCarryUs" target="_blank" class="contact-social-link magnetic"><i class="fab fa-youtube"></i></a>
+            </div>
+          </div>
+
+          <!-- Right Form -->
+          <div class="contact-form-col reveal-up">
+            <form class="contact-form glass-card" id="contact-form">
+              <div class="form-field">
+                <input type="text" id="f-name" name="name" required placeholder=" " />
+                <label for="f-name">Your Name</label>
+                <div class="field-line"></div>
+              </div>
+              <div class="form-field">
+                <input type="email" id="f-email" name="email" required placeholder=" " />
+                <label for="f-email">Email Address</label>
+                <div class="field-line"></div>
+              </div>
+              <div class="form-field">
+                <input type="text" id="f-subject" name="subject" placeholder=" " />
+                <label for="f-subject">Project Type / Subject</label>
+                <div class="field-line"></div>
+              </div>
+              <div class="form-field">
+                <textarea id="f-message" name="message" required placeholder=" " rows="4"></textarea>
+                <label for="f-message">Tell me about your project</label>
+                <div class="field-line"></div>
+              </div>
+              <button type="submit" class="form-submit-btn magnetic" id="submit-btn">
+                <span class="btn-label">Send Message</span>
+                <i class="fas fa-arrow-right btn-icon"></i>
+                <div class="btn-loader" hidden></div>
+              </button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════ FOOTER ═══════════════════════════════ -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <a href="#home" class="footer-logo">
+          <span class="logo-bracket">{</span>FA<span class="logo-bracket">}</span>
+        </a>
+        <p class="footer-tagline">Building with intentionality. Shipping with pride.</p>
+      </div>
+      <div class="footer-center">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="footer-right">
+        <a href="https://github.com/taka-duarr" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/firman-ardiansyah-700786284" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="https://www.instagram.com/lord_takaa" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.youtube.com/@TakaCarryUs" target="_blank"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Firman Ardiansyah. All rights reserved.</p>
+      <p>Made with <span class="accent-text">♥</span> in Surabaya</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

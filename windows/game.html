@@ -1,0 +1,30 @@
+    <!-- SNAKE GAME WINDOW -->
+    <div class="window" id="win-game" data-app="game" style="display:none; top:100px; left:200px; width:500px; height:600px;">
+      <div class="win-titlebar">
+        <div class="win-controls">
+          <button class="win-btn win-close" data-win="game" title="Close"></button>
+          <button class="win-btn win-minimize" data-win="game" title="Minimize"></button>
+          <button class="win-btn win-maximize" data-win="game" title="Maximize"></button>
+        </div>
+        <span class="win-title"><i class="fas fa-gamepad"></i> &nbsp;Snake Game</span>
+        <div class="win-title-spacer"></div>
+      </div>
+      <div class="win-body game-body">
+        <div class="game-header">
+          <div class="game-score-board">
+            Score: <span id="snake-score">0</span> | High Score: <span id="snake-high-score">0</span>
+          </div>
+        </div>
+        <div class="game-container">
+          <canvas id="snake-canvas" width="400" height="400"></canvas>
+          <div id="game-overlay" class="game-overlay">
+            <h2 id="game-overlay-title">SNAKE</h2>
+            <p id="game-overlay-desc">Use arrow keys to play</p>
+            <button id="game-start-btn" class="game-btn">Start Game</button>
+          </div>
+        </div>
+        <div class="game-controls-hint">
+          <p><i class="fas fa-arrows-alt"></i> Use Keyboard Arrow Keys or WASD to Move</p>
+        </div>
+      </div>
+    </div>

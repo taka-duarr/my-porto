@@ -1,0 +1,82 @@
+    <!-- LIBRARY / CERTIFICATES WINDOW -->
+    <div class="window" id="win-library" data-app="library" style="display:none; top:80px; left:100px; width:820px; height:560px;">
+      <div class="win-titlebar">
+        <div class="win-controls">
+          <button class="win-btn win-close" data-win="library" title="Close"></button>
+          <button class="win-btn win-minimize" data-win="library" title="Minimize"></button>
+          <button class="win-btn win-maximize" data-win="library" title="Maximize"></button>
+        </div>
+        <span class="win-title"><i class="fas fa-certificate"></i> &nbsp;Library &mdash; Certificates</span>
+        <div class="win-title-spacer"></div>
+      </div>
+      <div class="win-body">
+        <div class="sidebar-nav">
+          <div class="sidebar-section">Filter</div>
+          <div class="sidebar-item active" onclick="filterCerts('all', this)"><i class="fas fa-th"></i> All</div>
+          <div class="sidebar-item" onclick="filterCerts('web', this)"><i class="fas fa-globe"></i> Web Dev</div>
+          <div class="sidebar-item" onclick="filterCerts('network', this)"><i class="fas fa-network-wired"></i> Networking</div>
+          <div class="sidebar-item" onclick="filterCerts('other', this)"><i class="fas fa-star"></i> Other</div>
+        </div>
+        <div class="win-content" style="padding:0; display:flex; flex-direction:column;">
+          <div class="cert-toolbar">
+            <span class="toolbar-title"><i class="fas fa-award"></i> My Certificates</span>
+            <span class="toolbar-count" id="cert-count">0 certificates</span>
+          </div>
+          <div class="cert-grid" id="cert-grid">
+
+            <!-- Placeholder cards — ganti dengan sertif aslimu! -->
+            <div class="cert-card" data-cat="web">
+              <div class="cert-img-wrap">
+                <div class="cert-img-placeholder cert-placeholder-blue">
+                  <i class="fas fa-globe"></i>
+                </div>
+                <div class="cert-badge-ribbon">Web Dev</div>
+              </div>
+              <div class="cert-info">
+                <h3 class="cert-title">Tambahkan Sertifikatmu</h3>
+                <p class="cert-issuer"><i class="fas fa-building"></i> Nama Issuer</p>
+                <p class="cert-date"><i class="fas fa-calendar-alt"></i> 2024</p>
+                <div class="cert-actions">
+                  <button class="cert-btn cert-btn-view" onclick="alert('Tambahkan link atau gambar sertifikatmu!')"><i class="fas fa-eye"></i> View</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="cert-card" data-cat="network">
+              <div class="cert-img-wrap">
+                <div class="cert-img-placeholder cert-placeholder-orange">
+                  <i class="fas fa-network-wired"></i>
+                </div>
+                <div class="cert-badge-ribbon cert-ribbon-orange">Networking</div>
+              </div>
+              <div class="cert-info">
+                <h3 class="cert-title">Tambahkan Sertifikatmu</h3>
+                <p class="cert-issuer"><i class="fas fa-building"></i> Nama Issuer</p>
+                <p class="cert-date"><i class="fas fa-calendar-alt"></i> 2024</p>
+                <div class="cert-actions">
+                  <button class="cert-btn cert-btn-view" onclick="alert('Tambahkan link atau gambar sertifikatmu!')"><i class="fas fa-eye"></i> View</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="cert-card" data-cat="other">
+              <div class="cert-img-wrap">
+                <div class="cert-img-placeholder cert-placeholder-purple">
+                  <i class="fas fa-star"></i>
+                </div>
+                <div class="cert-badge-ribbon cert-ribbon-purple">Other</div>
+              </div>
+              <div class="cert-info">
+                <h3 class="cert-title">Tambahkan Sertifikatmu</h3>
+                <p class="cert-issuer"><i class="fas fa-building"></i> Nama Issuer</p>
+                <p class="cert-date"><i class="fas fa-calendar-alt"></i> 2024</p>
+                <div class="cert-actions">
+                  <button class="cert-btn cert-btn-view" onclick="alert('Tambahkan link atau gambar sertifikatmu!')"><i class="fas fa-eye"></i> View</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>

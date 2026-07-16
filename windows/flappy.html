@@ -1,0 +1,30 @@
+    <!-- FLAPPY BIRD WINDOW -->
+    <div class="window" id="win-flappy" data-app="flappy" style="display:none; top:110px; left:220px; width:450px; height:600px;">
+      <div class="win-titlebar">
+        <div class="win-controls">
+          <button class="win-btn win-close" data-win="flappy" title="Close"></button>
+          <button class="win-btn win-minimize" data-win="flappy" title="Minimize"></button>
+          <button class="win-btn win-maximize" data-win="flappy" title="Maximize"></button>
+        </div>
+        <span class="win-title"><i class="fas fa-crow"></i> &nbsp;Flappy Bird</span>
+        <div class="win-title-spacer"></div>
+      </div>
+      <div class="win-body game-body" style="background:#70c5ce;">
+        <div class="game-header" style="background:rgba(0,0,0,0.5); border-bottom: none;">
+          <div class="game-score-board" style="color:white; text-shadow: 2px 2px 0 #000;">
+            Score: <span id="flappy-score">0</span> | High Score: <span id="flappy-high-score">0</span>
+          </div>
+        </div>
+        <div class="game-container" style="background:transparent; border:none; padding-top: 10px;">
+          <canvas id="flappy-canvas" width="320" height="420" style="background:#70c5ce; border:4px solid #fff; border-radius:8px; box-shadow: 0 10px 20px rgba(0,0,0,0.3);"></canvas>
+          <div id="flappy-overlay" class="game-overlay" style="border-radius: 8px;">
+            <h2 id="flappy-overlay-title" style="font-family:'Ubuntu', sans-serif; font-size:2rem; text-shadow:2px 2px 0 #000; margin-bottom:10px;">FLAPPY BIRD</h2>
+            <p id="flappy-overlay-desc" style="font-size:1rem; text-shadow:1px 1px 0 #000;">Press Space or Click to Jump</p>
+            <button id="flappy-start-btn" class="game-btn" style="background:#f1c40f; color:#000; text-shadow:none; border-bottom:4px solid #d4ac0d; font-weight:bold; margin-top:15px;">Start Game</button>
+          </div>
+        </div>
+        <div class="game-controls-hint" style="background:rgba(0,0,0,0.3); color:white; margin-top:auto;">
+          <p><i class="fas fa-mouse"></i> Click or <i class="fas fa-ruler-horizontal"></i> Spacebar to Fly</p>
+        </div>
+      </div>
+    </div>

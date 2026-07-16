@@ -1,0 +1,142 @@
+    <!-- SKILLS WINDOW -->
+    <div class="window" id="win-skills" data-app="skills" style="display:none; top:90px; left:140px; width:760px; height:520px;">
+      <div class="win-titlebar">
+        <div class="win-controls">
+          <button class="win-btn win-close" data-win="skills" title="Close"></button>
+          <button class="win-btn win-minimize" data-win="skills" title="Minimize"></button>
+          <button class="win-btn win-maximize" data-win="skills" title="Maximize"></button>
+        </div>
+        <span class="win-title"><i class="fas fa-code"></i> &nbsp;Skills &amp; Expertise</span>
+        <div class="win-title-spacer"></div>
+      </div>
+      <div class="win-body">
+        <div class="sidebar-nav">
+          <div class="sidebar-section">Category</div>
+          <div class="sidebar-item active" onclick="switchSkillCat('frontend', this)"><i class="fas fa-laptop-code"></i> Frontend</div>
+          <div class="sidebar-item" onclick="switchSkillCat('backend', this)"><i class="fas fa-server"></i> Backend</div>
+          <div class="sidebar-item" onclick="switchSkillCat('networking', this)"><i class="fas fa-network-wired"></i> Networking</div>
+          <div class="sidebar-item" onclick="switchSkillCat('tools', this)"><i class="fas fa-tools"></i> Tools</div>
+        </div>
+        <div class="win-content skills-content">
+          <!-- Frontend Skills -->
+          <div class="skills-panel active" id="sk-frontend">
+            <h2 class="skills-cat-title"><i class="fas fa-laptop-code"></i> Frontend Development</h2>
+            <div class="skills-grid">
+              <div class="skill-item">
+                <div class="skill-top"><i class="fab fa-html5" style="color:#E34F26"></i><span>HTML5</span></div>
+                <div class="skill-bar-wrap"><div class="skill-bar-fill" data-w="90"></div></div>
+                <span class="skill-pct">90%</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-top"><i class="fab fa-css3-alt" style="color:#264DE4"></i><span>CSS3</span></div>
+                <div class="skill-bar-wrap"><div class="skill-bar-fill" data-w="85"></div></div>
+                <span class="skill-pct">85%</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-top"><i class="fab fa-js" style="color:#F7DF1E"></i><span>JavaScript</span></div>
+                <div class="skill-bar-wrap"><div class="skill-bar-fill" data-w="80"></div></div>
+                <span class="skill-pct">80%</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-top"><i class="fab fa-react" style="color:#61DAFB"></i><span>React</span></div>
+                <div class="skill-bar-wrap"><div class="skill-bar-fill" data-w="75"></div></div>
+                <span class="skill-pct">75%</span>
+              </div>
+            </div>
+          </div>
+          <!-- Backend Skills -->
+          <div class="skills-panel" id="sk-backend">
+            <h2 class="skills-cat-title"><i class="fas fa-server"></i> Backend Development</h2>
+            <div class="skills-grid">
+              <div class="skill-item">
+                <div class="skill-top"><i class="fab fa-php" style="color:#777BB4"></i><span>PHP</span></div>
+                <div class="skill-bar-wrap"><div class="skill-bar-fill" data-w="85"></div></div>
+                <span class="skill-pct">85%</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-top"><i class="fas fa-leaf" style="color:#FF2D20"></i><span>Laravel</span></div>
+                <div class="skill-bar-wrap"><div class="skill-bar-fill" data-w="80"></div></div>
+                <span class="skill-pct">80%</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-top"><i class="fas fa-database" style="color:#4479A1"></i><span>MySQL</span></div>
+                <div class="skill-bar-wrap"><div class="skill-bar-fill" data-w="80"></div></div>
+                <span class="skill-pct">80%</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-top"><i class="fab fa-java" style="color:#ED8B00"></i><span>Java</span></div>
+                <div class="skill-bar-wrap"><div class="skill-bar-fill" data-w="70"></div></div>
+                <span class="skill-pct">70%</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-top"><i class="fab fa-python" style="color:#3776AB"></i><span>Python</span></div>
+                <div class="skill-bar-wrap"><div class="skill-bar-fill" data-w="65"></div></div>
+                <span class="skill-pct">65%</span>
+              </div>
+            </div>
+          </div>
+          <!-- Networking Skills -->
+          <div class="skills-panel" id="sk-networking">
+            <h2 class="skills-cat-title"><i class="fas fa-network-wired"></i> Networking &amp; Server</h2>
+            <div class="skills-grid">
+              <div class="skill-item">
+                <div class="skill-top"><i class="fas fa-network-wired" style="color:#E95420"></i><span>Cisco / Routing</span></div>
+                <div class="skill-bar-wrap"><div class="skill-bar-fill" data-w="78"></div></div>
+                <span class="skill-pct">78%</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-top"><i class="fas fa-shield-alt" style="color:#3498DB"></i><span>TCP/IP &amp; Subnetting</span></div>
+                <div class="skill-bar-wrap"><div class="skill-bar-fill" data-w="82"></div></div>
+                <span class="skill-pct">82%</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-top"><i class="fab fa-linux" style="color:#FCC624"></i><span>Linux Server</span></div>
+                <div class="skill-bar-wrap"><div class="skill-bar-fill" data-w="80"></div></div>
+                <span class="skill-pct">80%</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-top"><i class="fas fa-hdd" style="color:#27C93F"></i><span>Apache / Nginx</span></div>
+                <div class="skill-bar-wrap"><div class="skill-bar-fill" data-w="75"></div></div>
+                <span class="skill-pct">75%</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-top"><i class="fas fa-fire-alt" style="color:#FF4C4C"></i><span>Firewall / iptables</span></div>
+                <div class="skill-bar-wrap"><div class="skill-bar-fill" data-w="70"></div></div>
+                <span class="skill-pct">70%</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-top"><i class="fas fa-globe-asia" style="color:#9B59B6"></i><span>DNS &amp; DHCP</span></div>
+                <div class="skill-bar-wrap"><div class="skill-bar-fill" data-w="75"></div></div>
+                <span class="skill-pct">75%</span>
+              </div>
+            </div>
+          </div>
+          <!-- Tools Skills -->
+          <div class="skills-panel" id="sk-tools">
+            <h2 class="skills-cat-title"><i class="fas fa-tools"></i> Tools &amp; DevOps</h2>
+            <div class="skills-grid">
+              <div class="skill-item">
+                <div class="skill-top"><i class="fab fa-git-alt" style="color:#F05032"></i><span>Git</span></div>
+                <div class="skill-bar-wrap"><div class="skill-bar-fill" data-w="80"></div></div>
+                <span class="skill-pct">80%</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-top"><i class="fab fa-github" style="color:#e4e2e3"></i><span>GitHub</span></div>
+                <div class="skill-bar-wrap"><div class="skill-bar-fill" data-w="80"></div></div>
+                <span class="skill-pct">80%</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-top"><i class="fas fa-code" style="color:#007ACC"></i><span>VS Code</span></div>
+                <div class="skill-bar-wrap"><div class="skill-bar-fill" data-w="90"></div></div>
+                <span class="skill-pct">90%</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-top"><i class="fab fa-figma" style="color:#F24E1E"></i><span>Figma</span></div>
+                <div class="skill-bar-wrap"><div class="skill-bar-fill" data-w="60"></div></div>
+                <span class="skill-pct">60%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

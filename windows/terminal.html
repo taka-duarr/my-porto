@@ -1,0 +1,21 @@
+    <!-- TERMINAL WINDOW -->
+    <div class="window" id="win-terminal" data-app="terminal" style="display:none; top:110px; left:180px; width:700px; height:460px;">
+      <div class="win-titlebar win-titlebar-dark">
+        <div class="win-controls">
+          <button class="win-btn win-close" data-win="terminal" title="Close"></button>
+          <button class="win-btn win-minimize" data-win="terminal" title="Minimize"></button>
+          <button class="win-btn win-maximize" data-win="terminal" title="Maximize"></button>
+        </div>
+        <span class="win-title win-title-light">firman@ubuntu: ~</span>
+        <div class="win-title-spacer"></div>
+      </div>
+      <div class="win-body terminal-body">
+        <div class="terminal-output" id="terminal-output">
+          <div class="term-line"><span class="term-prompt">firman@ubuntu:~$</span> <span class="term-cmd">neofetch</span></div>
+        </div>
+        <div class="terminal-input-row">
+          <span class="term-prompt-input" id="term-prompt-input">firman@ubuntu:~$</span>
+          <input type="text" class="terminal-input" id="terminal-input" placeholder="Type a command..." autocomplete="off" spellcheck="false" />
+        </div>
+      </div>
+    </div>
