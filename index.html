@@ -56,7 +56,7 @@
   </div>
   <div class="lock-user-wrap">
     <div class="lock-avatar">
-      <img src="../new porto/img/img1.jpg" alt="Firman Ardiansyah" id="lock-avatar-img" onerror="this.style.display='none'; document.getElementById('lock-avatar-fallback').style.display='flex'" />
+      <img src="img/img1.jpg" alt="Firman Ardiansyah" id="lock-avatar-img" onerror="this.src='img/img2.jpg'; this.onerror=function(){this.style.display='none'; document.getElementById('lock-avatar-fallback').style.display='flex';}" />
       <div class="lock-avatar-fallback" id="lock-avatar-fallback" style="display:none">FA</div>
     </div>
     <p class="lock-username">firman</p>
@@ -123,9 +123,9 @@
       </div>
     </div>
     <hr class="power-divider" />
-    <button class="power-menu-item" onclick="location.reload()"><i class="fas fa-sync-alt"></i> Restart Portfolio</button>
+    <button class="power-menu-item" onclick="sessionStorage.removeItem('ubuntu_unlocked'); location.reload()"><i class="fas fa-sync-alt"></i> Restart Portfolio</button>
     <button class="power-menu-item" id="power-lock-btn"><i class="fas fa-lock"></i> Lock Screen</button>
-    <button class="power-menu-item danger" onclick="document.getElementById('boot-screen').style.display='flex'; document.getElementById('desktop').style.display='none'; startBoot()"><i class="fas fa-power-off"></i> Shut Down</button>
+    <button class="power-menu-item danger" onclick="sessionStorage.removeItem('ubuntu_unlocked'); document.getElementById('boot-screen').style.display='flex'; document.getElementById('desktop').style.display='none'; startBoot()"><i class="fas fa-power-off"></i> Shut Down</button>
   </div>
 
   <!-- Desktop Wallpaper Area -->

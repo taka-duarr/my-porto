@@ -1,5 +1,5 @@
     <!-- LIBRARY / CERTIFICATES WINDOW -->
-    <div class="window" id="win-library" data-app="library" style="display:none; top:80px; left:100px; width:820px; height:560px;">
+    <div class="window" id="win-library" data-app="library" style="display:none; top:80px; left:100px; width:850px; height:580px;">
       <div class="win-titlebar">
         <div class="win-controls">
           <button class="win-btn win-close" data-win="library" title="Close"></button>
@@ -11,67 +11,295 @@
       </div>
       <div class="win-body">
         <div class="sidebar-nav">
-          <div class="sidebar-section">Filter</div>
-          <div class="sidebar-item active" onclick="filterCerts('all', this)"><i class="fas fa-th"></i> All</div>
-          <div class="sidebar-item" onclick="filterCerts('web', this)"><i class="fas fa-globe"></i> Web Dev</div>
-          <div class="sidebar-item" onclick="filterCerts('network', this)"><i class="fas fa-network-wired"></i> Networking</div>
-          <div class="sidebar-item" onclick="filterCerts('other', this)"><i class="fas fa-star"></i> Other</div>
+          <div class="sidebar-section">Kategori</div>
+          <div class="sidebar-item active" onclick="filterCerts('all', this)"><i class="fas fa-th"></i> Semua Sertif</div>
+          <div class="sidebar-item" onclick="filterCerts('network', this)"><i class="fas fa-network-wired"></i> Network &amp; 5G</div>
+          <div class="sidebar-item" onclick="filterCerts('prestasi', this)"><i class="fas fa-trophy"></i> Prestasi &amp; Lomba</div>
+          <div class="sidebar-item" onclick="filterCerts('web', this)"><i class="fas fa-code"></i> Web &amp; Mobile</div>
+          <div class="sidebar-item" onclick="filterCerts('cloud', this)"><i class="fas fa-cloud"></i> Cloud &amp; Security</div>
         </div>
-        <div class="win-content" style="padding:0; display:flex; flex-direction:column;">
+        <div class="win-content cert-content">
           <div class="cert-toolbar">
-            <span class="toolbar-title"><i class="fas fa-award"></i> My Certificates</span>
-            <span class="toolbar-count" id="cert-count">0 certificates</span>
+            <span class="toolbar-title"><i class="fas fa-award"></i> Koleksi Sertifikat Firman Ardiansyah</span>
+            <span class="toolbar-count" id="cert-count">15 certificates</span>
           </div>
           <div class="cert-grid" id="cert-grid">
 
-            <!-- Placeholder cards — ganti dengan sertif aslimu! -->
-            <div class="cert-card" data-cat="web">
-              <div class="cert-img-wrap">
-                <div class="cert-img-placeholder cert-placeholder-blue">
-                  <i class="fas fa-globe"></i>
-                </div>
-                <div class="cert-badge-ribbon">Web Dev</div>
-              </div>
-              <div class="cert-info">
-                <h3 class="cert-title">Tambahkan Sertifikatmu</h3>
-                <p class="cert-issuer"><i class="fas fa-building"></i> Nama Issuer</p>
-                <p class="cert-date"><i class="fas fa-calendar-alt"></i> 2024</p>
-                <div class="cert-actions">
-                  <button class="cert-btn cert-btn-view" onclick="alert('Tambahkan link atau gambar sertifikatmu!')"><i class="fas fa-eye"></i> View</button>
-                </div>
-              </div>
-            </div>
-
+            <!-- 1. Junior Network Administrator -->
             <div class="cert-card" data-cat="network">
               <div class="cert-img-wrap">
                 <div class="cert-img-placeholder cert-placeholder-orange">
                   <i class="fas fa-network-wired"></i>
                 </div>
-                <div class="cert-badge-ribbon cert-ribbon-orange">Networking</div>
+                <div class="cert-badge-ribbon cert-ribbon-orange">KOMDIGI</div>
               </div>
               <div class="cert-info">
-                <h3 class="cert-title">Tambahkan Sertifikatmu</h3>
-                <p class="cert-issuer"><i class="fas fa-building"></i> Nama Issuer</p>
-                <p class="cert-date"><i class="fas fa-calendar-alt"></i> 2024</p>
+                <h3 class="cert-title">Junior Network Administrator</h3>
+                <p class="cert-issuer"><i class="fas fa-building"></i> VSGA Digital Talent Scholarship (KOMDIGI)</p>
+                <p class="cert-date"><i class="fas fa-calendar-alt"></i> 2025</p>
                 <div class="cert-actions">
-                  <button class="cert-btn cert-btn-view" onclick="alert('Tambahkan link atau gambar sertifikatmu!')"><i class="fas fa-eye"></i> View</button>
+                  <a href="sertificate/Sertifikat_FIRMAN ARDIANSYAH_Junior Network Administrator.pdf" target="_blank" class="cert-btn cert-btn-view"><i class="fas fa-eye"></i> Lihat PDF</a>
+                  <a href="sertificate/Sertifikat_FIRMAN ARDIANSYAH_Junior Network Administrator.pdf" download class="cert-btn cert-btn-dl" title="Unduh"><i class="fas fa-download"></i></a>
                 </div>
               </div>
             </div>
 
-            <div class="cert-card" data-cat="other">
+            <!-- 2. HCIA 5G Huawei -->
+            <div class="cert-card" data-cat="network">
               <div class="cert-img-wrap">
-                <div class="cert-img-placeholder cert-placeholder-purple">
-                  <i class="fas fa-star"></i>
-                </div>
-                <div class="cert-badge-ribbon cert-ribbon-purple">Other</div>
+                <img src="sertificate/Huawei 5G Sertificate.png" alt="HCIA 5G Huawei" onerror="this.style.display='none'" />
+                <div class="cert-badge-ribbon cert-ribbon-orange">Huawei 5G</div>
               </div>
               <div class="cert-info">
-                <h3 class="cert-title">Tambahkan Sertifikatmu</h3>
-                <p class="cert-issuer"><i class="fas fa-building"></i> Nama Issuer</p>
+                <h3 class="cert-title">HCIA 5G (Fresh Graduate Academy)</h3>
+                <p class="cert-issuer"><i class="fas fa-building"></i> Huawei &amp; KOMDIGI DTS</p>
+                <p class="cert-date"><i class="fas fa-calendar-alt"></i> 2025</p>
+                <div class="cert-actions">
+                  <a href="sertificate/Sertifikat_FIRMAN ARDIANSYAH_HCIA 5G.pdf" target="_blank" class="cert-btn cert-btn-view"><i class="fas fa-eye"></i> Lihat PDF</a>
+                  <a href="sertificate/Huawei 5G Sertificate.png" target="_blank" class="cert-btn cert-btn-dl" title="Lihat Gambar"><i class="fas fa-image"></i></a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. Mengenal Teknologi 5G -->
+            <div class="cert-card" data-cat="network">
+              <div class="cert-img-wrap">
+                <div class="cert-img-placeholder cert-placeholder-orange">
+                  <i class="fas fa-satellite-dish"></i>
+                </div>
+                <div class="cert-badge-ribbon cert-ribbon-orange">5G Tech</div>
+              </div>
+              <div class="cert-info">
+                <h3 class="cert-title">Mengenal Teknologi 5G</h3>
+                <p class="cert-issuer"><i class="fas fa-building"></i> Huawei &amp; Digital Talent Scholarship</p>
+                <p class="cert-date"><i class="fas fa-calendar-alt"></i> 2025</p>
+                <div class="cert-actions">
+                  <a href="sertificate/Sertifikat_FIRMAN ARDIANSYAH_Mengenal Teknologi 5G.pdf" target="_blank" class="cert-btn cert-btn-view"><i class="fas fa-eye"></i> Lihat PDF</a>
+                  <a href="sertificate/Sertifikat_FIRMAN ARDIANSYAH_Mengenal Teknologi 5G.pdf" download class="cert-btn cert-btn-dl" title="Unduh"><i class="fas fa-download"></i></a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. JUARA 1 Lomba Pemrograman Terstruktur -->
+            <div class="cert-card" data-cat="prestasi">
+              <div class="cert-img-wrap">
+                <div class="cert-img-placeholder cert-placeholder-green">
+                  <i class="fas fa-trophy"></i>
+                </div>
+                <div class="cert-badge-ribbon cert-ribbon-green">🏆 Juara 1</div>
+              </div>
+              <div class="cert-info">
+                <h3 class="cert-title">JUARA 1 — Pemrograman Terstruktur</h3>
+                <p class="cert-issuer"><i class="fas fa-university"></i> Teknik Informatika ITATS</p>
                 <p class="cert-date"><i class="fas fa-calendar-alt"></i> 2024</p>
                 <div class="cert-actions">
-                  <button class="cert-btn cert-btn-view" onclick="alert('Tambahkan link atau gambar sertifikatmu!')"><i class="fas fa-eye"></i> View</button>
+                  <a href="sertificate/J1 Pemrograman Terstruktur.pdf" target="_blank" class="cert-btn cert-btn-view"><i class="fas fa-eye"></i> Lihat PDF</a>
+                  <a href="sertificate/J1 Pemrograman Terstruktur.pdf" download class="cert-btn cert-btn-dl" title="Unduh"><i class="fas fa-download"></i></a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 5. GEMASTIK XVIII 2025 -->
+            <div class="cert-card" data-cat="prestasi">
+              <div class="cert-img-wrap">
+                <img src="sertificate/Gemastik.png" alt="GEMASTIK XVIII" onerror="this.style.display='none'" />
+                <div class="cert-badge-ribbon cert-ribbon-purple">Nasional</div>
+              </div>
+              <div class="cert-info">
+                <h3 class="cert-title">GEMASTIK XVIII 2025 (Peserta Nasional)</h3>
+                <p class="cert-issuer"><i class="fas fa-award"></i> Kemendiktisaintek RI &amp; Telkom Univ</p>
+                <p class="cert-date"><i class="fas fa-calendar-alt"></i> 2025</p>
+                <div class="cert-actions">
+                  <a href="sertificate/Gemastik.png" target="_blank" class="cert-btn cert-btn-view"><i class="fas fa-eye"></i> Lihat Sertif</a>
+                  <a href="sertificate/Gemastik.png" download class="cert-btn cert-btn-dl" title="Unduh"><i class="fas fa-download"></i></a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 6. National Start Up Competition 2024 -->
+            <div class="cert-card" data-cat="prestasi">
+              <div class="cert-img-wrap">
+                <div class="cert-img-placeholder cert-placeholder-purple">
+                  <i class="fas fa-rocket"></i>
+                </div>
+                <div class="cert-badge-ribbon cert-ribbon-purple">Startup</div>
+              </div>
+              <div class="cert-info">
+                <h3 class="cert-title">National Start Up Competition 2024</h3>
+                <p class="cert-issuer"><i class="fas fa-university"></i> FEB Universitas Negeri Surabaya (UNESA)</p>
+                <p class="cert-date"><i class="fas fa-calendar-alt"></i> 2024</p>
+                <div class="cert-actions">
+                  <a href="sertificate/FIRMAN ARDIANSYAH-1.pdf" target="_blank" class="cert-btn cert-btn-view"><i class="fas fa-eye"></i> Lihat PDF</a>
+                  <a href="sertificate/FIRMAN ARDIANSYAH-1.pdf" download class="cert-btn cert-btn-dl" title="Unduh"><i class="fas fa-download"></i></a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 7. B-PRENEUR 2024 ITS -->
+            <div class="cert-card" data-cat="prestasi">
+              <div class="cert-img-wrap">
+                <img src="sertificate/B-Preneur.png" alt="B-PRENEUR 2024" onerror="this.style.display='none'" />
+                <div class="cert-badge-ribbon cert-ribbon-purple">B-Preneur</div>
+              </div>
+              <div class="cert-info">
+                <h3 class="cert-title">B-PRENEUR 2024 (Era Society 5.0)</h3>
+                <p class="cert-issuer"><i class="fas fa-university"></i> BIMITS Institut Teknologi Sepuluh Nopember</p>
+                <p class="cert-date"><i class="fas fa-calendar-alt"></i> 2024</p>
+                <div class="cert-actions">
+                  <a href="sertificate/B-Preneur.png" target="_blank" class="cert-btn cert-btn-view"><i class="fas fa-eye"></i> Lihat Sertif</a>
+                  <a href="sertificate/B-Preneur.png" download class="cert-btn cert-btn-dl" title="Unduh"><i class="fas fa-download"></i></a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 8. Frontend vs Backend Dicoding -->
+            <div class="cert-card" data-cat="web">
+              <div class="cert-img-wrap">
+                <div class="cert-img-placeholder cert-placeholder-blue">
+                  <i class="fas fa-laptop-code"></i>
+                </div>
+                <div class="cert-badge-ribbon cert-ribbon-blue">Web Dev</div>
+              </div>
+              <div class="cert-info">
+                <h3 class="cert-title">Frontend vs Backend Architecture</h3>
+                <p class="cert-issuer"><i class="fas fa-graduation-cap"></i> IDCamp x Dicoding Live 6</p>
+                <p class="cert-date"><i class="fas fa-calendar-alt"></i> 2025</p>
+                <div class="cert-actions">
+                  <a href="sertificate/idcamp-x-dicoding-live-6-frontend-vs-backend-a-never-ending-love-hate-relationship-certificate.pdf" target="_blank" class="cert-btn cert-btn-view"><i class="fas fa-eye"></i> Lihat PDF</a>
+                  <a href="sertificate/idcamp-x-dicoding-live-6-frontend-vs-backend-a-never-ending-love-hate-relationship-certificate.pdf" download class="cert-btn cert-btn-dl" title="Unduh"><i class="fas fa-download"></i></a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 9. Jetpack Compose UI Android -->
+            <div class="cert-card" data-cat="web">
+              <div class="cert-img-wrap">
+                <div class="cert-img-placeholder cert-placeholder-green">
+                  <i class="fab fa-android"></i>
+                </div>
+                <div class="cert-badge-ribbon cert-ribbon-green">Android</div>
+              </div>
+              <div class="cert-info">
+                <h3 class="cert-title">Jetpack Compose UI Development</h3>
+                <p class="cert-issuer"><i class="fas fa-graduation-cap"></i> IDCamp x Dicoding Live 5</p>
+                <p class="cert-date"><i class="fas fa-calendar-alt"></i> 2025</p>
+                <div class="cert-actions">
+                  <a href="sertificate/idcamp-x-dicoding-live-5-jetpack-compose-masa-depan-ui-development-di-android-certificate.pdf" target="_blank" class="cert-btn cert-btn-view"><i class="fas fa-eye"></i> Lihat PDF</a>
+                  <a href="sertificate/idcamp-x-dicoding-live-5-jetpack-compose-masa-depan-ui-development-di-android-certificate.pdf" download class="cert-btn cert-btn-dl" title="Unduh"><i class="fas fa-download"></i></a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 10. Path to Mobile Engineering -->
+            <div class="cert-card" data-cat="web">
+              <div class="cert-img-wrap">
+                <div class="cert-img-placeholder cert-placeholder-blue">
+                  <i class="fas fa-mobile-alt"></i>
+                </div>
+                <div class="cert-badge-ribbon cert-ribbon-blue">Mobile</div>
+              </div>
+              <div class="cert-info">
+                <h3 class="cert-title">Path to Mobile Engineering</h3>
+                <p class="cert-issuer"><i class="fas fa-graduation-cap"></i> Dicoding Ignite</p>
+                <p class="cert-date"><i class="fas fa-calendar-alt"></i> 2025</p>
+                <div class="cert-actions">
+                  <a href="sertificate/dicoding-ignite-path-to-mobile-engineering-certificate.pdf" target="_blank" class="cert-btn cert-btn-view"><i class="fas fa-eye"></i> Lihat PDF</a>
+                  <a href="sertificate/dicoding-ignite-path-to-mobile-engineering-certificate.pdf" download class="cert-btn cert-btn-dl" title="Unduh"><i class="fas fa-download"></i></a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 11. Roadshow Global Game Jam 2025 -->
+            <div class="cert-card" data-cat="web">
+              <div class="cert-img-wrap">
+                <div class="cert-img-placeholder cert-placeholder-green">
+                  <i class="fas fa-gamepad"></i>
+                </div>
+                <div class="cert-badge-ribbon cert-ribbon-green">Game Dev</div>
+              </div>
+              <div class="cert-info">
+                <h3 class="cert-title">Roadshow Global Game Jam 2025</h3>
+                <p class="cert-issuer"><i class="fas fa-users"></i> Teknik Informatika ITATS &amp; GADAS</p>
+                <p class="cert-date"><i class="fas fa-calendar-alt"></i> 2024</p>
+                <div class="cert-actions">
+                  <a href="sertificate/Sertifikat Roadshow GGJ 2024-9.pdf" target="_blank" class="cert-btn cert-btn-view"><i class="fas fa-eye"></i> Lihat PDF</a>
+                  <a href="sertificate/Sertifikat Roadshow GGJ 2024-9.pdf" download class="cert-btn cert-btn-dl" title="Unduh"><i class="fas fa-download"></i></a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 12. Cyber Security 101 CIA Triad -->
+            <div class="cert-card" data-cat="cloud">
+              <div class="cert-img-wrap">
+                <div class="cert-img-placeholder cert-placeholder-purple">
+                  <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="cert-badge-ribbon cert-ribbon-purple">Security</div>
+              </div>
+              <div class="cert-info">
+                <h3 class="cert-title">Cyber Security 101: Tiga Pilar CIA Triad</h3>
+                <p class="cert-issuer"><i class="fas fa-graduation-cap"></i> Dicoding DevCoach 219</p>
+                <p class="cert-date"><i class="fas fa-calendar-alt"></i> 2025</p>
+                <div class="cert-actions">
+                  <a href="sertificate/devcoach-219-cyber-security-cyber-security-101-membedah-tiga-pilar-sakti-cia-triad-certificate.pdf" target="_blank" class="cert-btn cert-btn-view"><i class="fas fa-eye"></i> Lihat PDF</a>
+                  <a href="sertificate/devcoach-219-cyber-security-cyber-security-101-membedah-tiga-pilar-sakti-cia-triad-certificate.pdf" download class="cert-btn cert-btn-dl" title="Unduh"><i class="fas fa-download"></i></a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 13. Machine Learning Google Cloud Vertex AI -->
+            <div class="cert-card" data-cat="cloud">
+              <div class="cert-img-wrap">
+                <div class="cert-img-placeholder cert-placeholder-blue">
+                  <i class="fas fa-brain"></i>
+                </div>
+                <div class="cert-badge-ribbon cert-ribbon-blue">Cloud AI</div>
+              </div>
+              <div class="cert-info">
+                <h3 class="cert-title">Machine Learning in Google Cloud (Vertex AI)</h3>
+                <p class="cert-issuer"><i class="fas fa-graduation-cap"></i> Dicoding DevCoach 171</p>
+                <p class="cert-date"><i class="fas fa-calendar-alt"></i> 2025</p>
+                <div class="cert-actions">
+                  <a href="sertificate/devcoach-171-machine-learning-in-google-cloud-vertex-ai-di-google-cloud-certificate.pdf" target="_blank" class="cert-btn cert-btn-view"><i class="fas fa-eye"></i> Lihat PDF</a>
+                  <a href="sertificate/devcoach-171-machine-learning-in-google-cloud-vertex-ai-di-google-cloud-certificate.pdf" download class="cert-btn cert-btn-dl" title="Unduh"><i class="fas fa-download"></i></a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 14. Data Science Probabilitas & Statistika -->
+            <div class="cert-card" data-cat="cloud">
+              <div class="cert-img-wrap">
+                <div class="cert-img-placeholder cert-placeholder-blue">
+                  <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="cert-badge-ribbon cert-ribbon-blue">Data Science</div>
+              </div>
+              <div class="cert-info">
+                <h3 class="cert-title">Data Science: Probabilitas &amp; Statistika</h3>
+                <p class="cert-issuer"><i class="fas fa-graduation-cap"></i> Dicoding DevCoach 211</p>
+                <p class="cert-date"><i class="fas fa-calendar-alt"></i> 2025</p>
+                <div class="cert-actions">
+                  <a href="sertificate/devcoach-211-data-science-mengenal-data-lewat-probabilitas-dan-statistika-certificate_Firman Ardiansyah.pdf" target="_blank" class="cert-btn cert-btn-view"><i class="fas fa-eye"></i> Lihat PDF</a>
+                  <a href="sertificate/devcoach-211-data-science-mengenal-data-lewat-probabilitas-dan-statistika-certificate_Firman Ardiansyah.pdf" download class="cert-btn cert-btn-dl" title="Unduh"><i class="fas fa-download"></i></a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 15. SNTEKPAN XI LPPM ITATS -->
+            <div class="cert-card" data-cat="prestasi">
+              <div class="cert-img-wrap">
+                <div class="cert-img-placeholder cert-placeholder-purple">
+                  <i class="fas fa-microchip"></i>
+                </div>
+                <div class="cert-badge-ribbon cert-ribbon-purple">Seminar</div>
+              </div>
+              <div class="cert-info">
+                <h3 class="cert-title">SNTEKPAN XI: Smart Tech &amp; Smart Energy</h3>
+                <p class="cert-issuer"><i class="fas fa-university"></i> LPPM Institut Teknologi Adhi Tama Surabaya</p>
+                <p class="cert-date"><i class="fas fa-calendar-alt"></i> 2023</p>
+                <div class="cert-actions">
+                  <a href="sertificate/Sertifikat Peserta SNTEKPAN XI Firman Ardiansyah S.kom..pdf" target="_blank" class="cert-btn cert-btn-view"><i class="fas fa-eye"></i> Lihat PDF</a>
+                  <a href="sertificate/Sertifikat Peserta SNTEKPAN XI Firman Ardiansyah S.kom..pdf" download class="cert-btn cert-btn-dl" title="Unduh"><i class="fas fa-download"></i></a>
                 </div>
               </div>
             </div>

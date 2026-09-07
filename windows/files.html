@@ -1,92 +1,221 @@
     <!-- RESUME / FILES WINDOW -->
-    <div class="window" id="win-files" data-app="files" style="display:none; top:100px; left:170px; width:750px; height:530px;">
+    <div class="window" id="win-files" data-app="files" style="display:none; top:90px; left:160px; width:780px; height:560px;">
       <div class="win-titlebar">
         <div class="win-controls">
           <button class="win-btn win-close" data-win="files" title="Close"></button>
           <button class="win-btn win-minimize" data-win="files" title="Minimize"></button>
           <button class="win-btn win-maximize" data-win="files" title="Maximize"></button>
         </div>
-        <span class="win-title"><i class="fas fa-file-alt"></i> &nbsp;Resume — Text Editor</span>
+        <span class="win-title"><i class="fas fa-file-alt"></i> &nbsp;Curriculum Vitae (ATS) — Text Editor</span>
         <div class="win-title-spacer"></div>
       </div>
       <div class="win-body">
         <div class="sidebar-nav">
-          <div class="sidebar-section">Document</div>
-          <div class="sidebar-item active"><i class="fas fa-user"></i> Profile</div>
-          <div class="sidebar-item"><i class="fas fa-briefcase"></i> Experience</div>
-          <div class="sidebar-item"><i class="fas fa-graduation-cap"></i> Education</div>
+          <div class="sidebar-section">Navigasi CV</div>
+          <div class="sidebar-item active" onclick="scrollResumeTo('res-profile', this)"><i class="fas fa-user"></i> Profil</div>
+          <div class="sidebar-item" onclick="scrollResumeTo('res-summary', this)"><i class="fas fa-align-left"></i> Ringkasan</div>
+          <div class="sidebar-item" onclick="scrollResumeTo('res-edu', this)"><i class="fas fa-graduation-cap"></i> Pendidikan</div>
+          <div class="sidebar-item" onclick="scrollResumeTo('res-exp', this)"><i class="fas fa-briefcase"></i> Pengalaman</div>
+          <div class="sidebar-item" onclick="scrollResumeTo('res-projects', this)"><i class="fas fa-laptop-code"></i> Proyek</div>
+          <div class="sidebar-item" onclick="scrollResumeTo('res-org', this)"><i class="fas fa-users"></i> Organisasi</div>
+          <div class="sidebar-item" onclick="scrollResumeTo('res-skills', this)"><i class="fas fa-tools"></i> Keahlian</div>
+          
+          <div class="sidebar-section" style="margin-top:16px;">Dokumen</div>
+          <a href="CV_DSI_Firman.pdf" download="CV_Firman_Ardiansyah.pdf" class="sidebar-item" style="color:var(--ubuntu-orange); text-decoration:none;" target="_blank">
+            <i class="fas fa-file-pdf"></i> Unduh PDF
+          </a>
         </div>
-        <div class="win-content resume-content">
-          <div class="resume-doc">
-            <div class="resume-header-section">
-              <h1 class="resume-name">Firman Ardiansyah</h1>
-              <p class="resume-title">Full Stack Developer</p>
+        <div class="win-content resume-content" id="resume-scroll-container">
+          <div class="resume-doc ats-format">
+            <!-- Header Section -->
+            <header class="resume-header-section" id="res-profile">
+              <h1 class="resume-name">FIRMAN ARDIANSYAH</h1>
+              <p class="resume-title">Junior Full Stack Developer &amp; Network / Server Administrator</p>
               <div class="resume-contact-row">
-                <span><i class="fas fa-envelope"></i> firman@example.com</span>
-                <span><i class="fab fa-whatsapp"></i> +62 813-5739-8265</span>
-                <span><i class="fas fa-map-marker-alt"></i> Surabaya, Indonesia</span>
-                <a href="https://github.com/taka-duarr" target="_blank"><i class="fab fa-github"></i> taka-duarr</a>
+                <span><i class="fas fa-map-marker-alt"></i> Sidoarjo &bull; Surabaya, Jawa Timur, Indonesia</span>
+                <span><i class="fab fa-whatsapp"></i> <a href="https://wa.me/6281357398265" target="_blank">+62 813-5739-8265</a></span>
+                <span><i class="fas fa-envelope"></i> <a href="mailto:busfirman9@gmail.com">busfirman9@gmail.com</a></span>
+                <span><i class="fab fa-github"></i> <a href="https://github.com/taka-duarr" target="_blank">github.com/taka-duarr</a></span>
               </div>
-            </div>
-            <div class="resume-section">
-              <h2 class="resume-sec-title"><span>Summary</span></h2>
-              <p>Passionate Full Stack Developer with 1+ years of hands-on experience building scalable web applications. Specialized in PHP/Laravel backend and React frontend development. Currently pursuing Informatic Engineering at ITATS Surabaya.</p>
-            </div>
-            <div class="resume-section">
-              <h2 class="resume-sec-title"><span>Technical Skills</span></h2>
-              <div class="resume-skills-row">
-                <div class="resume-skill-group">
-                  <strong>Frontend:</strong> HTML5, CSS3, JavaScript, React
+            </header>
+
+            <!-- Ringkasan Profesional (Summary) -->
+            <section class="resume-section" id="res-summary">
+              <h2 class="resume-sec-title"><span>Ringkasan Profesional</span></h2>
+              <p>Mahasiswa aktif Program Studi S1 Teknik Informatika di Institut Teknologi Adhi Tama Surabaya (IPK: 3.72) dengan fondasi kuat di bidang Teknik Komputer dan Jaringan (TKJ). Berpengalaman dalam pengembangan aplikasi web dan mobile (PHP, Laravel, React.js, Flutter), administrasi server Linux (Ubuntu Server, Apache, Nginx), serta konfigurasi jaringan komputer dan routing internet. Terbiasa membangun proyek mandiri maupun berkolaborasi dalam tim secara adaptif, disiplin, dan berorientasi pada pemecahan masalah teknis secara terukur.</p>
+            </section>
+
+            <!-- Riwayat Pendidikan -->
+            <section class="resume-section" id="res-edu">
+              <h2 class="resume-sec-title"><span>Riwayat Pendidikan</span></h2>
+              
+              <div class="resume-item">
+                <div class="resume-item-head">
+                  <div>
+                    <h3 class="resume-item-role">Institut Teknologi Adhi Tama Surabaya (ITATS)</h3>
+                    <p class="resume-item-sub">S1 Teknik Informatika — <strong>IPK: 3.72 / 4.00</strong></p>
+                  </div>
+                  <span class="resume-item-date">2023 — Sekarang</span>
                 </div>
-                <div class="resume-skill-group">
-                  <strong>Backend:</strong> PHP, Laravel, MySQL, Java, Python
+                <ul class="resume-bullets">
+                  <li>Mempelajari Rekayasa Perangkat Lunak, Pemrograman Berorientasi Objek (OOP), Struktur Data, Basis Data Relasional, serta Jaringan Komputer.</li>
+                  <li>Aktif dalam kegiatan akademik dan organisasi kemahasiswaan jurusan teknik informatika.</li>
+                </ul>
+              </div>
+
+              <div class="resume-item">
+                <div class="resume-item-head">
+                  <div>
+                    <h3 class="resume-item-role">SMK Taman Siswa Mojokerto</h3>
+                    <p class="resume-item-sub">Teknik Komputer dan Jaringan (TKJ)</p>
+                  </div>
+                  <span class="resume-item-date">2020 — 2023</span>
                 </div>
-                <div class="resume-skill-group">
-                  <strong>Tools:</strong> Git, GitHub, VS Code, Figma
+                <ul class="resume-bullets">
+                  <li>Mendalami arsitektur jaringan komputer, subnetting IP Address (CIDR/VLSM), konfigurasi router MikroTik, dan perancangan jaringan LAN/WLAN.</li>
+                  <li>Mendapatkan pelatihan praktis perakitan PC, diagnosa kerusakan hardware/software, instalasi sistem operasi, dan pengkabelan terstruktur (crimping RJ-45).</li>
+                </ul>
+              </div>
+            </section>
+
+            <!-- Pengalaman Kerja / Magang -->
+            <section class="resume-section" id="res-exp">
+              <h2 class="resume-sec-title"><span>Pengalaman Kerja &amp; Magang</span></h2>
+              
+              <div class="resume-item">
+                <div class="resume-item-head">
+                  <div>
+                    <h3 class="resume-item-role">IT Support &amp; Network Technician (Magang)</h3>
+                    <p class="resume-item-sub">Mitra Mojopahit Computer — Mojokerto, Jawa Timur</p>
+                  </div>
+                  <span class="resume-item-date">Periode Magang</span>
+                </div>
+                <ul class="resume-bullets">
+                  <li>Melakukan perbaikan dan maintenance hardware maupun software pada perangkat komputer, laptop, dan printer pelanggan serta instansi mitra.</li>
+                  <li>Melakukan pemeliharaan berkala (preventive maintenance) dan troubleshooting perangkat komputasi instansi guna meminimalkan downtime operasional.</li>
+                  <li>Membantu perancangan, penarikan kabel transmisi data (UTP), serta instalasi dan konfigurasi jaringan internet (RT/RW Net) di lingkup perumahan.</li>
+                  <li>Mengonfigurasi perangkat router Wi-Fi, pengujian konektivitas jaringan, dan memastikan distribusi bandwidth berjalan stabil ke sisi klien.</li>
+                </ul>
+              </div>
+            </section>
+
+            <!-- Proyek Unggulan (Projects) -->
+            <section class="resume-section" id="res-projects">
+              <h2 class="resume-sec-title"><span>Proyek Unggulan</span></h2>
+
+              <div class="resume-item">
+                <div class="resume-item-head">
+                  <div>
+                    <h3 class="resume-item-role">SIM Guru — SMKN 2 Surabaya (Multi-Platform Ecosystem)</h3>
+                    <p class="resume-item-sub">Laravel &bull; Flutter (Dart) &bull; MySQL &bull; RESTful API &bull; 2 Devices</p>
+                  </div>
+                  <span class="resume-item-date">2026</span>
+                </div>
+                <ul class="resume-bullets">
+                  <li>Mengembangkan ekosistem manajemen sekolah terintegrasi 2 perangkat untuk 100+ tenaga pengajar SMKN 2 Surabaya.</li>
+                  <li>Membangun <strong>Web Admin Dashboard</strong> menggunakan Laravel &amp; MySQL untuk pemantauan presensi, jadwal mengajar induk, dan pelaporan otomatis.</li>
+                  <li>Mengintegrasikan <strong>Mobile App (Android APK)</strong> berbasis Flutter untuk memfasilitasi absensi real-time guru dan pencatatan aktivitas belajar mengajar di kelas.</li>
+                </ul>
+              </div>
+
+              <div class="resume-item">
+                <div class="resume-item-head">
+                  <div>
+                    <h3 class="resume-item-role">PT Conbloc Indotama Quarry — Corporate Profile &amp; Catalog</h3>
+                    <p class="resume-item-sub">PHP &bull; Laravel &bull; MySQL &bull; Bootstrap &bull; JavaScript</p>
+                  </div>
+                  <span class="resume-item-date">2025</span>
+                </div>
+                <ul class="resume-bullets">
+                  <li>Merancang dan mendeploy website profil resmi untuk perusahaan manufaktur material konstruksi (paving block, readymix, agregat batu).</li>
+                  <li>Mengimplementasikan katalog produk digital yang responsif, profil kredensial perusahaan, dan sistem inquiry penawaran langsung.</li>
+                </ul>
+              </div>
+
+              <div class="resume-item">
+                <div class="resume-item-head">
+                  <div>
+                    <h3 class="resume-item-role">Nganime — Interactive Streaming &amp; Discovery Platform</h3>
+                    <p class="resume-item-sub">React.js &bull; JavaScript &bull; REST API &bull; Tailwind CSS &bull; MySQL</p>
+                  </div>
+                  <span class="resume-item-date">2025</span>
+                </div>
+                <ul class="resume-bullets">
+                  <li>Membangun antarmuka streaming anime modern dengan pemutar media interaktif, filter genre dinamis, dan pencarian instan.</li>
+                  <li>Mengintegrasikan konsumsi RESTful API untuk pembaruan episode tayang secara otomatis dan fitur penanda tontonan (watchlist).</li>
+                </ul>
+              </div>
+
+              <div class="resume-item">
+                <div class="resume-item-head">
+                  <div>
+                    <h3 class="resume-item-role">Laboratorium Jaringan Komputer ITATS — Portal Praktikum &amp; Akademik</h3>
+                    <p class="resume-item-sub">PHP &bull; Laravel &bull; TypeScript &bull; MySQL &bull; JavaScript</p>
+                  </div>
+                  <span class="resume-item-date">2025</span>
+                </div>
+                <ul class="resume-bullets">
+                  <li>Merancang dan membangun web portal akademik resmi untuk Laboratorium Jaringan Komputer Teknik Informatika ITATS (`labinformatika.itats.ac.id/jarkom`).</li>
+                  <li>Mengembangkan modul <strong>pendaftaran praktikum</strong> mahasiswa secara online, sistem pelaksanaan <strong>kuis/evaluasi</strong> praktikum berbasis web, modul rekapitulasi <strong>penilaian asisten lab</strong>, serta formulir <strong>pengisian buku tamu digital</strong> bagi pengunjung lab.</li>
+                </ul>
+              </div>
+            </section>
+
+            <!-- Pengalaman Organisasi -->
+            <section class="resume-section" id="res-org">
+              <h2 class="resume-sec-title"><span>Pengalaman Organisasi</span></h2>
+              
+              <div class="resume-item">
+                <div class="resume-item-head">
+                  <div>
+                    <h3 class="resume-item-role">Himpunan Mahasiswa Teknik Informatika (HMTI ITATS)</h3>
+                    <p class="resume-item-sub">Anggota Aktif Organisasi Kemahasiswaan</p>
+                  </div>
+                  <span class="resume-item-date">2025 — Sekarang</span>
+                </div>
+                <ul class="resume-bullets">
+                  <li><strong>Divisi Acara (Bakti Sosial ke Panti Asuhan):</strong> Bertanggung jawab menyusun rancangan alur kegiatan (rundown), mengoordinasikan pembagian tugas lapangan, serta memandu interaksi sosial dengan anak-anak panti.</li>
+                  <li><strong>Divisi Perlengkapan (Perayaan Wisuda):</strong> Mengelola pengadaan logistik, inventarisasi peralatan teknis audio-visual dan kelistrikan, serta instalasi tata panggung pada perayaan wisuda sarjana.</li>
+                </ul>
+              </div>
+            </section>
+
+            <!-- Keahlian Teknis (Skills) -->
+            <section class="resume-section" id="res-skills">
+              <h2 class="resume-sec-title"><span>Keahlian Teknis (Technical Skills)</span></h2>
+              <div class="resume-skills-grid">
+                <div class="resume-skill-cat">
+                  <strong>Pemrograman &amp; Framework:</strong>
+                  <span>PHP (Native, Laravel), JavaScript (ES6+), React.js, Flutter (Dart), HTML5, CSS3, Tailwind CSS, Bootstrap.</span>
+                </div>
+                <div class="resume-skill-cat">
+                  <strong>Basis Data:</strong>
+                  <span>MySQL, MariaDB, Database Normalization, Relational Schema Design, Query Optimization.</span>
+                </div>
+                <div class="resume-skill-cat">
+                  <strong>Server &amp; System Administration:</strong>
+                  <span>Ubuntu Server, Debian, Web Server (Apache, Nginx), Linux CLI (Bash), Systemd Services, SSL/TLS, SSH Management.</span>
+                </div>
+                <div class="resume-skill-cat">
+                  <strong>Jaringan Komputer (Networking):</strong>
+                  <span>Subnetting IP Address (CIDR/VLSM), MikroTik RouterOS, TCP/IP, VLAN, Routing, LAN/WLAN Deployment, RT/RW Net Architecture.</span>
+                </div>
+                <div class="resume-skill-cat">
+                  <strong>Perangkat Keras &amp; Troubleshooting:</strong>
+                  <span>Perbaikan Hardware PC/Laptop, Diagnosa Kerusakan Perangkat, Maintenance Printer, Pengkabelan &amp; Crimping LAN UTP.</span>
+                </div>
+                <div class="resume-skill-cat">
+                  <strong>Tools &amp; Produktivitas:</strong>
+                  <span>Git, GitHub, Visual Studio Code, Postman, Laragon, Figma, Microsoft Office (Word, Excel, PowerPoint).</span>
                 </div>
               </div>
-            </div>
-            <div class="resume-section">
-              <h2 class="resume-sec-title"><span>Projects</span></h2>
-              <div class="resume-proj-item">
-                <div class="resume-proj-header">
-                  <strong>E-Kelontong Platform</strong>
-                  <span>2024</span>
-                </div>
-                <p>E-commerce solution for local grocery stores with inventory management and payment gateways.</p>
-                <div class="resume-tech-row"><span class="rt-pill">PHP</span><span class="rt-pill">Laravel</span><span class="rt-pill">MySQL</span></div>
-              </div>
-              <div class="resume-proj-item">
-                <div class="resume-proj-header">
-                  <strong>ITATS Event Platform</strong>
-                  <span>2024</span>
-                </div>
-                <p>Campus event management platform streamlining registration and participant tracking.</p>
-                <div class="resume-tech-row"><span class="rt-pill">PHP</span><span class="rt-pill">Laravel</span><span class="rt-pill">MySQL</span></div>
-              </div>
-              <div class="resume-proj-item">
-                <div class="resume-proj-header">
-                  <strong>Classroom UI Clone</strong>
-                  <span>2023</span>
-                </div>
-                <p>Pixel-perfect UI clone of ITATS classroom portal using vanilla HTML/CSS/JS.</p>
-                <div class="resume-tech-row"><span class="rt-pill">HTML5</span><span class="rt-pill">CSS3</span><span class="rt-pill">JavaScript</span></div>
-              </div>
-            </div>
-            <div class="resume-section">
-              <h2 class="resume-sec-title"><span>Education</span></h2>
-              <div class="resume-edu-item">
-                <div class="resume-proj-header">
-                  <strong>Informatic Engineering</strong>
-                  <span>2023 — Present</span>
-                </div>
-                <p>Institut Teknologi Adhi Tama Surabaya (ITATS)</p>
-              </div>
-            </div>
+            </section>
+
+            <!-- Download Button -->
             <div class="resume-download-btn-wrap">
-              <button class="resume-dl-btn" onclick="alert('Resume download will be available soon!')">
-                <i class="fas fa-download"></i> Download PDF
-              </button>
+              <a href="CV_DSI_Firman.pdf" download="CV_Firman_Ardiansyah.pdf" class="resume-dl-btn" target="_blank">
+                <i class="fas fa-file-pdf"></i> Unduh CV Asli (PDF)
+              </a>
             </div>
           </div>
         </div>

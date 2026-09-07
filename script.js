@@ -83,7 +83,9 @@ function showDesktop() {
   if (desktop) { desktop.style.display = 'flex'; }
   state.bootComplete = true;
   updatePanelClock();
-  setInterval(updatePanelClock, 1000);
+  if (!state.clockInterval) {
+    state.clockInterval = setInterval(updatePanelClock, 1000);
+  }
   // Run neofetch in terminal on first open
   setTimeout(() => runNeofetch(), 100);
 }
@@ -107,6 +109,9 @@ function tryUnlock() {
   const input = document.getElementById('lock-pass');
   const hint = document.getElementById('lock-hint');
   // Any password (or empty) unlocks — it's a portfolio, not real security!
+  try {
+    sessionStorage.setItem('ubuntu_unlocked', 'true');
+  } catch (e) {}
   showDesktop();
 }
 
@@ -309,7 +314,7 @@ function animateSkillBars() {
 }
 
 // ─── Project Filter ───────────────────────────────────────
-function filterProjects(tag) {
+function filterProjects(tag, btn) {
   const cards = document.querySelectorAll('.proj-card');
   let count = 0;
   cards.forEach(card => {
@@ -321,6 +326,7 @@ function filterProjects(tag) {
   const countEl = document.getElementById('proj-count');
   if (countEl) countEl.textContent = `${count} item${count !== 1 ? 's' : ''}`;
   document.querySelectorAll('#win-projects .sidebar-item').forEach(i => i.classList.remove('active'));
+  if (btn) btn.classList.add('active');
 }
 
 // ─── Certificate Filter ────────────────────────────────────
@@ -336,6 +342,49 @@ function filterCerts(cat, btn) {
   if (countEl) countEl.textContent = `${count} certificate${count !== 1 ? 's' : ''}`;
   document.querySelectorAll('#win-library .sidebar-item').forEach(i => i.classList.remove('active'));
   if (btn) btn.classList.add('active');
+}
+
+// ─── Resume Section Scroll ─────────────────────────────────
+function scrollResumeTo(id, el) {
+  const target = document.getElementById(id);
+  const container = document.getElementById('resume-scroll-container');
+  if (target && container) {
+    const topPos = target.offsetTop - container.offsetTop - 10;
+    container.scrollTo({ top: Math.max(0, topPos), behavior: 'smooth' });
+  }
+  document.querySelectorAll('#win-files .sidebar-item').forEach(i => i.classList.remove('active'));
+  if (el) el.classList.add('active');
+}
+
+// ─── About Section Scroll & Language Switch ────────────────
+function scrollAboutTo(id, el) {
+  const target = document.getElementById(id);
+  const container = document.getElementById('about-scroll-container');
+  if (target && container) {
+    const topPos = target.offsetTop - container.offsetTop - 10;
+    container.scrollTo({ top: Math.max(0, topPos), behavior: 'smooth' });
+  }
+  document.querySelectorAll('#win-about .sidebar-item').forEach(i => i.classList.remove('active'));
+  if (el) el.classList.add('active');
+}
+
+function setAboutLang(lang) {
+  const idEls = document.querySelectorAll('.about-lang-id');
+  const enEls = document.querySelectorAll('.about-lang-en');
+  const btnId = document.getElementById('btn-lang-id');
+  const btnEn = document.getElementById('btn-lang-en');
+
+  if (lang === 'id') {
+    idEls.forEach(el => el.style.display = '');
+    enEls.forEach(el => el.style.display = 'none');
+    if (btnId) btnId.classList.add('active');
+    if (btnEn) btnEn.classList.remove('active');
+  } else {
+    idEls.forEach(el => el.style.display = 'none');
+    enEls.forEach(el => el.style.display = 'block');
+    if (btnId) btnId.classList.remove('active');
+    if (btnEn) btnEn.classList.add('active');
+  }
 }
 
 // ─── Contact Form ─────────────────────────────────────────
@@ -698,8 +747,19 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Await dynamically loaded components
   await loadComponents();
 
-  // Start boot
-  startBoot();
+  // Start boot or restore active desktop session
+  let isUnlocked = false;
+  try {
+    isUnlocked = sessionStorage.getItem('ubuntu_unlocked') === 'true';
+  } catch (e) {}
+
+  if (isUnlocked) {
+    const boot = document.getElementById('boot-screen');
+    if (boot) boot.style.display = 'none';
+    showDesktop();
+  } else {
+    startBoot();
+  }
 
   // Lock screen unlock
   const lockBtn = document.getElementById('lock-pass-btn');
@@ -782,6 +842,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Lock from power menu
   document.getElementById('power-lock-btn')?.addEventListener('click', () => {
+    try {
+      sessionStorage.removeItem('ubuntu_unlocked');
+    } catch (e) {}
     document.getElementById('power-menu').style.display = 'none';
     document.getElementById('desktop').style.display = 'none';
     document.getElementById('lock-screen').style.display = 'flex';

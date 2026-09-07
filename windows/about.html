@@ -1,77 +1,279 @@
     <!-- ABOUT ME WINDOW -->
-    <div class="window" id="win-about" data-app="about" style="display:none; top:80px; left:120px; width:720px; height:500px;">
+    <div class="window" id="win-about" data-app="about" style="display:none; top:80px; left:120px; width:760px; height:540px;">
       <div class="win-titlebar">
         <div class="win-controls">
           <button class="win-btn win-close" data-win="about" title="Close"></button>
           <button class="win-btn win-minimize" data-win="about" title="Minimize"></button>
           <button class="win-btn win-maximize" data-win="about" title="Maximize"></button>
         </div>
-        <span class="win-title"><i class="fas fa-user"></i> &nbsp;About Me — Files</span>
+        <span class="win-title"><i class="fas fa-user"></i> &nbsp;About Me — Firman Ardiansyah</span>
         <div class="win-title-spacer"></div>
       </div>
       <div class="win-body">
         <div class="sidebar-nav">
-          <div class="sidebar-section">Places</div>
-          <div class="sidebar-item active"><i class="fas fa-home"></i> Home</div>
-          <div class="sidebar-item"><i class="fas fa-star"></i> Starred</div>
-          <div class="sidebar-section">Bookmarks</div>
-          <div class="sidebar-item"><i class="fas fa-briefcase"></i> Projects</div>
-          <div class="sidebar-item"><i class="fas fa-certificate"></i> Skills</div>
+          <div class="sidebar-section">Navigasi Profil</div>
+          <div class="sidebar-item active" onclick="scrollAboutTo('about-hero-sec', this)"><i class="fas fa-user"></i> Profil &amp; Bio</div>
+          <div class="sidebar-item" onclick="scrollAboutTo('about-edu-sec', this)"><i class="fas fa-graduation-cap"></i> Pendidikan</div>
+          <div class="sidebar-item" onclick="scrollAboutTo('about-exp-sec', this)"><i class="fas fa-briefcase"></i> Pengalaman</div>
+          <div class="sidebar-item" onclick="scrollAboutTo('about-org-sec', this)"><i class="fas fa-users"></i> Organisasi</div>
+          <div class="sidebar-item" onclick="scrollAboutTo('about-achieve-sec', this)"><i class="fas fa-trophy"></i> Prestasi</div>
+          
+          <div class="sidebar-section" style="margin-top:14px;">Buka Modul</div>
+          <div class="sidebar-item" onclick="openApp('projects')"><i class="fas fa-laptop-code"></i> Projects (4)</div>
+          <div class="sidebar-item" onclick="openApp('skills')"><i class="fas fa-code"></i> Skills</div>
+          <div class="sidebar-item" onclick="openApp('library')"><i class="fas fa-certificate"></i> Certificates (15)</div>
+          <div class="sidebar-item" onclick="openApp('files')"><i class="fas fa-file-alt"></i> Resume ATS</div>
+          <div class="sidebar-item" onclick="openApp('contact')"><i class="fas fa-envelope"></i> Contact</div>
         </div>
-        <div class="win-content about-content">
-          <div class="about-hero">
+        
+        <div class="win-content about-content" id="about-scroll-container">
+          <!-- Language Toggle Bar -->
+          <div class="about-lang-bar">
+            <span class="lang-label"><i class="fas fa-language"></i> <span class="about-lang-id">Pilihan Bahasa</span><span class="about-lang-en">Select Language</span>:</span>
+            <div class="lang-toggle-wrap">
+              <button type="button" class="lang-btn active" id="btn-lang-id" onclick="setAboutLang('id')">🇮🇩 Indonesia</button>
+              <button type="button" class="lang-btn" id="btn-lang-en" onclick="setAboutLang('en')">🇬🇧 English</button>
+            </div>
+          </div>
+
+          <!-- Hero Section -->
+          <div class="about-hero" id="about-hero-sec">
             <div class="about-avatar-wrap">
-              <img src="./img/img2.jpg" alt="Firman Ardiansyah" class="about-avatar" onerror="this.style.display='none'; document.getElementById('about-avatar-fb').style.display='flex'" />
+              <img src="img/img2.jpg" alt="Firman Ardiansyah" class="about-avatar" onerror="this.src='img/img1.jpg'; this.onerror=function(){this.style.display='none'; document.getElementById('about-avatar-fb').style.display='flex';}" />
               <div class="about-avatar-fb" id="about-avatar-fb" style="display:none">FA</div>
-              <div class="about-status-dot"></div>
+              <div class="about-status-dot" title="Available for work"></div>
             </div>
             <div class="about-info">
               <h1 class="about-name">Firman Ardiansyah</h1>
-              <p class="about-role"><i class="fas fa-terminal"></i> Full Stack Developer &amp; Network Engineer</p>
-              <p class="about-location"><i class="fas fa-map-marker-alt"></i> Surabaya, Indonesia 🇮🇩</p>
+              <p class="about-role"><i class="fas fa-terminal"></i> Junior Full Stack Developer &amp; Network / Server Administrator</p>
+              <p class="about-location"><i class="fas fa-map-marker-alt"></i> Sidoarjo &bull; Surabaya, Jawa Timur, Indonesia 🇮🇩</p>
               <div class="about-badges">
-                <span class="badge badge-blue"><i class="fas fa-globe"></i> Open to Remote</span>
-                <span class="badge badge-orange"><i class="fas fa-network-wired"></i> Network Config</span>
+                <span class="badge badge-green"><i class="fas fa-check-circle"></i> Open for Work &amp; Collab</span>
+                <span class="badge badge-orange"><i class="fas fa-network-wired"></i> Network &amp; Server Admin</span>
+                <span class="badge badge-blue"><i class="fas fa-laptop-code"></i> Full Stack Web &amp; Flutter</span>
               </div>
             </div>
           </div>
+
+          <!-- Bio Section (Indonesian default, English toggleable) -->
           <div class="about-bio">
-            <p>Hi! I'm <strong>Firman</strong> — a passionate <strong>Full Stack Developer &amp; Network Engineer</strong> currently pursuing Informatic Engineering at <strong>Institut Teknologi Adhi Tama Surabaya (ITATS)</strong>, class of 2023.</p>
-            <p>I don't just write code — I architect digital experiences <em>and</em> build the infrastructure behind them. From crafting slick web apps to configuring servers, routing networks, and managing Linux environments, I handle the full picture.</p>
+            <!-- Indonesian Version -->
+            <div class="about-lang-id">
+              <p>Halo! Saya Firman Ardiansyah, seorang Junior Full Stack Developer dan Network / Server Administrator yang berdomisili di Sidoarjo / Surabaya, Jawa Timur. Saat ini saya menempuh studi sarjana (S1) Teknik Informatika di Institut Teknologi Adhi Tama Surabaya (ITATS) dengan raihan IPK 3.72 / 4.00, didukung fondasi vokasi dari SMK Taman Siswa Mojokerto (TKJ).</p>
+              <p>Saya berfokus merancang dan membangun solusi digital yang andal — mulai dari antarmuka frontend responsif menggunakan React.js dan Tailwind CSS, backend RESTful API berbasis PHP dan Laravel, aplikasi mobile lintas platform dengan Flutter (Android APK), hingga deployment serta konfigurasi web server Linux pada Ubuntu Server, Nginx, dan Apache.</p>
+              <p>Di bidang infrastruktur jaringan, saya terbiasa melakukan perancangan skema subnetting IP (CIDR/VLSM), konfigurasi router MikroTik, implementasi jaringan distribusi RT/RW Net, serta maintenance dan troubleshooting hardware/software komputasi. Saya juga telah tersertifikasi nasional sebagai Junior Network Administrator oleh KOMDIGI / BNSP, mengantongi sertifikasi internasional HCIA 5G dari Huawei, serta meraih Juara 1 Lomba Pemrograman Terstruktur di ITATS.</p>
+            </div>
+
+            <!-- English Version -->
+            <div class="about-lang-en">
+              <p>Hi! I'm Firman Ardiansyah, a Junior Full Stack Developer and Network / Server Administrator based in Sidoarjo &bull; Surabaya, East Java, Indonesia. Currently pursuing an undergraduate degree (S1) in Informatic Engineering at Institut Teknologi Adhi Tama Surabaya (ITATS) with a cumulative GPA of 3.72 / 4.00, backed by solid vocational expertise in Computer and Network Engineering (TKJ) from SMK Taman Siswa Mojokerto.</p>
+              <p>I specialize in building full-lifecycle digital solutions — from clean, responsive frontend architectures with React.js and Tailwind CSS, scalable backend RESTful APIs with PHP and Laravel, cross-platform mobile apps with Flutter (Android APK), to deploying and hardening secure Linux web server environments on Ubuntu Server, Nginx, and Apache.</p>
+              <p>Beyond software development, my networking skillset includes MikroTik RouterOS routing and bandwidth management, structured IP subnetting (CIDR/VLSM), RT/RW Net community distribution deployment, and PC/laptop hardware troubleshooting. I hold national credentials as a certified Junior Network Administrator from KOMDIGI / BNSP, an international HCIA 5G certification from Huawei, and achieved 1st Place in the ITATS Structured Programming Competition.</p>
+            </div>
           </div>
+
+          <!-- Stats Row -->
           <div class="about-stats-row">
             <div class="about-stat">
-              <span class="stat-big">3+</span>
-              <span class="stat-lbl">Projects Shipped</span>
+              <span class="stat-big">4+</span>
+              <span class="stat-lbl about-lang-id">Proyek Selesai</span>
+              <span class="stat-lbl about-lang-en">Projects Shipped</span>
             </div>
             <div class="about-stat">
-              <span class="stat-big">1+</span>
-              <span class="stat-lbl">Year Experience</span>
+              <span class="stat-big">15+</span>
+              <span class="stat-lbl about-lang-id">Sertifikat Resmi</span>
+              <span class="stat-lbl about-lang-en">Certificates</span>
             </div>
             <div class="about-stat">
-              <span class="stat-big">100%</span>
-              <span class="stat-lbl">Commitment</span>
+              <span class="stat-big">3.72</span>
+              <span class="stat-lbl about-lang-id">IPK / GPA (ITATS)</span>
+              <span class="stat-lbl about-lang-en">GPA / IPK (ITATS)</span>
+            </div>
+            <div class="about-stat">
+              <span class="stat-big">🏆 1st</span>
+              <span class="stat-lbl about-lang-id">Juara 1 Pemrograman</span>
+              <span class="stat-lbl about-lang-en">1st Place Coding</span>
             </div>
           </div>
+
+          <!-- Traits / Competencies Row -->
           <div class="about-traits-row">
-            <span class="trait"><i class="fas fa-lightbulb"></i> Problem Solving</span>
-            <span class="trait"><i class="fas fa-users"></i> Team Player</span>
-            <span class="trait"><i class="fas fa-infinity"></i> Continuous Learning</span>
-            <span class="trait"><i class="fas fa-paint-brush"></i> Clean UI/UX</span>
-            <span class="trait"><i class="fas fa-network-wired"></i> Network Config</span>
-            <span class="trait"><i class="fas fa-server"></i> Server Admin</span>
+            <span class="trait"><i class="fas fa-code"></i> Full Stack Web (Laravel &amp; React)</span>
+            <span class="trait"><i class="fas fa-mobile-screen"></i> Flutter Mobile (2 Devices)</span>
+            <span class="trait"><i class="fas fa-server"></i> Ubuntu Server &amp; Nginx</span>
+            <span class="trait"><i class="fas fa-network-wired"></i> MikroTik &amp; Subnetting IP</span>
+            <span class="trait"><i class="fas fa-tools"></i> Hardware &amp; Troubleshooting</span>
+            <span class="trait"><i class="fas fa-trophy"></i> Juara 1 Pemrograman</span>
+            <span class="trait"><i class="fas fa-award"></i> KOMDIGI &amp; Huawei Certified</span>
           </div>
-          <div class="about-edu">
-            <h3><i class="fas fa-graduation-cap"></i> Education</h3>
-            <div class="edu-row">
-              <div class="edu-icon"><i class="fas fa-university"></i></div>
-              <div>
-                <p class="edu-deg">Informatic Engineering</p>
-                <p class="edu-school">Institut Teknologi Adhi Tama Surabaya</p>
-                <span class="edu-year">2023 — Present</span>
+
+          <!-- Education Section -->
+          <div class="about-block" id="about-edu-sec">
+            <h3 class="about-block-title"><i class="fas fa-graduation-cap"></i> <span class="about-lang-id">Riwayat Pendidikan</span><span class="about-lang-en">Education</span></h3>
+            
+            <div class="about-card-item">
+              <div class="about-item-head">
+                <div>
+                  <h4 class="about-item-title">Institut Teknologi Adhi Tama Surabaya (ITATS)</h4>
+                  <p class="about-item-sub">S1 Teknik Informatika &bull; <strong>IPK: 3.72 / 4.00</strong></p>
+                </div>
+                <span class="about-item-date">2023 — Sekarang</span>
               </div>
+              <ul class="about-bullets">
+                <li class="about-lang-id">Mendalami Rekayasa Perangkat Lunak, Pemrograman Berorientasi Objek (OOP), Algoritma &amp; Struktur Data, Basis Data Relasional (MySQL), dan Jaringan Komputer.</li>
+                <li class="about-lang-id">Meraih prestasi akademik konsisten dengan Indeks Prestasi Kumulatif 3.72 serta aktif dalam riset praktikum laboratorium.</li>
+                <li class="about-lang-en">Studying Software Engineering, Object-Oriented Programming (OOP), Data Structures, Relational Database Management, and Computer Networks.</li>
+                <li class="about-lang-en">Maintained high academic standing with a 3.72 GPA and active involvement in computer network laboratory activities.</li>
+              </ul>
+            </div>
+
+            <div class="about-card-item">
+              <div class="about-item-head">
+                <div>
+                  <h4 class="about-item-title">SMK Taman Siswa Mojokerto</h4>
+                  <p class="about-item-sub">Teknik Komputer dan Jaringan (TKJ)</p>
+                </div>
+                <span class="about-item-date">2020 — 2023</span>
+              </div>
+              <ul class="about-bullets">
+                <li class="about-lang-id">Mempelajari arsitektur jaringan komputer LAN/WLAN, perhitungan subnetting IP (CIDR/VLSM), dan konfigurasi router MikroTik RouterOS.</li>
+                <li class="about-lang-id">Pelatihan teknis intensif dalam perakitan komputer (PC assembly), diagnosa kerusakan hardware/software, dan pengkabelan terstruktur (crimping RJ-45).</li>
+                <li class="about-lang-en">Studied LAN/WLAN network topologies, IP subnetting calculations (CIDR/VLSM), and MikroTik RouterOS network administration.</li>
+                <li class="about-lang-en">Hands-on technical training in PC assembly, hardware diagnostics, OS installation, and structured cabling (RJ-45 crimping).</li>
+              </ul>
             </div>
           </div>
+
+          <!-- Work & Internship Experience -->
+          <div class="about-block" id="about-exp-sec">
+            <h3 class="about-block-title"><i class="fas fa-briefcase"></i> <span class="about-lang-id">Pengalaman Kerja &amp; Magang</span><span class="about-lang-en">Work &amp; Internship Experience</span></h3>
+            
+            <div class="about-card-item">
+              <div class="about-item-head">
+                <div>
+                  <h4 class="about-item-title">Mitra Mojopahit Computer — Mojokerto</h4>
+                  <p class="about-item-sub">IT Support &amp; Network Technician (Magang)</p>
+                </div>
+                <span class="about-item-date about-lang-id">Periode Magang</span>
+                <span class="about-item-date about-lang-en">Internship Period</span>
+              </div>
+              <ul class="about-bullets">
+                <li class="about-lang-id">Melakukan maintenance dan perbaikan hardware serta software pada perangkat PC, laptop, dan printer bagi pelanggan retail maupun instansi mitra.</li>
+                <li class="about-lang-id">Membantu perancangan, penarikan kabel transmisi data UTP, serta instalasi dan konfigurasi jaringan internet (RT/RW Net) di area perumahan warga.</li>
+                <li class="about-lang-id">Mengonfigurasi router Wi-Fi dan perangkat distribusi jaringan, melakukan pengujian throughput koneksi, dan troubleshooting gangguan konektivitas.</li>
+                <li class="about-lang-en">Executed preventative maintenance and hardware/software troubleshooting on client PCs, laptops, and printers to minimize operational downtime.</li>
+                <li class="about-lang-en">Assisted in data transmission cable routing (UTP), network layout design, and internet distribution setup (RT/RW Net) for residential zones.</li>
+                <li class="about-lang-en">Configured Wi-Fi routers and access points, conducted connectivity tests, and ensured stable network bandwidth delivery.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Organizational Experience -->
+          <div class="about-block" id="about-org-sec">
+            <h3 class="about-block-title"><i class="fas fa-users"></i> <span class="about-lang-id">Pengalaman Organisasi</span><span class="about-lang-en">Organizational Experience</span></h3>
+            
+            <div class="about-card-item">
+              <div class="about-item-head">
+                <div>
+                  <h4 class="about-item-title">Himpunan Mahasiswa Teknik Informatika (HMTI ITATS)</h4>
+                  <p class="about-item-sub">Anggota Aktif Organisasi Kemahasiswaan</p>
+                </div>
+                <span class="about-item-date">2025 — Sekarang</span>
+              </div>
+              <ul class="about-bullets">
+                <li class="about-lang-id"><strong>Divisi Acara (Bakti Sosial):</strong> Berperan aktif dalam merancang rundown kegiatan, mengoordinasikan tim pelaksana di lapangan, dan memimpin interaksi sosial dengan anak-anak panti asuhan.</li>
+                <li class="about-lang-id"><strong>Divisi Perlengkapan (Perayaan Wisuda):</strong> Mengatur logistik dan perlengkapan teknis, memastikan ketersediaan sistem audio-visual, serta kelancaran tata panggung wisuda sarjana.</li>
+                <li class="about-lang-en"><strong>Event Division (Social Charity):</strong> Formulated detailed event schedules, coordinated field teams, and engaged with children during orphanage community outreach.</li>
+                <li class="about-lang-en"><strong>Logistics Division (Graduation Celebration):</strong> Managed technical equipment, audio-visual stage setups, and logistical support for undergraduate graduation ceremonies.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Key Achievements & Certifications -->
+          <div class="about-block" id="about-achieve-sec">
+            <h3 class="about-block-title"><i class="fas fa-trophy"></i> <span class="about-lang-id">Prestasi &amp; Sertifikasi Unggulan</span><span class="about-lang-en">Key Achievements &amp; Certifications</span></h3>
+            
+            <div class="about-card-item">
+              <div class="about-item-head">
+                <div>
+                  <h4 class="about-item-title">🏆 Juara 1 — Lomba Pemrograman Terstruktur</h4>
+                  <p class="about-item-sub">Institut Teknologi Adhi Tama Surabaya (ITATS)</p>
+                </div>
+                <span class="about-item-date">Prestasi Juara 1</span>
+              </div>
+              <p style="font-size:12.5px; color:var(--gnome-text-dim); line-height:1.6; margin-top:4px;" class="about-lang-id">
+                Meraih peringkat pertama dalam kompetisi pemrograman terstruktur tingkat perguruan tinggi dengan memecahkan studi kasus algoritma dan implementasi logika pemrograman secara efisien dan cepat.
+              </p>
+              <p style="font-size:12.5px; color:var(--gnome-text-dim); line-height:1.6; margin-top:4px;" class="about-lang-en">
+                Secured 1st place in the university-wide structured programming competition by solving algorithmic problem-solving cases with optimized code logic and execution efficiency.
+              </p>
+            </div>
+
+            <div class="about-card-item">
+              <div class="about-item-head">
+                <div>
+                  <h4 class="about-item-title">🏅 Junior Network Administrator — KOMDIGI &amp; BNSP</h4>
+                  <p class="about-item-sub">Kementerian Komunikasi dan Digital RI</p>
+                </div>
+                <span class="about-item-date">Sertifikasi BNSP</span>
+              </div>
+              <p style="font-size:12.5px; color:var(--gnome-text-dim); line-height:1.6; margin-top:4px;" class="about-lang-id">
+                Sertifikasi standar kompetensi kerja nasional Indonesia (SKKNI) dalam instalasi, konfigurasi jaringan komputer, manajemen IP address, routing, dan pemecahan masalah jaringan.
+              </p>
+              <p style="font-size:12.5px; color:var(--gnome-text-dim); line-height:1.6; margin-top:4px;" class="about-lang-en">
+                National Work Competency Standard (SKKNI) credential in network hardware setup, IP address management, router configuration, and structured network troubleshooting.
+              </p>
+            </div>
+
+            <div class="about-card-item">
+              <div class="about-item-head">
+                <div>
+                  <h4 class="about-item-title">🌐 Huawei Certified ICT Associate (HCIA) — 5G</h4>
+                  <p class="about-item-sub">Huawei Technologies</p>
+                </div>
+                <span class="about-item-date">Internasional</span>
+              </div>
+              <p style="font-size:12.5px; color:var(--gnome-text-dim); line-height:1.6; margin-top:4px;" class="about-lang-id">
+                Sertifikasi internasional dalam pemahaman arsitektur jaringan seluler generasi ke-5 (5G), teknologi transmisi nirkabel, dan implementasi industri digital.
+              </p>
+              <p style="font-size:12.5px; color:var(--gnome-text-dim); line-height:1.6; margin-top:4px;" class="about-lang-en">
+                International certification demonstrating proficiency in 5G wireless telecommunication concepts, network slicing architecture, and future IoT industry applications.
+              </p>
+            </div>
+          </div>
+
+          <!-- Quick Navigation Actions -->
+          <div class="about-block">
+            <h3 class="about-block-title"><i class="fas fa-compass"></i> <span class="about-lang-id">Eksplorasi Modul Lainnya</span><span class="about-lang-en">Explore Other Modules</span></h3>
+            <div class="about-actions-grid">
+              <button type="button" class="about-action-btn" onclick="openApp('projects')">
+                <i class="fas fa-laptop-code"></i>
+                <span class="about-lang-id">Lihat Proyek (4)</span>
+                <span class="about-lang-en">Projects (4)</span>
+              </button>
+              <button type="button" class="about-action-btn" onclick="openApp('files')">
+                <i class="fas fa-file-alt"></i>
+                <span class="about-lang-id">Resume ATS (CV)</span>
+                <span class="about-lang-en">ATS Resume</span>
+              </button>
+              <button type="button" class="about-action-btn" onclick="openApp('library')">
+                <i class="fas fa-certificate"></i>
+                <span class="about-lang-id">15+ Sertifikat</span>
+                <span class="about-lang-en">Certificates (15+)</span>
+              </button>
+              <button type="button" class="about-action-btn" onclick="openApp('skills')">
+                <i class="fas fa-code"></i>
+                <span class="about-lang-id">Keahlian Teknis</span>
+                <span class="about-lang-en">Technical Skills</span>
+              </button>
+              <button type="button" class="about-action-btn" onclick="openApp('contact')">
+                <i class="fas fa-envelope"></i>
+                <span class="about-lang-id">Kontak Saya</span>
+                <span class="about-lang-en">Contact Me</span>
+              </button>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
