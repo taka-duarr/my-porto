@@ -29,6 +29,7 @@ jobs:
           script: |
             echo "🚀 [CI/CD] Starting Deployment via Tailscale..."
             cd ${{ secrets.DEPLOY_PATH }}
-            git fetch origin main
-            git reset --hard origin/main
+            git config --global --add safe.directory "${{ secrets.DEPLOY_PATH }}"
+            git config --global --add safe.directory "$PWD"
+            git pull origin main
             echo "✅ [CI/CD] Deployed successfully to server!"
