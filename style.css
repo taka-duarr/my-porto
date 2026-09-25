@@ -946,9 +946,7 @@ img { display: block; }
     justify-content: space-between !important;
     align-items: center !important;
     padding: calc(24px + env(safe-area-inset-top, 0px)) 20px calc(24px + env(safe-area-inset-bottom, 0px)) 20px !important;
-    background: radial-gradient(ellipse at 50% 12%, rgba(68, 85, 150, 0.75), transparent 45%),
-                radial-gradient(ellipse at 80% 80%, rgba(130, 60, 140, 0.4), transparent 50%),
-                linear-gradient(170deg, #18223c 0%, #0d1222 50%, #060812 100%) !important;
+    background: url('img/ios_gold_wallpaper.jpg') center top / cover no-repeat !important;
     position: fixed !important;
     inset: 0 !important;
     z-index: 10000 !important;
@@ -963,18 +961,22 @@ img { display: block; }
   .lock-date {
     font-family: var(--ios-font) !important;
     font-size: 19px !important;
-    font-weight: 500 !important;
-    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 550 !important;
+    color: #fcedd8 !important;
     letter-spacing: -0.2px !important;
     margin-bottom: 2px !important;
+    text-shadow: 0 2px 8px rgba(40, 20, 5, 0.6) !important;
   }
   .lock-time {
     font-family: var(--ios-font) !important;
-    font-size: clamp(74px, 22vw, 98px) !important;
-    font-weight: 250 !important;
-    color: rgba(255, 255, 255, 0.96) !important;
-    letter-spacing: -2px !important;
-    line-height: 1 !important;
+    font-size: clamp(86px, 28vw, 126px) !important;
+    font-weight: 800 !important;
+    letter-spacing: -3px !important;
+    line-height: 0.92 !important;
+    background: linear-gradient(175deg, #ffffff 0%, #fcedd8 28%, #dfbd8c 58%, #a77c4e 85%, #694a2a 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    filter: drop-shadow(0 6px 20px rgba(60, 36, 12, 0.55)) drop-shadow(0 1px 2px rgba(255, 255, 255, 0.6)) !important;
   }
   .lock-user-wrap {
     display: flex !important;
@@ -987,14 +989,15 @@ img { display: block; }
     width: 68px !important;
     height: 68px !important;
     border-radius: 50% !important;
-    border: 2px solid rgba(255, 255, 255, 0.4) !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
+    border: 2.5px solid rgba(225, 195, 145, 0.6) !important;
+    box-shadow: 0 4px 20px rgba(35, 20, 8, 0.45) !important;
   }
   .lock-username {
     font-family: var(--ios-font) !important;
     font-size: 15px !important;
     font-weight: 600 !important;
-    color: rgba(255, 255, 255, 0.9) !important;
+    color: #fbf5eb !important;
+    text-shadow: 0 2px 6px rgba(30, 15, 5, 0.6) !important;
   }
   .lock-pass-wrap,
   .lock-hint {
@@ -1012,22 +1015,24 @@ img { display: block; }
     width: 50px !important;
     height: 50px !important;
     border-radius: 50% !important;
-    background: rgba(30, 30, 36, 0.6) !important;
+    background: rgba(38, 28, 20, 0.55) !important;
     backdrop-filter: blur(25px) !important;
     -webkit-backdrop-filter: blur(25px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.18) !important;
-    color: #fff !important;
+    border: 1px solid rgba(225, 195, 145, 0.28) !important;
+    color: #faeedc !important;
     font-size: 18px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     cursor: pointer !important;
     transition: transform 0.15s, background 0.2s !important;
+    box-shadow: 0 4px 16px rgba(25, 12, 5, 0.35) !important;
   }
   .ios-lock-btn:active,
   .ios-lock-btn.active {
-    background: rgba(255, 255, 255, 0.92) !important;
-    color: #000 !important;
+    background: linear-gradient(135deg, #fff7eb 0%, #e7c793 100%) !important;
+    color: #241608 !important;
+    box-shadow: 0 0 20px rgba(225, 190, 110, 0.7) !important;
     transform: scale(0.92) !important;
   }
   .ios-lock-swipe {
@@ -1052,8 +1057,9 @@ img { display: block; }
   .ios-home-pill {
     width: 134px !important;
     height: 5px !important;
-    background: #fff !important;
+    background: rgba(245, 225, 195, 0.85) !important;
     border-radius: 100px !important;
+    box-shadow: 0 1px 6px rgba(40, 20, 5, 0.5) !important;
   }
 
   /* ─── iOS Status Bar & Dynamic Island ─── */
@@ -1159,10 +1165,17 @@ img { display: block; }
     display: none !important;
   }
   .ios-dynamic-island.expanded {
-    width: 260px !important;
-    height: 50px !important;
-    border-radius: 26px !important;
-    padding: 0 14px !important;
+    width: min(375px, calc(100vw - 24px)) !important;
+    height: auto !important;
+    min-height: 175px !important;
+    border-radius: 36px !important;
+    padding: 16px 16px 14px 16px !important;
+    background: rgba(24, 18, 14, 0.94) !important;
+    backdrop-filter: blur(45px) saturate(220%) !important;
+    -webkit-backdrop-filter: blur(45px) saturate(220%) !important;
+    border: 1px solid rgba(225, 195, 145, 0.3) !important;
+    box-shadow: 0 25px 65px rgba(25, 15, 6, 0.8), 0 0 20px rgba(212, 175, 55, 0.12), inset 0 1px 1px rgba(255, 240, 215, 0.3) !important;
+    animation: islandDrop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
   }
   .ios-dynamic-island.expanded .island-default {
     display: none !important;
@@ -1217,10 +1230,7 @@ img { display: block; }
 
   /* ─── iOS Home Screen & Desktop Area ─── */
   #desktop {
-    background: radial-gradient(ellipse at 15% 15%, rgba(100, 140, 255, 0.65), transparent 45%),
-                radial-gradient(ellipse at 85% 35%, rgba(160, 90, 220, 0.55), transparent 45%),
-                radial-gradient(ellipse at 50% 90%, rgba(30, 120, 180, 0.4), transparent 50%),
-                linear-gradient(160deg, #1e2e4a 0%, #202242 45%, #0e121d 100%) !important;
+    background: url('img/ios_gold_wallpaper.jpg') center top / cover no-repeat !important;
     position: fixed !important;
     inset: 0 !important;
     overflow: hidden !important;
@@ -1251,13 +1261,13 @@ img { display: block; }
     margin-top: 4px !important;
   }
   .ios-profile-widget {
-    background: rgba(30, 30, 34, 0.58) !important;
+    background: rgba(36, 28, 22, 0.65) !important;
     backdrop-filter: blur(28px) saturate(180%) !important;
     -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    border: 1px solid rgba(225, 195, 145, 0.28) !important;
     border-radius: 24px !important;
     padding: 16px !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28) !important;
+    box-shadow: 0 12px 32px rgba(25, 14, 6, 0.35) !important;
     display: flex !important;
     flex-direction: column !important;
     gap: 12px !important;
@@ -1292,7 +1302,7 @@ img { display: block; }
   }
   .ios-widget-role {
     font-size: 12.5px !important;
-    color: rgba(255, 255, 255, 0.7) !important;
+    color: #dfbd8c !important;
     font-weight: 450 !important;
   }
   .ios-widget-tags {
@@ -1303,8 +1313,9 @@ img { display: block; }
   .ios-wtag {
     font-size: 11px !important;
     font-weight: 550 !important;
-    color: rgba(255, 255, 255, 0.9) !important;
-    background: rgba(255, 255, 255, 0.12) !important;
+    color: #faeedc !important;
+    background: rgba(225, 195, 145, 0.16) !important;
+    border: 1px solid rgba(225, 195, 145, 0.25) !important;
     padding: 4px 9px !important;
     border-radius: 12px !important;
     display: flex !important;
@@ -1397,11 +1408,11 @@ img { display: block; }
     right: 14px !important;
     height: 76px !important;
     border-radius: 36px !important;
-    background: rgba(255, 255, 255, 0.22) !important;
-    backdrop-filter: blur(30px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(30px) saturate(180%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.28) !important;
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.28) !important;
+    background: rgba(38, 28, 20, 0.58) !important;
+    backdrop-filter: blur(34px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(34px) saturate(180%) !important;
+    border: 1px solid rgba(225, 195, 145, 0.28) !important;
+    box-shadow: 0 14px 40px rgba(25, 12, 5, 0.38) !important;
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
@@ -1834,8 +1845,8 @@ img { display: block; }
 
   /* Apple Intelligence Floating Notification Card */
   .island-ai-card {
-    background: rgba(255, 255, 255, 0.1) !important;
-    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    background: rgba(255, 235, 210, 0.12) !important;
+    border: 1px solid rgba(245, 220, 175, 0.25) !important;
     border-radius: 20px !important;
     padding: 12px 14px !important;
     display: flex !important;
@@ -1843,7 +1854,7 @@ img { display: block; }
     gap: 12px !important;
     cursor: pointer !important;
     transition: transform 0.15s ease, background 0.2s ease !important;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25) !important;
+    box-shadow: 0 8px 24px rgba(20, 12, 5, 0.35) !important;
   }
   .island-ai-card:active {
     transform: scale(0.98) !important;
@@ -1853,16 +1864,16 @@ img { display: block; }
     width: 40px !important;
     height: 40px !important;
     border-radius: 50% !important;
-    background: linear-gradient(135deg, #6366f1, #a855f7) !important;
-    color: white !important;
-    font-weight: 700 !important;
+    background: linear-gradient(135deg, #dfbd8c 0%, #a47b4d 100%) !important;
+    color: #241608 !important;
+    font-weight: 800 !important;
     font-size: 14px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     position: relative !important;
     flex-shrink: 0 !important;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4) !important;
+    box-shadow: 0 4px 12px rgba(164, 123, 77, 0.45) !important;
   }
   .island-ai-badge {
     position: absolute !important;
@@ -1919,10 +1930,10 @@ img { display: block; }
     padding-bottom: 2px !important;
   }
   .island-ai-btn {
-    background: rgba(255, 255, 255, 0.12) !important;
-    border: 1px solid rgba(255, 255, 255, 0.16) !important;
+    background: rgba(225, 195, 150, 0.14) !important;
+    border: 1px solid rgba(225, 195, 150, 0.28) !important;
     border-radius: 14px !important;
-    color: #fff !important;
+    color: #fbf5eb !important;
     font-size: 11.5px !important;
     font-weight: 600 !important;
     padding: 6px 12px !important;
@@ -1939,7 +1950,7 @@ img { display: block; }
   }
   .island-ai-btn i {
     font-size: 11px !important;
-    color: #0a84ff !important;
+    color: #dfbd8c !important;
   }
 
   /* Status Bar Pull Hint */
@@ -2039,13 +2050,13 @@ img { display: block; }
 
   /* Cards */
   .ios-cc-card {
-    background: rgba(36, 34, 40, 0.68) !important;
+    background: rgba(36, 28, 22, 0.72) !important;
     backdrop-filter: blur(34px) saturate(190%) !important;
     -webkit-backdrop-filter: blur(34px) saturate(190%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    border: 1px solid rgba(225, 195, 145, 0.22) !important;
     border-radius: 24px !important;
     padding: 14px !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28) !important;
+    box-shadow: 0 12px 32px rgba(25, 14, 6, 0.38) !important;
   }
 
   /* 2x2 Connectivity */
@@ -2075,12 +2086,12 @@ img { display: block; }
     width: 36px !important;
     height: 36px !important;
     border-radius: 50% !important;
-    background: rgba(255, 255, 255, 0.12) !important;
+    background: rgba(255, 235, 205, 0.1) !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     font-size: 15px !important;
-    color: #fff !important;
+    color: #eedbc3 !important;
     transition: all 0.2s ease !important;
   }
   .cc-btn span {
@@ -2091,9 +2102,9 @@ img { display: block; }
   }
   .cc-btn.active#cc-wifi .cc-icon-circle,
   .cc-btn.active#cc-bluetooth .cc-icon-circle {
-    background: #007aff !important;
-    color: #fff !important;
-    box-shadow: 0 0 14px rgba(0, 122, 255, 0.5) !important;
+    background: linear-gradient(135deg, #eed58f, #c79f32) !important;
+    color: #241608 !important;
+    box-shadow: 0 0 16px rgba(212, 175, 55, 0.65) !important;
   }
   .cc-btn.active#cc-cellular .cc-icon-circle {
     background: #34c759 !important;
@@ -2181,24 +2192,24 @@ img { display: block; }
 
   /* Two Wide Horizontal Pill Controls */
   .ios-cc-half-card {
-    background: rgba(36, 34, 40, 0.68) !important;
+    background: rgba(36, 28, 22, 0.72) !important;
     backdrop-filter: blur(34px) saturate(190%) !important;
     -webkit-backdrop-filter: blur(34px) saturate(190%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    border: 1px solid rgba(225, 195, 145, 0.22) !important;
     border-radius: 20px !important;
     padding: 10px 14px !important;
     display: flex !important;
     align-items: center !important;
     gap: 12px !important;
     cursor: pointer !important;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2) !important;
+    box-shadow: 0 10px 26px rgba(25, 14, 6, 0.3) !important;
     transition: transform 0.15s, background 0.2s !important;
   }
   .ios-cc-half-card:active {
     transform: scale(0.97) !important;
   }
   .cc-focus-pill.active {
-    background: rgba(255, 255, 255, 0.95) !important;
+    background: linear-gradient(135deg, #fff7eb 0%, #e7c793 100%) !important;
   }
   .cc-focus-pill.active .cc-pill-icon,
   .cc-focus-pill.active .cc-pill-label {
@@ -2235,14 +2246,14 @@ img { display: block; }
     flex: 1 !important;
     height: 140px !important;
     border-radius: 24px !important;
-    background: rgba(45, 43, 50, 0.72) !important;
+    background: rgba(45, 34, 26, 0.74) !important;
     backdrop-filter: blur(34px) !important;
     -webkit-backdrop-filter: blur(34px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    border: 1px solid rgba(225, 195, 145, 0.22) !important;
     position: relative !important;
     overflow: hidden !important;
     cursor: pointer !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25) !important;
+    box-shadow: 0 10px 30px rgba(25, 14, 6, 0.3) !important;
   }
   .ios-cc-slider-track {
     width: 100% !important;
@@ -2257,7 +2268,7 @@ img { display: block; }
     bottom: 0 !important;
     left: 0 !important;
     right: 0 !important;
-    background: rgba(255, 255, 255, 0.95) !important;
+    background: linear-gradient(180deg, #ffffff 0%, #fcedd8 35%, #dfbd8c 100%) !important;
     transition: height 0.12s ease !important;
   }
   .ios-cc-slider-icon {
@@ -2266,7 +2277,7 @@ img { display: block; }
     left: 50% !important;
     transform: translateX(-50%) !important;
     font-size: 18px !important;
-    color: rgba(0, 0, 0, 0.8) !important;
+    color: #2e1b0c !important;
     pointer-events: none !important;
     z-index: 2 !important;
   }
@@ -2281,26 +2292,26 @@ img { display: block; }
   .cc-square-tile {
     height: 64px !important;
     border-radius: 20px !important;
-    background: rgba(36, 34, 40, 0.68) !important;
+    background: rgba(36, 28, 22, 0.72) !important;
     backdrop-filter: blur(34px) !important;
     -webkit-backdrop-filter: blur(34px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    border: 1px solid rgba(225, 195, 145, 0.22) !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     font-size: 20px !important;
-    color: #fff !important;
+    color: #eedbc3 !important;
     cursor: pointer !important;
     transition: transform 0.15s, background 0.2s !important;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2) !important;
+    box-shadow: 0 8px 20px rgba(25, 14, 6, 0.25) !important;
   }
   .cc-square-tile:active {
     transform: scale(0.92) !important;
   }
   .cc-square-tile.active {
-    background: #fff !important;
-    color: #000 !important;
-    box-shadow: 0 0 16px rgba(255, 255, 255, 0.6) !important;
+    background: linear-gradient(135deg, #fff6e8, #dfbe90) !important;
+    color: #241608 !important;
+    box-shadow: 0 0 20px rgba(225, 190, 110, 0.75) !important;
   }
 
   /* Control Center Bottom Grabber */
@@ -2314,17 +2325,13 @@ img { display: block; }
   .ios-cc-grabber {
     width: 48px !important;
     height: 5px !important;
-    background: rgba(255, 255, 255, 0.45) !important;
+    background: rgba(235, 210, 170, 0.6) !important;
     border-radius: 10px !important;
   }
 
   /* ─── iOS 27 Titanium Depth Clock on Lock Screen (Matching Reference Image) ─── */
   #lock-screen {
-    background:
-      radial-gradient(ellipse at 50% 18%, rgba(215, 175, 130, 0.45), transparent 48%),
-      radial-gradient(ellipse at 85% 75%, rgba(180, 130, 80, 0.35), transparent 50%),
-      radial-gradient(ellipse at 15% 85%, rgba(140, 110, 80, 0.25), transparent 45%),
-      linear-gradient(165deg, #30261f 0%, #1a1512 48%, #0a0807 100%) !important;
+    background: url('img/ios_gold_wallpaper.jpg') center top / cover no-repeat !important;
   }
   .lock-time {
     font-size: clamp(86px, 26vw, 118px) !important;
@@ -2352,7 +2359,7 @@ img { display: block; }
     content: '' !important;
     position: fixed !important;
     inset: 0 !important;
-    box-shadow: inset 0 0 100px rgba(255, 255, 240, 0.5) !important;
+    box-shadow: inset 0 0 120px rgba(255, 235, 185, 0.65) !important;
     pointer-events: none !important;
     z-index: 9999999 !important;
   }
