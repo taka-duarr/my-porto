@@ -94,11 +94,13 @@ function showDesktop() {
 function updateLockClock() {
   const t = document.getElementById('lock-time');
   const d = document.getElementById('lock-date');
+  const iosEl = document.getElementById('ios-status-time');
   if (!t) return;
   const now = new Date();
   const h = String(now.getHours()).padStart(2, '0');
   const m = String(now.getMinutes()).padStart(2, '0');
   t.textContent = `${h}:${m}`;
+  if (iosEl) iosEl.textContent = `${h}:${m}`;
   const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
   d.textContent = `${days[now.getDay()]}, ${months[now.getMonth()]} ${now.getDate()}`;
@@ -114,15 +116,18 @@ function tryUnlock() {
   } catch (e) {}
   showDesktop();
 }
+window.tryUnlock = tryUnlock;
 
 // ─── Panel Clock ──────────────────────────────────────────
 function updatePanelClock() {
   const el = document.getElementById('panel-clock');
-  if (!el) return;
+  const iosEl = document.getElementById('ios-status-time');
+  if (!el && !iosEl) return;
   const now = new Date();
   const h = String(now.getHours()).padStart(2, '0');
   const m = String(now.getMinutes()).padStart(2, '0');
-  el.textContent = `${h}:${m}`;
+  if (el) el.textContent = `${h}:${m}`;
+  if (iosEl) iosEl.textContent = `${h}:${m}`;
 }
 
 // ─── Window Management ────────────────────────────────────
@@ -204,6 +209,27 @@ function closeApp(appName) {
     cancelAnimationFrame(shooterGame.req);
   }
 }
+
+function closeTopMobileApp() {
+  if (state.openWindows.size > 0) {
+    let topApp = null;
+    let maxZ = -1;
+    for (const app of state.openWindows) {
+      const win = getWindow(app);
+      if (win && win.style.display !== 'none') {
+        const z = parseInt(win.style.zIndex) || 0;
+        if (z >= maxZ) {
+          maxZ = z;
+          topApp = app;
+        }
+      }
+    }
+    if (topApp) {
+      closeApp(topApp);
+    }
+  }
+}
+window.closeTopMobileApp = closeTopMobileApp;
 
 function minimizeApp(appName) {
   const win = getWindow(appName);
@@ -766,6 +792,26 @@ document.addEventListener('DOMContentLoaded', async () => {
   const lockInput = document.getElementById('lock-pass');
   if (lockBtn) lockBtn.addEventListener('click', tryUnlock);
   if (lockInput) lockInput.addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
+
+  // Mobile Lock Screen touch swipe-up unlock
+  const lockScreen = document.getElementById('lock-screen');
+  let lockTouchStartY = 0;
+  if (lockScreen) {
+    lockScreen.addEventListener('touchstart', e => {
+      if (e.touches && e.touches[0]) {
+        lockTouchStartY = e.touches[0].clientY;
+      }
+    }, { passive: true });
+
+    lockScreen.addEventListener('touchend', e => {
+      if (e.changedTouches && e.changedTouches[0]) {
+        const lockTouchEndY = e.changedTouches[0].clientY;
+        if (lockTouchStartY - lockTouchEndY > 40) {
+          tryUnlock();
+        }
+      }
+    }, { passive: true });
+  }
 
   // Dock items
   document.querySelectorAll('.dock-item[data-app]').forEach(item => {

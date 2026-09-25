@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   <title>Firman Ardiansyah — Full Stack Developer Portfolio</title>
   <meta name="description" content="Portfolio of Firman Ardiansyah, a Full Stack Developer from Surabaya. An interactive Ubuntu GNOME desktop simulation showcasing projects, skills, and more." />
   <meta name="author" content="Firman Ardiansyah" />
@@ -19,7 +19,7 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-  <link rel="stylesheet" href="style.css?v=2" />
+  <link rel="stylesheet" href="style.css?v=3" />
 </head>
 <body>
 
@@ -68,10 +68,54 @@
     </div>
     <p class="lock-hint" id="lock-hint">Press Enter or click → to unlock</p>
   </div>
+  <!-- iOS Lock Screen Controls (Mobile Only) -->
+  <div class="ios-lock-bottom">
+    <button type="button" class="ios-lock-btn" title="Flashlight" onclick="this.classList.toggle('active')"><i class="fas fa-flashlight"></i></button>
+    <div class="ios-lock-swipe" onclick="tryUnlock()">
+      <span class="ios-swipe-text">Swipe up to unlock</span>
+      <div class="ios-home-pill"></div>
+    </div>
+    <button type="button" class="ios-lock-btn" title="Camera" onclick="openApp('library'); tryUnlock()"><i class="fas fa-camera"></i></button>
+  </div>
 </div>
 
 <!-- ═══════════════════════════ DESKTOP ═══════════════════════════════ -->
 <div id="desktop" class="desktop" style="display:none">
+
+  <!-- iOS Status Bar & Dynamic Island (Mobile Only) -->
+  <div class="ios-status-bar" id="ios-status-bar">
+    <div class="ios-status-left">
+      <span class="ios-status-time" id="ios-status-time">09:41</span>
+    </div>
+    <div class="ios-dynamic-island" id="ios-dynamic-island" onclick="this.classList.toggle('expanded')">
+      <div class="island-default">
+        <div class="island-camera"></div>
+        <div class="island-sensor"></div>
+      </div>
+      <div class="island-expanded">
+        <div class="island-media">
+          <i class="fab fa-spotify" style="color:#1db954"></i>
+          <div class="island-info">
+            <span class="island-title">Portfolio Session</span>
+            <span class="island-sub">Firman Ardiansyah</span>
+          </div>
+          <div class="island-waves">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ios-status-right">
+      <span class="ios-signal"><i class="fas fa-signal"></i></span>
+      <span class="ios-wifi"><i class="fas fa-wifi"></i></span>
+      <div class="ios-battery">
+        <div class="ios-battery-border">
+          <div class="ios-battery-charge"></div>
+        </div>
+        <div class="ios-battery-cap"></div>
+      </div>
+    </div>
+  </div>
 
   <!-- Desktop Top Panel -->
   <div class="top-panel" id="top-panel">
@@ -130,6 +174,23 @@
 
   <!-- Desktop Wallpaper Area -->
   <div class="desktop-area" id="desktop-area">
+    <!-- iOS Smart Profile Widget (Mobile Only) -->
+    <div class="ios-widget-container" id="ios-widget-container">
+      <div class="ios-profile-widget" onclick="openApp('about')">
+        <div class="ios-widget-top">
+          <img src="img/img2.jpg" alt="Firman" class="ios-widget-avatar" onerror="this.src='img/img1.jpg'" />
+          <div class="ios-widget-titles">
+            <span class="ios-widget-name">Firman Ardiansyah</span>
+            <span class="ios-widget-role">Full Stack &amp; Network Admin</span>
+          </div>
+        </div>
+        <div class="ios-widget-tags">
+          <span class="ios-wtag"><i class="fas fa-circle" style="color:#34c759; font-size:6px;"></i> Open for Work</span>
+          <span class="ios-wtag"><i class="fas fa-graduation-cap"></i> GPA 3.72</span>
+          <span class="ios-wtag"><i class="fas fa-map-marker-alt"></i> Surabaya 🇮🇩</span>
+        </div>
+      </div>
+    </div>
     <!-- App Grid Overlay (replaces desktop icons) -->
     <div class="app-grid-overlay hidden" id="app-grid-overlay">
       <div class="desktop-icons app-grid-content" id="desktop-icons">
@@ -406,6 +467,11 @@
     <div id='comp-shooter'></div>
   </div><!-- /windows-layer -->
 
+  <!-- iOS Bottom Home Indicator (Mobile Only) -->
+  <div class="ios-home-indicator" id="ios-home-indicator" onclick="closeTopMobileApp()">
+    <div class="ios-home-bar-pill"></div>
+  </div>
+
   <!-- Notification Toast -->
   <div class="notif-toast" id="notif-toast" style="display:none">
     <div class="notif-icon"><i class="fas fa-check-circle"></i></div>
@@ -414,6 +480,6 @@
 
 </div><!-- /desktop -->
 
-<script src="script.js?v=2"></script>
+<script src="script.js?v=3"></script>
 </body>
 </html>
