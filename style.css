@@ -864,7 +864,8 @@ img { display: block; }
 .ios-status-bar,
 .ios-lock-bottom,
 .ios-widget-container,
-.ios-home-indicator {
+.ios-home-indicator,
+.ios-control-center {
   display: none !important;
 }
 
@@ -1671,5 +1672,688 @@ img { display: block; }
   .about-stats-grid,
   .about-hobbies-grid {
     grid-template-columns: 1fr !important;
+  }
+}
+
+/* ─── iOS visual polish: wallpaper, icons, glass surfaces and safe areas ─── */
+@media (max-width: 768px) {
+  #desktop {
+    background-image:
+      radial-gradient(ellipse at 12% 12%, rgba(116, 164, 255, .74), transparent 42%),
+      radial-gradient(ellipse at 88% 27%, rgba(180, 104, 232, .62), transparent 43%),
+      radial-gradient(ellipse at 47% 82%, rgba(44, 158, 205, .48), transparent 48%),
+      linear-gradient(155deg, #233d67 0%, #29284f 48%, #101625 100%) !important;
+    background-size: 125% 125%, 130% 130%, 120% 120%, 100% 100% !important;
+    animation: iosWallpaperDrift 28s ease-in-out infinite alternate;
+  }
+  @keyframes iosWallpaperDrift {
+    from { background-position: 0% 0%, 100% 0%, 50% 100%, center; }
+    to { background-position: 18% 14%, 82% 22%, 58% 82%, center; }
+  }
+
+  .ios-status-bar {
+    height: calc(48px + env(safe-area-inset-top, 0px)) !important;
+    padding: env(safe-area-inset-top, 0px) 24px 0 !important;
+  }
+  .ios-status-left, .ios-status-right { flex-shrink: 0 !important; }
+  .ios-dynamic-island.expanded {
+    width: min(260px, calc(100vw - 168px)) !important;
+    flex-shrink: 1 !important;
+  }
+  .island-info { min-width: 0 !important; }
+  .island-title, .island-sub { overflow: hidden !important; text-overflow: ellipsis !important; }
+  .island-camera { background: radial-gradient(circle at 35% 35%, #17172a, #020204 70%) !important; }
+
+  #lock-screen {
+    background:
+      radial-gradient(ellipse at 18% 14%, rgba(100, 146, 255, .78), transparent 42%),
+      radial-gradient(ellipse at 84% 62%, rgba(166, 83, 205, .48), transparent 48%),
+      linear-gradient(165deg, #1d3158 0%, #111a31 54%, #070a12 100%) !important;
+  }
+  .lock-time-wrap { margin-top: 44px !important; }
+  .lock-user-wrap { gap: 10px !important; }
+  .lock-avatar {
+    width: 74px !important; height: 74px !important;
+    border-color: rgba(255,255,255,.58) !important;
+    box-shadow: 0 8px 26px rgba(0,0,0,.32), 0 0 0 5px rgba(255,255,255,.08) !important;
+  }
+  .ios-lock-btn { box-shadow: 0 5px 20px rgba(0,0,0,.2) !important; }
+  .ios-swipe-text { letter-spacing: .1px !important; }
+
+  .ios-profile-widget {
+    background: linear-gradient(145deg, rgba(255,255,255,.19), rgba(255,255,255,.075)) !important;
+    border-color: rgba(255,255,255,.22) !important;
+    box-shadow: 0 14px 36px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.12) !important;
+    padding: 17px !important;
+    backdrop-filter: blur(32px) saturate(185%) !important;
+    -webkit-backdrop-filter: blur(32px) saturate(185%) !important;
+  }
+  .ios-widget-avatar { border-color: rgba(255,255,255,.62) !important; }
+  .ios-widget-name { letter-spacing: -.45px !important; }
+  .ios-wtag {
+    background: rgba(255,255,255,.14) !important;
+    border: 1px solid rgba(255,255,255,.08) !important;
+    padding: 5px 9px !important;
+  }
+
+  .dicon-img {
+    overflow: hidden !important;
+    border-radius: 16px !important;
+    padding: 0 !important;
+    background: linear-gradient(145deg, #fc8c69, #e95420) !important;
+    box-shadow: 0 8px 18px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.2) !important;
+  }
+  #dicon-projects .dicon-img { background: linear-gradient(145deg, #65c7ff, #1675db) !important; }
+  #dicon-skills .dicon-img { background: linear-gradient(145deg, #c17aff, #6d36c7) !important; }
+  #dicon-terminal .dicon-img { background: linear-gradient(145deg, #454958, #171923) !important; }
+  #dicon-contact .dicon-img { background: linear-gradient(145deg, #5fe28c, #159447) !important; }
+  #dicon-files .dicon-img { background: linear-gradient(145deg, #ffd76a, #f08b22) !important; }
+  #dicon-library .dicon-img { background: linear-gradient(145deg, #ff986a, #d94c2f) !important; }
+  #dicon-game .dicon-img { background: linear-gradient(145deg, #64748b, #263449) !important; }
+  #dicon-flappy .dicon-img { background: linear-gradient(145deg, #82e4ef, #2797b2) !important; }
+  #dicon-shooter .dicon-img { background: linear-gradient(145deg, #9d7bff, #4924a7) !important; }
+  .dicon-img svg { filter: drop-shadow(0 2px 4px rgba(0,0,0,.22)) !important; }
+  .dicon-label { text-shadow: 0 1px 5px rgba(0,0,0,.9) !important; }
+
+  #dock {
+    background: linear-gradient(145deg, rgba(255,255,255,.28), rgba(220,225,245,.17)) !important;
+    border-color: rgba(255,255,255,.32) !important;
+    box-shadow: 0 16px 38px rgba(0,0,0,.26), inset 0 1px 0 rgba(255,255,255,.22) !important;
+    backdrop-filter: blur(34px) saturate(190%) !important;
+    -webkit-backdrop-filter: blur(34px) saturate(190%) !important;
+  }
+  .dock-icon { border-radius: 15px !important; }
+
+  .window,
+  .window.win-maximized {
+    top: calc(48px + env(safe-area-inset-top, 0px)) !important;
+    height: calc(100% - 48px - env(safe-area-inset-top, 0px)) !important;
+  }
+  .win-content { padding-bottom: calc(30px + env(safe-area-inset-bottom, 0px)) !important; }
+  .win-titlebar { background: rgba(36,36,40,.88) !important; }
+}
+
+@media (max-width: 360px) {
+  .ios-status-bar { padding-left: 18px !important; padding-right: 18px !important; }
+  .ios-status-right { gap: 5px !important; }
+  .ios-dynamic-island.expanded { width: min(220px, calc(100vw - 150px)) !important; }
+  .desktop-icons.app-grid-content { gap: 13px 5px !important; }
+  .dicon-img { width: 54px !important; height: 54px !important; }
+  .ios-widget-tags { gap: 5px !important; }
+  .ios-wtag { font-size: 10.5px !important; }
+}
+
+@media (prefers-reduced-motion: reduce) and (max-width: 768px) {
+  #desktop { animation: none !important; }
+  .ios-swipe-text, .island-waves span { animation: none !important; }
+  .ios-profile-widget, .dock-item, .dicon, .ios-dynamic-island { transition-duration: .01ms !important; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   iOS 27 CONCEPT POLISH & CONTROL CENTER (Wipe Down)
+   ═══════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Dynamic Island Positioning & Organic Expansion (Concept Reference) */
+  .ios-dynamic-island {
+    position: absolute !important;
+    top: calc(8px + env(safe-area-inset-top, 0px)) !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    z-index: 100005 !important;
+  }
+  .ios-dynamic-island.expanded {
+    width: min(375px, calc(100vw - 24px)) !important;
+    height: auto !important;
+    min-height: 175px !important;
+    border-radius: 36px !important;
+    padding: 16px 16px 14px 16px !important;
+    background: rgba(22, 19, 16, 0.94) !important;
+    backdrop-filter: blur(45px) saturate(220%) !important;
+    -webkit-backdrop-filter: blur(45px) saturate(220%) !important;
+    border: 1px solid rgba(255, 235, 205, 0.25) !important;
+    box-shadow: 0 25px 65px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+    animation: islandDrop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  }
+  @keyframes islandDrop {
+    from { transform: translateX(-50%) scale(0.85); opacity: 0; }
+    to { transform: translateX(-50%) scale(1); opacity: 1; }
+  }
+
+  /* Apple Intelligence Header */
+  .island-ai-header {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    font-size: 14.5px !important;
+    font-weight: 550 !important;
+    color: #fff !important;
+    letter-spacing: -0.2px !important;
+    margin-bottom: 12px !important;
+    padding: 0 4px !important;
+  }
+
+  /* Apple Intelligence Floating Notification Card */
+  .island-ai-card {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    border-radius: 20px !important;
+    padding: 12px 14px !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+    cursor: pointer !important;
+    transition: transform 0.15s ease, background 0.2s ease !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25) !important;
+  }
+  .island-ai-card:active {
+    transform: scale(0.98) !important;
+    background: rgba(255, 255, 255, 0.16) !important;
+  }
+  .island-ai-avatar {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    background: linear-gradient(135deg, #6366f1, #a855f7) !important;
+    color: white !important;
+    font-weight: 700 !important;
+    font-size: 14px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative !important;
+    flex-shrink: 0 !important;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4) !important;
+  }
+  .island-ai-badge {
+    position: absolute !important;
+    bottom: -2px !important;
+    right: -2px !important;
+    width: 17px !important;
+    height: 17px !important;
+    background: #34c759 !important;
+    border-radius: 50% !important;
+    border: 2px solid #1a1715 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 8px !important;
+    color: white !important;
+  }
+  .island-ai-body {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 3px !important;
+    min-width: 0 !important;
+    flex: 1 !important;
+  }
+  .island-ai-sender {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+  }
+  .ai-sender-name {
+    font-size: 13.5px !important;
+    font-weight: 650 !important;
+    color: #fff !important;
+    letter-spacing: -0.2px !important;
+  }
+  .ai-sender-time {
+    font-size: 11px !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+    font-weight: 500 !important;
+  }
+  .island-ai-text {
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+    color: rgba(255, 255, 255, 0.88) !important;
+    margin: 0 !important;
+  }
+
+  /* Island Action Buttons */
+  .island-ai-actions {
+    display: flex !important;
+    gap: 8px !important;
+    margin-top: 10px !important;
+    overflow-x: auto !important;
+    padding-bottom: 2px !important;
+  }
+  .island-ai-btn {
+    background: rgba(255, 255, 255, 0.12) !important;
+    border: 1px solid rgba(255, 255, 255, 0.16) !important;
+    border-radius: 14px !important;
+    color: #fff !important;
+    font-size: 11.5px !important;
+    font-weight: 600 !important;
+    padding: 6px 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
+    transition: transform 0.12s, background 0.15s !important;
+  }
+  .island-ai-btn:active {
+    transform: scale(0.93) !important;
+    background: rgba(255, 255, 255, 0.24) !important;
+  }
+  .island-ai-btn i {
+    font-size: 11px !important;
+    color: #0a84ff !important;
+  }
+
+  /* Status Bar Pull Hint */
+  .ios-cc-pull-hint {
+    width: 20px !important;
+    height: 3px !important;
+    background: rgba(255, 255, 255, 0.65) !important;
+    border-radius: 3px !important;
+    position: absolute !important;
+    bottom: -6px !important;
+    right: 26px !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  /* ─── Control Center Panel (Wipe Down) ─── */
+  .ios-control-center {
+    display: none;
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 1000000 !important;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.28s ease;
+  }
+  .ios-control-center.active {
+    display: flex !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+  .ios-cc-backdrop {
+    position: absolute !important;
+    inset: 0 !important;
+    background: rgba(0, 0, 0, 0.45) !important;
+    backdrop-filter: blur(28px) !important;
+    -webkit-backdrop-filter: blur(28px) !important;
+  }
+  .ios-cc-panel {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    max-height: 94vh !important;
+    overflow-y: auto !important;
+    padding: calc(16px + env(safe-area-inset-top, 0px)) 16px 24px 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 14px !important;
+    transform: translateY(-100%);
+    transition: transform 0.38s cubic-bezier(0.25, 1, 0.5, 1) !important;
+  }
+  .ios-control-center.active .ios-cc-panel {
+    transform: translateY(0) !important;
+  }
+  .ios-cc-top-bar {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 0 4px !important;
+  }
+  .ios-cc-status-mini {
+    display: flex !important;
+    align-items: baseline !important;
+    gap: 8px !important;
+  }
+  #cc-status-time {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    color: #fff !important;
+    letter-spacing: -0.5px !important;
+  }
+  .cc-status-carrier {
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    color: rgba(255, 255, 255, 0.65) !important;
+  }
+  .ios-cc-close-btn {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 50% !important;
+    background: rgba(255, 255, 255, 0.14) !important;
+    border: none !important;
+    color: #fff !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    font-size: 14px !important;
+  }
+
+  /* Control Center Grid */
+  .ios-cc-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 14px !important;
+    width: 100% !important;
+  }
+
+  /* Cards */
+  .ios-cc-card {
+    background: rgba(36, 34, 40, 0.68) !important;
+    backdrop-filter: blur(34px) saturate(190%) !important;
+    -webkit-backdrop-filter: blur(34px) saturate(190%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    border-radius: 24px !important;
+    padding: 14px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28) !important;
+  }
+
+  /* 2x2 Connectivity */
+  .cc-connectivity {
+    height: 146px !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    grid-template-rows: 1fr 1fr !important;
+    gap: 8px !important;
+    padding: 10px !important;
+  }
+  .cc-btn {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 3px !important;
+    cursor: pointer !important;
+    border-radius: 14px !important;
+    padding: 4px !important;
+    transition: transform 0.15s ease !important;
+  }
+  .cc-btn:active {
+    transform: scale(0.9) !important;
+  }
+  .cc-icon-circle {
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 50% !important;
+    background: rgba(255, 255, 255, 0.12) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 15px !important;
+    color: #fff !important;
+    transition: all 0.2s ease !important;
+  }
+  .cc-btn span {
+    font-size: 9.5px !important;
+    font-weight: 550 !important;
+    color: rgba(255, 255, 255, 0.75) !important;
+    white-space: nowrap !important;
+  }
+  .cc-btn.active#cc-wifi .cc-icon-circle,
+  .cc-btn.active#cc-bluetooth .cc-icon-circle {
+    background: #007aff !important;
+    color: #fff !important;
+    box-shadow: 0 0 14px rgba(0, 122, 255, 0.5) !important;
+  }
+  .cc-btn.active#cc-cellular .cc-icon-circle {
+    background: #34c759 !important;
+    color: #fff !important;
+    box-shadow: 0 0 14px rgba(52, 199, 89, 0.5) !important;
+  }
+  .cc-btn.active#cc-airplane .cc-icon-circle {
+    background: #ff9f0a !important;
+    color: #fff !important;
+  }
+
+  /* Media Player Card */
+  .cc-media-player {
+    height: 146px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+  }
+  .cc-media-header {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+  }
+  .cc-media-artwork {
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 10px !important;
+    background: #111 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 20px !important;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3) !important;
+  }
+  .cc-media-meta {
+    flex: 1 !important;
+    min-width: 0 !important;
+  }
+  .cc-media-title {
+    font-size: 13px !important;
+    font-weight: 650 !important;
+    color: #fff !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  .cc-media-artist {
+    font-size: 10.5px !important;
+    color: rgba(255, 255, 255, 0.65) !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  .cc-media-soundwave {
+    display: flex !important;
+    gap: 2px !important;
+    align-items: flex-end !important;
+    height: 12px !important;
+  }
+  .cc-media-soundwave span {
+    width: 2.5px !important;
+    background: #1db954 !important;
+    border-radius: 2px !important;
+    animation: islandWave 0.8s infinite alternate ease-in-out !important;
+  }
+  .cc-media-soundwave span:nth-child(1) { height: 5px; }
+  .cc-media-soundwave span:nth-child(2) { height: 12px; animation-delay: 0.2s; }
+  .cc-media-soundwave span:nth-child(3) { height: 8px; animation-delay: 0.1s; }
+  .cc-media-buttons {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-around !important;
+  }
+  .cc-player-btn {
+    background: transparent !important;
+    border: none !important;
+    color: #fff !important;
+    font-size: 16px !important;
+    cursor: pointer !important;
+    padding: 6px !important;
+  }
+  .cc-play-pause {
+    font-size: 20px !important;
+  }
+
+  /* Two Wide Horizontal Pill Controls */
+  .ios-cc-half-card {
+    background: rgba(36, 34, 40, 0.68) !important;
+    backdrop-filter: blur(34px) saturate(190%) !important;
+    -webkit-backdrop-filter: blur(34px) saturate(190%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    border-radius: 20px !important;
+    padding: 10px 14px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    cursor: pointer !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2) !important;
+    transition: transform 0.15s, background 0.2s !important;
+  }
+  .ios-cc-half-card:active {
+    transform: scale(0.97) !important;
+  }
+  .cc-focus-pill.active {
+    background: rgba(255, 255, 255, 0.95) !important;
+  }
+  .cc-focus-pill.active .cc-pill-icon,
+  .cc-focus-pill.active .cc-pill-label {
+    color: #000 !important;
+  }
+  .cc-focus-pill.active .cc-pill-sub {
+    color: rgba(0, 0, 0, 0.6) !important;
+  }
+  .cc-pill-icon {
+    font-size: 18px !important;
+    color: #fff !important;
+  }
+  .cc-pill-text {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .cc-pill-label {
+    font-size: 13.5px !important;
+    font-weight: 650 !important;
+    color: #fff !important;
+  }
+  .cc-pill-sub {
+    font-size: 10.5px !important;
+    color: rgba(255, 255, 255, 0.65) !important;
+  }
+
+  /* Sliders & Quick Tiles Row */
+  .ios-cc-sliders-row {
+    display: flex !important;
+    gap: 12px !important;
+    justify-content: space-between !important;
+  }
+  .ios-cc-slider-box {
+    flex: 1 !important;
+    height: 140px !important;
+    border-radius: 24px !important;
+    background: rgba(45, 43, 50, 0.72) !important;
+    backdrop-filter: blur(34px) !important;
+    -webkit-backdrop-filter: blur(34px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    cursor: pointer !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25) !important;
+  }
+  .ios-cc-slider-track {
+    width: 100% !important;
+    height: 100% !important;
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-end !important;
+  }
+  .ios-cc-slider-level {
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    transition: height 0.12s ease !important;
+  }
+  .ios-cc-slider-icon {
+    position: absolute !important;
+    bottom: 16px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    font-size: 18px !important;
+    color: rgba(0, 0, 0, 0.8) !important;
+    pointer-events: none !important;
+    z-index: 2 !important;
+  }
+
+  /* 4 Square Quick Tiles */
+  .ios-cc-quick-tiles {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    grid-template-rows: 1fr 1fr !important;
+    gap: 12px !important;
+  }
+  .cc-square-tile {
+    height: 64px !important;
+    border-radius: 20px !important;
+    background: rgba(36, 34, 40, 0.68) !important;
+    backdrop-filter: blur(34px) !important;
+    -webkit-backdrop-filter: blur(34px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 20px !important;
+    color: #fff !important;
+    cursor: pointer !important;
+    transition: transform 0.15s, background 0.2s !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2) !important;
+  }
+  .cc-square-tile:active {
+    transform: scale(0.92) !important;
+  }
+  .cc-square-tile.active {
+    background: #fff !important;
+    color: #000 !important;
+    box-shadow: 0 0 16px rgba(255, 255, 255, 0.6) !important;
+  }
+
+  /* Control Center Bottom Grabber */
+  .ios-cc-bottom-handle {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    padding: 10px 0 !important;
+    cursor: pointer !important;
+  }
+  .ios-cc-grabber {
+    width: 48px !important;
+    height: 5px !important;
+    background: rgba(255, 255, 255, 0.45) !important;
+    border-radius: 10px !important;
+  }
+
+  /* ─── iOS 27 Titanium Depth Clock on Lock Screen (Matching Reference Image) ─── */
+  #lock-screen {
+    background:
+      radial-gradient(ellipse at 50% 18%, rgba(215, 175, 130, 0.45), transparent 48%),
+      radial-gradient(ellipse at 85% 75%, rgba(180, 130, 80, 0.35), transparent 50%),
+      radial-gradient(ellipse at 15% 85%, rgba(140, 110, 80, 0.25), transparent 45%),
+      linear-gradient(165deg, #30261f 0%, #1a1512 48%, #0a0807 100%) !important;
+  }
+  .lock-time {
+    font-size: clamp(86px, 26vw, 118px) !important;
+    font-weight: 850 !important;
+    letter-spacing: -4px !important;
+    background: linear-gradient(180deg, #ffffff 0%, #f0e6d6 45%, #bfa98e 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.6)) drop-shadow(0 1px 1px rgba(255, 255, 255, 0.35)) !important;
+    line-height: 0.95 !important;
+  }
+  .lock-date {
+    color: rgba(245, 235, 220, 0.92) !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.2px !important;
+  }
+
+  /* Screen Brightness Live Filter */
+  #desktop-area {
+    filter: brightness(var(--ios-screen-brightness, 1)) !important;
+  }
+
+  /* Flashlight Overlay on Body */
+  body.ios-torch-on::after {
+    content: '' !important;
+    position: fixed !important;
+    inset: 0 !important;
+    box-shadow: inset 0 0 100px rgba(255, 255, 240, 0.5) !important;
+    pointer-events: none !important;
+    z-index: 9999999 !important;
   }
 }

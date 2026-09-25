@@ -101,6 +101,8 @@ function updateLockClock() {
   const m = String(now.getMinutes()).padStart(2, '0');
   t.textContent = `${h}:${m}`;
   if (iosEl) iosEl.textContent = `${h}:${m}`;
+  const ccTime = document.getElementById('cc-status-time');
+  if (ccTime) ccTime.textContent = `${h}:${m}`;
   const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
   d.textContent = `${days[now.getDay()]}, ${months[now.getMonth()]} ${now.getDate()}`;
@@ -122,12 +124,14 @@ window.tryUnlock = tryUnlock;
 function updatePanelClock() {
   const el = document.getElementById('panel-clock');
   const iosEl = document.getElementById('ios-status-time');
-  if (!el && !iosEl) return;
+  const ccTime = document.getElementById('cc-status-time');
+  if (!el && !iosEl && !ccTime) return;
   const now = new Date();
   const h = String(now.getHours()).padStart(2, '0');
   const m = String(now.getMinutes()).padStart(2, '0');
   if (el) el.textContent = `${h}:${m}`;
   if (iosEl) iosEl.textContent = `${h}:${m}`;
+  if (ccTime) ccTime.textContent = `${h}:${m}`;
 }
 
 // ─── Window Management ────────────────────────────────────
@@ -230,6 +234,88 @@ function closeTopMobileApp() {
   }
 }
 window.closeTopMobileApp = closeTopMobileApp;
+
+// ─── iOS 27 Control Center & Island Features ───
+function openControlCenter() {
+  const cc = document.getElementById('ios-control-center');
+  if (cc) cc.classList.add('active');
+}
+function closeControlCenter() {
+  const cc = document.getElementById('ios-control-center');
+  if (cc) cc.classList.remove('active');
+}
+function toggleControlCenter() {
+  const cc = document.getElementById('ios-control-center');
+  if (cc) cc.classList.toggle('active');
+}
+window.openControlCenter = openControlCenter;
+window.closeControlCenter = closeControlCenter;
+window.toggleControlCenter = toggleControlCenter;
+
+function toggleDynamicIsland() {
+  const island = document.getElementById('ios-dynamic-island');
+  if (island) island.classList.toggle('expanded');
+}
+window.toggleDynamicIsland = toggleDynamicIsland;
+
+function toggleTorch(btn) {
+  if (btn) btn.classList.toggle('active');
+  const lockTorch = document.querySelector('.ios-lock-btn[title="Flashlight"]');
+  if (lockTorch) lockTorch.classList.toggle('active');
+  document.body.classList.toggle('ios-torch-on');
+  if (typeof notif === 'function') {
+    const isOn = document.body.classList.contains('ios-torch-on');
+    notif(isOn ? 'Flashlight On 🔦' : 'Flashlight Off');
+  }
+}
+window.toggleTorch = toggleTorch;
+
+function togglePlayPause() {
+  const btn = document.getElementById('cc-play-pause');
+  const waves = document.querySelector('.cc-media-soundwave');
+  if (btn) {
+    const isPlaying = btn.querySelector('i').classList.contains('fa-pause');
+    if (isPlaying) {
+      btn.innerHTML = '<i class="fas fa-play"></i>';
+      if (waves) waves.style.opacity = '0.3';
+      if (typeof notif === 'function') notif('Music Paused ⏸️');
+    } else {
+      btn.innerHTML = '<i class="fas fa-pause"></i>';
+      if (waves) waves.style.opacity = '1';
+      if (typeof notif === 'function') notif('Playing: Coding in Surabaya 🎵');
+    }
+  }
+}
+window.togglePlayPause = togglePlayPause;
+
+function adjustBrightness(e) {
+  const box = document.getElementById('cc-brightness-box');
+  const level = document.getElementById('cc-brightness-level');
+  if (!box || !level) return;
+  const rect = box.getBoundingClientRect();
+  const clickY = e.clientY - rect.top;
+  const pct = Math.max(15, Math.min(100, Math.round((1 - (clickY / rect.height)) * 100)));
+  level.style.height = pct + '%';
+  document.documentElement.style.setProperty('--ios-screen-brightness', (pct / 100).toString());
+}
+window.adjustBrightness = adjustBrightness;
+
+function adjustVolume(e) {
+  const box = document.getElementById('cc-volume-box');
+  const level = document.getElementById('cc-volume-level');
+  const icon = document.getElementById('cc-volume-icon');
+  if (!box || !level) return;
+  const rect = box.getBoundingClientRect();
+  const clickY = e.clientY - rect.top;
+  const pct = Math.max(0, Math.min(100, Math.round((1 - (clickY / rect.height)) * 100)));
+  level.style.height = pct + '%';
+  if (icon) {
+    if (pct === 0) icon.innerHTML = '<i class="fas fa-volume-xmark"></i>';
+    else if (pct < 50) icon.innerHTML = '<i class="fas fa-volume-low"></i>';
+    else icon.innerHTML = '<i class="fas fa-volume-high"></i>';
+  }
+}
+window.adjustVolume = adjustVolume;
 
 function minimizeApp(appName) {
   const win = getWindow(appName);
@@ -808,6 +894,55 @@ document.addEventListener('DOMContentLoaded', async () => {
         const lockTouchEndY = e.changedTouches[0].clientY;
         if (lockTouchStartY - lockTouchEndY > 40) {
           tryUnlock();
+        }
+      }
+    }, { passive: true });
+  }
+
+  // Mobile swipe down from top (Wipe Down) to open Control Center or Dynamic Island
+  let swipeDownStartX = 0;
+  let swipeDownStartY = 0;
+
+  document.addEventListener('touchstart', e => {
+    if (window.innerWidth <= 768 && e.touches && e.touches[0]) {
+      swipeDownStartX = e.touches[0].clientX;
+      swipeDownStartY = e.touches[0].clientY;
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchend', e => {
+    if (window.innerWidth <= 768 && e.changedTouches && e.changedTouches[0]) {
+      const endX = e.changedTouches[0].clientX;
+      const endY = e.changedTouches[0].clientY;
+      const diffY = endY - swipeDownStartY;
+      const diffX = Math.abs(endX - swipeDownStartX);
+
+      // Swipe down started in top 75px
+      if (swipeDownStartY <= 75 && diffY > 40 && diffY > diffX) {
+        // Right side (top right status bar): Control Center
+        if (swipeDownStartX > window.innerWidth * 0.45) {
+          openControlCenter();
+        } else {
+          // Center / left: Apple Intelligence Dynamic Island
+          toggleDynamicIsland();
+        }
+      }
+    }
+  }, { passive: true });
+
+  // Swipe up inside Control Center to close it
+  const ccPanel = document.getElementById('ios-control-center');
+  let ccTouchStartY = 0;
+  if (ccPanel) {
+    ccPanel.addEventListener('touchstart', e => {
+      if (e.touches && e.touches[0]) ccTouchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    ccPanel.addEventListener('touchend', e => {
+      if (e.changedTouches && e.changedTouches[0]) {
+        const ccTouchEndY = e.changedTouches[0].clientY;
+        if (ccTouchStartY - ccTouchEndY > 45) {
+          closeControlCenter();
         }
       }
     }, { passive: true });

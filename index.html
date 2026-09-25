@@ -84,28 +84,41 @@
 
   <!-- iOS Status Bar & Dynamic Island (Mobile Only) -->
   <div class="ios-status-bar" id="ios-status-bar">
-    <div class="ios-status-left">
+    <div class="ios-status-left" onclick="toggleDynamicIsland()" style="cursor:pointer;">
       <span class="ios-status-time" id="ios-status-time">09:41</span>
     </div>
-    <div class="ios-dynamic-island" id="ios-dynamic-island" onclick="this.classList.toggle('expanded')">
+    <div class="ios-dynamic-island" id="ios-dynamic-island" onclick="toggleDynamicIsland()">
       <div class="island-default">
         <div class="island-camera"></div>
         <div class="island-sensor"></div>
       </div>
       <div class="island-expanded">
-        <div class="island-media">
-          <i class="fab fa-spotify" style="color:#1db954"></i>
-          <div class="island-info">
-            <span class="island-title">Portfolio Session</span>
-            <span class="island-sub">Firman Ardiansyah</span>
+        <!-- iOS 27 Apple Intelligence Banner (Concept Reference) -->
+        <div class="island-ai-header">
+          <i class="fas fa-sparkles" style="color: #ff9f0a; font-size: 11px;"></i>
+          <span>Here, I found Firman's portfolio &amp; contact info.</span>
+        </div>
+        <div class="island-ai-card" onclick="event.stopPropagation(); openApp('about'); toggleDynamicIsland();">
+          <div class="island-ai-avatar">
+            <span>FA</span>
+            <div class="island-ai-badge"><i class="fas fa-comment-dots"></i></div>
           </div>
-          <div class="island-waves">
-            <span></span><span></span><span></span>
+          <div class="island-ai-body">
+            <div class="island-ai-sender">
+              <span class="ai-sender-name">Firman Ardiansyah</span>
+              <span class="ai-sender-time">Surabaya 🇮🇩</span>
+            </div>
+            <p class="island-ai-text">Full Stack Developer &amp; Network Admin. Open for collaboration &amp; roles!</p>
           </div>
+        </div>
+        <div class="island-ai-actions" onclick="event.stopPropagation()">
+          <button type="button" class="island-ai-btn" onclick="openApp('projects'); toggleDynamicIsland();"><i class="fas fa-laptop-code"></i> Projects</button>
+          <button type="button" class="island-ai-btn" onclick="openApp('skills'); toggleDynamicIsland();"><i class="fas fa-code"></i> Skills</button>
+          <button type="button" class="island-ai-btn" onclick="openApp('contact'); toggleDynamicIsland();"><i class="fas fa-paper-plane"></i> Contact</button>
         </div>
       </div>
     </div>
-    <div class="ios-status-right">
+    <div class="ios-status-right" onclick="openControlCenter()" style="cursor: pointer;" title="Wipe down or tap for Control Center">
       <span class="ios-signal"><i class="fas fa-signal"></i></span>
       <span class="ios-wifi"><i class="fas fa-wifi"></i></span>
       <div class="ios-battery">
@@ -113,6 +126,122 @@
           <div class="ios-battery-charge"></div>
         </div>
         <div class="ios-battery-cap"></div>
+      </div>
+      <div class="ios-cc-pull-hint"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════ iOS 27 CONTROL CENTER (Wipe Down From Top) ═══════════ -->
+  <div class="ios-control-center" id="ios-control-center">
+    <div class="ios-cc-backdrop" onclick="closeControlCenter()"></div>
+    <div class="ios-cc-panel">
+      <!-- Top Status & Close -->
+      <div class="ios-cc-top-bar">
+        <div class="ios-cc-status-mini">
+          <span id="cc-status-time">09:41</span>
+          <span class="cc-status-carrier">5G • FirmanOS 27</span>
+        </div>
+        <button type="button" class="ios-cc-close-btn" onclick="closeControlCenter()" title="Close Control Center">
+          <i class="fas fa-chevron-up"></i>
+        </button>
+      </div>
+
+      <div class="ios-cc-grid">
+        <!-- 1. Connectivity 2x2 Glass Card -->
+        <div class="ios-cc-card cc-connectivity">
+          <div class="cc-btn" id="cc-airplane" onclick="this.classList.toggle('active')">
+            <div class="cc-icon-circle"><i class="fas fa-plane"></i></div>
+            <span>AirDrop</span>
+          </div>
+          <div class="cc-btn active" id="cc-cellular" onclick="this.classList.toggle('active')">
+            <div class="cc-icon-circle"><i class="fas fa-tower-broadcast"></i></div>
+            <span>Cellular</span>
+          </div>
+          <div class="cc-btn active" id="cc-wifi" onclick="this.classList.toggle('active')">
+            <div class="cc-icon-circle"><i class="fas fa-wifi"></i></div>
+            <span>Wi-Fi</span>
+          </div>
+          <div class="cc-btn active" id="cc-bluetooth" onclick="this.classList.toggle('active')">
+            <div class="cc-icon-circle"><i class="fab fa-bluetooth-b"></i></div>
+            <span>Bluetooth</span>
+          </div>
+        </div>
+
+        <!-- 2. Apple Intelligence / Music Player Card -->
+        <div class="ios-cc-card cc-media-player">
+          <div class="cc-media-header">
+            <div class="cc-media-artwork">
+              <i class="fab fa-spotify" style="color:#1db954;"></i>
+            </div>
+            <div class="cc-media-meta">
+              <div class="cc-media-title">Coding in Surabaya</div>
+              <div class="cc-media-artist">Firman Ardiansyah</div>
+            </div>
+            <div class="cc-media-soundwave">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+          <div class="cc-media-buttons">
+            <button type="button" class="cc-player-btn" onclick="if(typeof notif==='function')notif('Previous track')"><i class="fas fa-backward-step"></i></button>
+            <button type="button" class="cc-player-btn cc-play-pause" id="cc-play-pause" onclick="togglePlayPause()"><i class="fas fa-pause"></i></button>
+            <button type="button" class="cc-player-btn" onclick="if(typeof notif==='function')notif('Next track')"><i class="fas fa-forward-step"></i></button>
+          </div>
+        </div>
+
+        <!-- 3. Two Wide Horizontal Pill Controls: Focus & Projects -->
+        <div class="ios-cc-half-card cc-focus-pill" onclick="this.classList.toggle('active')">
+          <div class="cc-pill-icon"><i class="fas fa-moon"></i></div>
+          <div class="cc-pill-text">
+            <span class="cc-pill-label">Focus</span>
+            <span class="cc-pill-sub">Full Stack Mode</span>
+          </div>
+        </div>
+        <div class="ios-cc-half-card cc-mirror-pill" onclick="openApp('projects'); closeControlCenter();">
+          <div class="cc-pill-icon"><i class="fas fa-laptop-code"></i></div>
+          <div class="cc-pill-text">
+            <span class="cc-pill-label">Projects</span>
+            <span class="cc-pill-sub">4 Featured Works</span>
+          </div>
+        </div>
+
+        <!-- 4. Sliders: Brightness & Volume (Vertical Glass Pillars) -->
+        <div class="ios-cc-sliders-row">
+          <!-- Brightness Slider -->
+          <div class="ios-cc-slider-box" id="cc-brightness-box" onclick="adjustBrightness(event)">
+            <div class="ios-cc-slider-track">
+              <div class="ios-cc-slider-level" id="cc-brightness-level" style="height: 85%;"></div>
+              <div class="ios-cc-slider-icon"><i class="fas fa-sun"></i></div>
+            </div>
+          </div>
+          <!-- Volume Slider -->
+          <div class="ios-cc-slider-box" id="cc-volume-box" onclick="adjustVolume(event)">
+            <div class="ios-cc-slider-track">
+              <div class="ios-cc-slider-level" id="cc-volume-level" style="height: 70%;"></div>
+              <div class="ios-cc-slider-icon" id="cc-volume-icon"><i class="fas fa-volume-high"></i></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Four Square Quick Tiles -->
+        <div class="ios-cc-quick-tiles">
+          <div class="cc-square-tile" id="cc-tile-torch" onclick="toggleTorch(this)" title="Flashlight">
+            <i class="fas fa-flashlight"></i>
+          </div>
+          <div class="cc-square-tile" onclick="openApp('about'); closeControlCenter();" title="About Profile">
+            <i class="fas fa-user-astronaut"></i>
+          </div>
+          <div class="cc-square-tile" onclick="openApp('terminal'); closeControlCenter();" title="Terminal Console">
+            <i class="fas fa-terminal"></i>
+          </div>
+          <div class="cc-square-tile" onclick="changeWallpaper()" title="Change Wallpaper Theme">
+            <i class="fas fa-wand-magic-sparkles"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Drag Handle to swipe up / close -->
+      <div class="ios-cc-bottom-handle" onclick="closeControlCenter()">
+        <div class="ios-cc-grabber"></div>
       </div>
     </div>
   </div>
