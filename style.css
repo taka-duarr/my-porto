@@ -865,7 +865,10 @@ img { display: block; }
 .ios-lock-bottom,
 .ios-widget-container,
 .ios-home-indicator,
-.ios-control-center {
+.ios-control-center,
+.mobile-game-dpad,
+.flappy-mobile-controls,
+.shooter-mobile-controls {
   display: none !important;
 }
 
@@ -2573,5 +2576,301 @@ img { display: block; }
   .ios-home-bar-pill {
     background: rgba(245, 225, 195, 0.85) !important;
     box-shadow: 0 1px 6px rgba(35, 20, 8, 0.5) !important;
+  }
+
+  /* ─── Mobile Game Controls: Snake, Flappy Bird, Dungeon Shooter ─── */
+  
+  /* 1. General Game Body & Container adjustments */
+  .game-body {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+  .game-header {
+    width: 100% !important;
+    padding: 10px 16px !important;
+    background: rgba(34, 26, 20, 0.75) !important;
+    border-bottom: 1px solid rgba(225, 195, 145, 0.18) !important;
+    flex-shrink: 0 !important;
+  }
+  .game-score-board {
+    color: #dfbd8c !important;
+    font-size: 15px !important;
+  }
+  .game-container {
+    padding: 6px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    position: relative !important;
+  }
+  .game-controls-hint {
+    font-size: 11.5px !important;
+    color: rgba(238, 219, 195, 0.75) !important;
+    padding: 6px 12px !important;
+    background: rgba(225, 195, 145, 0.08) !important;
+    border-top: 1px solid rgba(225, 195, 145, 0.15) !important;
+    width: 100% !important;
+    text-align: center !important;
+    flex-shrink: 0 !important;
+  }
+  .game-controls-hint i {
+    color: #dfbd8c !important;
+  }
+  .game-overlay {
+    background: rgba(22, 17, 13, 0.88) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    border-radius: 16px !important;
+  }
+  #game-overlay-title {
+    color: #dfbd8c !important;
+    text-shadow: 0 2px 14px rgba(223, 189, 140, 0.45) !important;
+  }
+  #game-overlay-desc {
+    color: #eedbc3 !important;
+  }
+  .game-btn {
+    background: linear-gradient(135deg, #dfbd8c 0%, #a47b4d 100%) !important;
+    color: #241608 !important;
+    font-family: var(--ios-font) !important;
+    font-weight: 750 !important;
+    border-radius: 18px !important;
+    box-shadow: 0 4px 16px rgba(164, 123, 77, 0.45) !important;
+    touch-action: manipulation !important;
+    -webkit-tap-highlight-color: transparent !important;
+    border: none !important;
+  }
+  .game-btn:active {
+    transform: scale(0.95) !important;
+    filter: brightness(0.92) !important;
+  }
+
+  /* 2. Snake Canvas & D-Pad */
+  #snake-canvas {
+    max-width: min(290px, 80vw) !important;
+    max-height: min(290px, 36vh) !important;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1 !important;
+    border: 2px solid rgba(225, 195, 145, 0.3) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 8px 30px rgba(25, 14, 6, 0.5) !important;
+    touch-action: none !important;
+  }
+  .mobile-game-dpad {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    padding: 6px 0 10px 0 !important;
+    width: 100% !important;
+    flex-shrink: 0 !important;
+    touch-action: manipulation !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+  }
+  .dpad-middle-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 12px !important;
+  }
+  .dpad-btn {
+    width: 52px !important;
+    height: 52px !important;
+    border-radius: 18px !important;
+    background: rgba(36, 28, 22, 0.8) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 1.5px solid rgba(225, 195, 145, 0.35) !important;
+    color: #dfbd8c !important;
+    font-size: 20px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    box-shadow: 0 5px 16px rgba(25, 14, 6, 0.5) !important;
+    touch-action: manipulation !important;
+    -webkit-tap-highlight-color: transparent !important;
+    transition: transform 0.1s ease, background 0.1s ease !important;
+  }
+  .dpad-btn:active {
+    transform: scale(0.9) !important;
+    background: linear-gradient(135deg, #dfbd8c 0%, #a47b4d 100%) !important;
+    color: #241608 !important;
+    box-shadow: 0 2px 8px rgba(164, 123, 77, 0.6) !important;
+  }
+  .dpad-center {
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 50% !important;
+    background: rgba(225, 195, 145, 0.1) !important;
+    border: 1px dashed rgba(225, 195, 145, 0.35) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: rgba(225, 195, 145, 0.6) !important;
+    font-size: 16px !important;
+  }
+
+  /* 3. Flappy Bird Canvas & Jump Button */
+  #flappy-canvas {
+    max-width: min(280px, 80vw) !important;
+    max-height: min(340px, 42vh) !important;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 320 / 420 !important;
+    border: 3px solid rgba(255, 255, 255, 0.85) !important;
+    border-radius: 18px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+    touch-action: none !important;
+    cursor: pointer !important;
+  }
+  .flappy-body {
+    background: linear-gradient(180deg, #4fa4be 0%, #70c5ce 100%) !important;
+  }
+  .flappy-mobile-controls {
+    display: flex !important;
+    justify-content: center !important;
+    padding: 8px 18px 12px 18px !important;
+    width: 100% !important;
+    flex-shrink: 0 !important;
+  }
+  .flappy-tap-btn {
+    width: 100% !important;
+    max-width: 320px !important;
+    height: 54px !important;
+    border-radius: 22px !important;
+    background: linear-gradient(135deg, #dfbd8c 0%, #a47b4d 100%) !important;
+    color: #241608 !important;
+    font-family: var(--ios-font) !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.5px !important;
+    border: 1px solid rgba(255, 235, 205, 0.5) !important;
+    box-shadow: 0 6px 22px rgba(164, 123, 77, 0.45) !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    touch-action: manipulation !important;
+    -webkit-tap-highlight-color: transparent !important;
+    transition: transform 0.1s ease, filter 0.1s ease !important;
+  }
+  .flappy-tap-btn:active {
+    transform: scale(0.95) !important;
+    filter: brightness(0.9) !important;
+  }
+
+  /* 4. Dungeon Shooter Controls */
+  .shooter-body {
+    position: relative !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    touch-action: none !important;
+  }
+  #shooter-canvas {
+    touch-action: none !important;
+  }
+  .shooter-mobile-controls {
+    display: flex !important;
+    position: absolute !important;
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px)) !important;
+    left: 12px !important;
+    right: 12px !important;
+    justify-content: space-between !important;
+    align-items: flex-end !important;
+    z-index: 20 !important;
+    pointer-events: none !important;
+  }
+  .shooter-move-pad,
+  .shooter-action-pad {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+    pointer-events: auto !important;
+  }
+  .shooter-move-pad {
+    align-items: center !important;
+  }
+  .shooter-pad-row {
+    display: flex !important;
+    gap: 6px !important;
+  }
+  .shooter-look-row {
+    display: flex !important;
+    gap: 8px !important;
+    justify-content: flex-end !important;
+    margin-bottom: 4px !important;
+  }
+  .shooter-ctrl-btn {
+    width: 46px !important;
+    height: 46px !important;
+    border-radius: 15px !important;
+    background: rgba(34, 26, 20, 0.82) !important;
+    border: 1.5px solid rgba(225, 195, 145, 0.35) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    color: #dfbd8c !important;
+    font-size: 18px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    touch-action: manipulation !important;
+    -webkit-tap-highlight-color: transparent !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.55) !important;
+    transition: transform 0.1s ease, background 0.1s ease !important;
+  }
+  .shooter-ctrl-btn:active {
+    transform: scale(0.9) !important;
+    background: linear-gradient(135deg, #dfbd8c, #a47b4d) !important;
+    color: #241608 !important;
+  }
+  .shooter-turn-btn {
+    width: 48px !important;
+    height: 42px !important;
+    font-size: 16px !important;
+    border-radius: 13px !important;
+  }
+  .shooter-fire-btn {
+    width: 108px !important;
+    height: 50px !important;
+    border-radius: 18px !important;
+    background: linear-gradient(135deg, #e74c3c 0%, #b02a1c 100%) !important;
+    border: 1.5px solid rgba(255, 190, 170, 0.45) !important;
+    color: #ffffff !important;
+    font-family: var(--ios-font) !important;
+    font-size: 15px !important;
+    font-weight: 850 !important;
+    letter-spacing: 1px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    cursor: pointer !important;
+    touch-action: manipulation !important;
+    -webkit-tap-highlight-color: transparent !important;
+    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.55) !important;
+    transition: transform 0.1s ease, filter 0.1s ease !important;
+  }
+  .shooter-fire-btn:active {
+    transform: scale(0.92) !important;
+    filter: brightness(0.9) !important;
+  }
+  .shooter-overlay h2 {
+    font-size: clamp(1.4rem, 6vw, 2rem) !important;
+  }
+  .shooter-desktop-hints {
+    max-width: 90% !important;
+    font-size: 11px !important;
   }
 }

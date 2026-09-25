@@ -19,12 +19,22 @@
           <canvas id="snake-canvas" width="400" height="400"></canvas>
           <div id="game-overlay" class="game-overlay">
             <h2 id="game-overlay-title">SNAKE</h2>
-            <p id="game-overlay-desc">Use arrow keys to play</p>
+            <p id="game-overlay-desc">Use arrow keys or touch buttons to play</p>
             <button id="game-start-btn" class="game-btn">Start Game</button>
           </div>
         </div>
+        <!-- Mobile Touch D-Pad -->
+        <div class="mobile-game-dpad" id="snake-dpad">
+          <button type="button" class="dpad-btn dpad-up" data-dir="UP" aria-label="Up"><i class="fas fa-chevron-up"></i></button>
+          <div class="dpad-middle-row">
+            <button type="button" class="dpad-btn dpad-left" data-dir="LEFT" aria-label="Left"><i class="fas fa-chevron-left"></i></button>
+            <div class="dpad-center"><i class="fas fa-gamepad"></i></div>
+            <button type="button" class="dpad-btn dpad-right" data-dir="RIGHT" aria-label="Right"><i class="fas fa-chevron-right"></i></button>
+          </div>
+          <button type="button" class="dpad-btn dpad-down" data-dir="DOWN" aria-label="Down"><i class="fas fa-chevron-down"></i></button>
+        </div>
         <div class="game-controls-hint">
-          <p><i class="fas fa-arrows-alt"></i> Use Keyboard Arrow Keys or WASD to Move</p>
+          <p><i class="fas fa-arrows-alt"></i> Use D-Pad, Swipe, or Arrow Keys</p>
         </div>
       </div>
     </div>

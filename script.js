@@ -177,19 +177,27 @@ function openApp(appName) {
     if (output && output.children.length <= 1) runNeofetch();
     setTimeout(() => document.getElementById('terminal-input')?.focus(), 100);
   }
-  // Resume snake game if it was running
-  if (appName === 'game' && typeof snakeGame !== 'undefined' && snakeGame.running) {
-    snakeGame.paused = false;
+  // Resume or init games
+  if (appName === 'game') {
+    initSnakeGame();
+    if (typeof snakeGame !== 'undefined' && snakeGame.running) {
+      snakeGame.paused = false;
+    }
   }
-  // Resume flappy game if it was running
-  if (appName === 'flappy' && typeof flappyGame !== 'undefined' && flappyGame.running) {
-    flappyGame.paused = false;
+  if (appName === 'flappy') {
+    initFlappyGame();
+    if (typeof flappyGame !== 'undefined' && flappyGame.running) {
+      flappyGame.paused = false;
+    }
   }
-  // Resume shooter game if it was running
-  if (appName === 'shooter' && typeof shooterGame !== 'undefined' && shooterGame.running) {
-    shooterGame.paused = false;
-    if (shooterGame.req) cancelAnimationFrame(shooterGame.req);
-    shooterGame.req = requestAnimationFrame(shooterLoop);
+  if (appName === 'shooter') {
+    initShooterGame();
+    resizeShooterCanvas();
+    if (typeof shooterGame !== 'undefined' && shooterGame.running) {
+      shooterGame.paused = false;
+      if (shooterGame.req) cancelAnimationFrame(shooterGame.req);
+      shooterGame.req = requestAnimationFrame(shooterLoop);
+    }
   }
 }
 
@@ -1092,13 +1100,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
-  // ─── SNAKE GAME INIT ───
-  const snakeCanvas = document.getElementById('snake-canvas');
-  if (snakeCanvas) {
-    const startBtn = document.getElementById('game-start-btn');
-    startBtn.addEventListener('click', startSnakeGame);
-    document.addEventListener('keydown', handleSnakeInput);
-  }
+  // ─── GAMES INIT ───
+  initSnakeGame();
+  initFlappyGame();
+  initShooterGame();
 
 }); // end DOMContentLoaded
 
@@ -1274,22 +1279,95 @@ function snakeLoop() {
   ctx.fill();
 }
 
+function queueSnakeDirection(dir) {
+  if (!snakeGame.running || snakeGame.paused) return;
+  if (snakeGame.snake.queue.length > 2) return;
+  snakeGame.snake.queue.push(dir);
+}
+
+let snakeInitialized = false;
+function initSnakeGame() {
+  const canvas = document.getElementById('snake-canvas');
+  if (!canvas) return;
+  snakeGame.ctx = canvas.getContext('2d');
+
+  if (snakeInitialized) return;
+  snakeInitialized = true;
+
+  const startBtn = document.getElementById('game-start-btn');
+  if (startBtn) {
+    const handleStart = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      startSnakeGame();
+    };
+    startBtn.addEventListener('pointerdown', handleStart);
+    startBtn.addEventListener('click', handleStart);
+  }
+
+  // Handle D-Pad on-screen buttons for mobile
+  const dpad = document.getElementById('snake-dpad');
+  if (dpad) {
+    dpad.querySelectorAll('.dpad-btn').forEach(btn => {
+      const handleDir = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const dir = btn.dataset.dir;
+        if (dir) queueSnakeDirection(dir);
+      };
+      btn.addEventListener('pointerdown', handleDir);
+      btn.addEventListener('click', handleDir);
+    });
+  }
+
+  // Touch swipe on snake canvas
+  let touchStartX = 0;
+  let touchStartY = 0;
+  canvas.addEventListener('touchstart', (e) => {
+    if (e.touches && e.touches[0]) {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }
+  }, { passive: false });
+
+  canvas.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+  }, { passive: false });
+
+  canvas.addEventListener('touchend', (e) => {
+    if (!snakeGame.running || snakeGame.paused) return;
+    if (e.changedTouches && e.changedTouches[0]) {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      const dy = e.changedTouches[0].clientY - touchStartY;
+      const absX = Math.abs(dx);
+      const absY = Math.abs(dy);
+      if (Math.max(absX, absY) > 20) {
+        if (absX > absY) {
+          queueSnakeDirection(dx > 0 ? 'RIGHT' : 'LEFT');
+        } else {
+          queueSnakeDirection(dy > 0 ? 'DOWN' : 'UP');
+        }
+      }
+    }
+  }, { passive: true });
+
+  document.addEventListener('keydown', handleSnakeInput);
+}
+
 function handleSnakeInput(e) {
   if (!snakeGame.running || snakeGame.paused) return;
   if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key)) {
-    if (state.openWindows.has('game') && getWindow('game').style.display !== 'none') {
+    if (state.openWindows.has('game') && getWindow('game')?.style.display !== 'none') {
       e.preventDefault();
     } else {
       return;
     }
   }
 
-  if (snakeGame.snake.queue.length > 2) return;
-
-  if (e.key === 'ArrowLeft' || e.key === 'a') snakeGame.snake.queue.push('LEFT');
-  else if (e.key === 'ArrowUp' || e.key === 'w') snakeGame.snake.queue.push('UP');
-  else if (e.key === 'ArrowRight' || e.key === 'd') snakeGame.snake.queue.push('RIGHT');
-  else if (e.key === 'ArrowDown' || e.key === 's') snakeGame.snake.queue.push('DOWN');
+  if (e.key === 'ArrowLeft' || e.key === 'a') queueSnakeDirection('LEFT');
+  else if (e.key === 'ArrowUp' || e.key === 'w') queueSnakeDirection('UP');
+  else if (e.key === 'ArrowRight' || e.key === 'd') queueSnakeDirection('RIGHT');
+  else if (e.key === 'ArrowDown' || e.key === 's') queueSnakeDirection('DOWN');
 }
 
 
@@ -1319,17 +1397,60 @@ const flappyGame = {
   dx: 2 // speed of pipes
 };
 
+let flappyInitialized = false;
 function initFlappyGame() {
   flappyGame.canvas = document.getElementById('flappy-canvas');
   if (!flappyGame.canvas) return;
   flappyGame.ctx = flappyGame.canvas.getContext('2d');
 
-  document.getElementById('flappy-start-btn')?.addEventListener('click', startFlappyGame);
-  document.getElementById('flappy-overlay').style.display = 'flex';
+  if (flappyInitialized) return;
+  flappyInitialized = true;
 
-  // Handle Input
+  const startBtn = document.getElementById('flappy-start-btn');
+  if (startBtn) {
+    const handleStart = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      startFlappyGame();
+    };
+    startBtn.addEventListener('pointerdown', handleStart);
+    startBtn.addEventListener('click', handleStart);
+  }
+
+  const tapBtn = document.getElementById('flappy-tap-btn');
+  if (tapBtn) {
+    const handleTap = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (!flappyGame.running) {
+        startFlappyGame();
+      } else {
+        handleFlappyJump();
+      }
+    };
+    tapBtn.addEventListener('pointerdown', handleTap);
+    tapBtn.addEventListener('click', handleTap);
+  }
+
+  const overlay = document.getElementById('flappy-overlay');
+  if (overlay) overlay.style.display = 'flex';
+
+  const handleCanvasTap = (e) => {
+    e.preventDefault();
+    if (!flappyGame.running) {
+      if (document.getElementById('flappy-overlay')?.style.display !== 'none') {
+        startFlappyGame();
+      }
+    } else {
+      handleFlappyJump();
+    }
+  };
+
+  flappyGame.canvas.addEventListener('pointerdown', handleCanvasTap);
+  flappyGame.canvas.addEventListener('touchstart', handleCanvasTap, { passive: false });
+  flappyGame.canvas.addEventListener('mousedown', handleCanvasTap);
+
   document.addEventListener('keydown', handleFlappyInput);
-  flappyGame.canvas.addEventListener('mousedown', handleFlappyJump);
 }
 
 function startFlappyGame() {
@@ -1484,11 +1605,7 @@ function handleFlappyInput(e) {
   }
 }
 
-// Call init once DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-  // Slight delay to allow fetch components to load
-  setTimeout(() => initFlappyGame(), 500);
-});
+// (Flappy Bird init called in DOMContentLoaded & openApp)
 
 // ─── FPS DUNGEON SHOOTER ───────────────────────────────────
 const shooterGame = {
@@ -1544,21 +1661,142 @@ const shooterGame = {
 };
 
 // ─────────────────────────────── Init ──────────────────────
+let shooterInitialized = false;
 function initShooterGame() {
   const canvas = document.getElementById('shooter-canvas');
   if (!canvas) return;
 
-  document.getElementById('shooter-start-btn')?.addEventListener('click', startShooterGame);
+  if (shooterInitialized) return;
+  shooterInitialized = true;
 
-  // Click canvas: lock pointer (first click) or shoot (while locked)
+  const startBtn = document.getElementById('shooter-start-btn');
+  if (startBtn) {
+    const handleStart = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      startShooterGame();
+    };
+    startBtn.addEventListener('pointerdown', handleStart);
+    startBtn.addEventListener('click', handleStart);
+  }
+
+  // Click canvas: lock pointer (if desktop) or shoot
   canvas.addEventListener('click', () => {
     if (!shooterGame.running || shooterGame.paused) return;
-    if (document.pointerLockElement !== canvas) {
-      canvas.requestPointerLock();
+    if (window.innerWidth > 768 && document.pointerLockElement !== canvas) {
+      try { canvas.requestPointerLock(); } catch(e) {}
     } else if (shooterGame.player.reloadTimer <= 0) {
       shooterShoot();
     }
   });
+
+  // Touch drag to look around, or tap to shoot on canvas
+  let shooterTouchStartX = 0;
+  let shooterLastTouchX = 0;
+  let isShooterDragging = false;
+
+  canvas.addEventListener('touchstart', (e) => {
+    if (!shooterGame.running || shooterGame.paused) return;
+    if (e.touches && e.touches[0]) {
+      shooterTouchStartX = e.touches[0].clientX;
+      shooterLastTouchX = shooterTouchStartX;
+      isShooterDragging = false;
+    }
+  }, { passive: false });
+
+  canvas.addEventListener('touchmove', (e) => {
+    if (!shooterGame.running || shooterGame.paused) return;
+    e.preventDefault();
+    if (e.touches && e.touches[0]) {
+      const curX = e.touches[0].clientX;
+      const deltaX = curX - shooterLastTouchX;
+      shooterLastTouchX = curX;
+      if (Math.abs(curX - shooterTouchStartX) > 6) {
+        isShooterDragging = true;
+      }
+      shooterGame.player.angle += deltaX * 0.006;
+    }
+  }, { passive: false });
+
+  canvas.addEventListener('touchend', (e) => {
+    if (!shooterGame.running || shooterGame.paused) return;
+    if (!isShooterDragging) {
+      if (shooterGame.player.reloadTimer <= 0) {
+        shooterShoot();
+      }
+    }
+  }, { passive: false });
+
+  // On-screen mobile controls (Move pad)
+  const moveBtns = [
+    { id: 'sbtn-up', key: 'w' },
+    { id: 'sbtn-down', key: 's' },
+    { id: 'sbtn-left', key: 'a' },
+    { id: 'sbtn-right', key: 'd' }
+  ];
+
+  moveBtns.forEach(({ id, key }) => {
+    const btn = document.getElementById(id);
+    if (!btn) return;
+    const press = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      shooterGame.keys[key] = true;
+    };
+    const release = (e) => {
+      e.preventDefault();
+      shooterGame.keys[key] = false;
+    };
+    btn.addEventListener('pointerdown', press);
+    btn.addEventListener('pointerup', release);
+    btn.addEventListener('pointercancel', release);
+    btn.addEventListener('pointerleave', release);
+  });
+
+  // Turn buttons
+  let turnInterval = null;
+  const bindTurn = (id, delta) => {
+    const btn = document.getElementById(id);
+    if (!btn) return;
+    const startTurn = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (turnInterval) clearInterval(turnInterval);
+      shooterGame.player.angle += delta;
+      turnInterval = setInterval(() => {
+        if (shooterGame.running && !shooterGame.paused) {
+          shooterGame.player.angle += delta;
+        }
+      }, 30);
+    };
+    const endTurn = (e) => {
+      e.preventDefault();
+      if (turnInterval) {
+        clearInterval(turnInterval);
+        turnInterval = null;
+      }
+    };
+    btn.addEventListener('pointerdown', startTurn);
+    btn.addEventListener('pointerup', endTurn);
+    btn.addEventListener('pointercancel', endTurn);
+    btn.addEventListener('pointerleave', endTurn);
+  };
+  bindTurn('sbtn-turn-left', -0.05);
+  bindTurn('sbtn-turn-right', 0.05);
+
+  // Fire button
+  const fireBtn = document.getElementById('sbtn-fire');
+  if (fireBtn) {
+    const doFire = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (shooterGame.running && !shooterGame.paused && shooterGame.player.reloadTimer <= 0) {
+        shooterShoot();
+      }
+    };
+    fireBtn.addEventListener('pointerdown', doFire);
+    fireBtn.addEventListener('click', doFire);
+  }
 
   // Pointer Lock events
   document.addEventListener('pointerlockchange', () => {
@@ -1606,8 +1844,10 @@ function startShooterGame() {
 
   shooterGame.running = true;
   shooterGame.paused = false;
-  // Request pointer lock on start
-  canvas.requestPointerLock();
+  // Request pointer lock on start only for desktop
+  if (window.innerWidth > 768) {
+    try { canvas.requestPointerLock(); } catch (e) {}
+  }
   if (shooterGame.req) cancelAnimationFrame(shooterGame.req);
   shooterGame.req = requestAnimationFrame(shooterLoop);
 }
@@ -1996,21 +2236,17 @@ function shooterShoot() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => initShooterGame(), 700);
-});
+// (Shooter init called in DOMContentLoaded & openApp)
 
 // ─────────────────────────────── Canvas Resize ─────────────
 function resizeShooterCanvas() {
   const canvas = document.getElementById('shooter-canvas');
   if (!canvas) return;
 
-  // Canvas CSS is 100%x100% of win-body, so offsetWidth/Height is the actual display size
   const W = canvas.offsetWidth  || 480;
   const H = canvas.offsetHeight || 360;
 
-  // Set internal render resolution to match display (no distortion, no letterboxing)
-  if (canvas.width !== W || canvas.height !== H) {
+  if (W > 0 && H > 0 && (canvas.width !== W || canvas.height !== H)) {
     canvas.width  = W;
     canvas.height = H;
     shooterGame.W = W;
