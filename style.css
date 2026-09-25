@@ -1686,20 +1686,13 @@ img { display: block; }
   }
 }
 
-/* ─── iOS visual polish: wallpaper, icons, glass surfaces and safe areas ─── */
+/* ─── iOS visual polish: Desert Titanium Gold wallpaper, icons, glass surfaces and safe areas ─── */
 @media (max-width: 768px) {
   #desktop {
-    background-image:
-      radial-gradient(ellipse at 12% 12%, rgba(116, 164, 255, .74), transparent 42%),
-      radial-gradient(ellipse at 88% 27%, rgba(180, 104, 232, .62), transparent 43%),
-      radial-gradient(ellipse at 47% 82%, rgba(44, 158, 205, .48), transparent 48%),
-      linear-gradient(155deg, #233d67 0%, #29284f 48%, #101625 100%) !important;
-    background-size: 125% 125%, 130% 130%, 120% 120%, 100% 100% !important;
-    animation: iosWallpaperDrift 28s ease-in-out infinite alternate;
-  }
-  @keyframes iosWallpaperDrift {
-    from { background-position: 0% 0%, 100% 0%, 50% 100%, center; }
-    to { background-position: 18% 14%, 82% 22%, 58% 82%, center; }
+    background: url('img/ios_gold_wallpaper.jpg') center top / cover no-repeat !important;
+    background-image: url('img/ios_gold_wallpaper.jpg') !important;
+    background-size: cover !important;
+    animation: none !important;
   }
 
   .ios-status-bar {
@@ -1707,43 +1700,40 @@ img { display: block; }
     padding: env(safe-area-inset-top, 0px) 24px 0 !important;
   }
   .ios-status-left, .ios-status-right { flex-shrink: 0 !important; }
-  .ios-dynamic-island.expanded {
-    width: min(260px, calc(100vw - 168px)) !important;
-    flex-shrink: 1 !important;
-  }
   .island-info { min-width: 0 !important; }
   .island-title, .island-sub { overflow: hidden !important; text-overflow: ellipsis !important; }
-  .island-camera { background: radial-gradient(circle at 35% 35%, #17172a, #020204 70%) !important; }
+  .island-camera { background: radial-gradient(circle at 35% 35%, #2a2016, #080604 70%) !important; }
 
   #lock-screen {
-    background:
-      radial-gradient(ellipse at 18% 14%, rgba(100, 146, 255, .78), transparent 42%),
-      radial-gradient(ellipse at 84% 62%, rgba(166, 83, 205, .48), transparent 48%),
-      linear-gradient(165deg, #1d3158 0%, #111a31 54%, #070a12 100%) !important;
+    background: url('img/ios_gold_wallpaper.jpg') center top / cover no-repeat !important;
+    background-image: url('img/ios_gold_wallpaper.jpg') !important;
+    background-size: cover !important;
   }
   .lock-time-wrap { margin-top: 44px !important; }
   .lock-user-wrap { gap: 10px !important; }
   .lock-avatar {
     width: 74px !important; height: 74px !important;
-    border-color: rgba(255,255,255,.58) !important;
-    box-shadow: 0 8px 26px rgba(0,0,0,.32), 0 0 0 5px rgba(255,255,255,.08) !important;
+    border-color: rgba(225, 195, 145, 0.6) !important;
+    box-shadow: 0 8px 26px rgba(35, 20, 8, 0.45), 0 0 0 5px rgba(225, 195, 145, 0.15) !important;
   }
-  .ios-lock-btn { box-shadow: 0 5px 20px rgba(0,0,0,.2) !important; }
+  .ios-lock-btn { box-shadow: 0 5px 20px rgba(25, 12, 5, 0.35) !important; }
   .ios-swipe-text { letter-spacing: .1px !important; }
 
   .ios-profile-widget {
-    background: linear-gradient(145deg, rgba(255,255,255,.19), rgba(255,255,255,.075)) !important;
-    border-color: rgba(255,255,255,.22) !important;
-    box-shadow: 0 14px 36px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.12) !important;
+    background: rgba(36, 28, 22, 0.72) !important;
+    border-color: rgba(225, 195, 145, 0.3) !important;
+    box-shadow: 0 14px 36px rgba(25, 14, 6, 0.4), inset 0 1px 0 rgba(255, 235, 200, 0.15) !important;
     padding: 17px !important;
     backdrop-filter: blur(32px) saturate(185%) !important;
     -webkit-backdrop-filter: blur(32px) saturate(185%) !important;
   }
-  .ios-widget-avatar { border-color: rgba(255,255,255,.62) !important; }
+  .ios-widget-avatar { border-color: rgba(225, 195, 145, 0.6) !important; }
   .ios-widget-name { letter-spacing: -.45px !important; }
+  .ios-widget-role { color: #dfbd8c !important; }
   .ios-wtag {
-    background: rgba(255,255,255,.14) !important;
-    border: 1px solid rgba(255,255,255,.08) !important;
+    background: rgba(225, 195, 145, 0.16) !important;
+    border: 1px solid rgba(225, 195, 145, 0.25) !important;
+    color: #faeedc !important;
     padding: 5px 9px !important;
   }
 
@@ -1767,9 +1757,9 @@ img { display: block; }
   .dicon-label { text-shadow: 0 1px 5px rgba(0,0,0,.9) !important; }
 
   #dock {
-    background: linear-gradient(145deg, rgba(255,255,255,.28), rgba(220,225,245,.17)) !important;
-    border-color: rgba(255,255,255,.32) !important;
-    box-shadow: 0 16px 38px rgba(0,0,0,.26), inset 0 1px 0 rgba(255,255,255,.22) !important;
+    background: rgba(38, 28, 20, 0.58) !important;
+    border-color: rgba(225, 195, 145, 0.28) !important;
+    box-shadow: 0 16px 38px rgba(25, 12, 5, 0.38), inset 0 1px 0 rgba(255, 235, 200, 0.18) !important;
     backdrop-filter: blur(34px) saturate(190%) !important;
     -webkit-backdrop-filter: blur(34px) saturate(190%) !important;
   }
@@ -1781,23 +1771,7 @@ img { display: block; }
     height: calc(100% - 48px - env(safe-area-inset-top, 0px)) !important;
   }
   .win-content { padding-bottom: calc(30px + env(safe-area-inset-bottom, 0px)) !important; }
-  .win-titlebar { background: rgba(36,36,40,.88) !important; }
-}
-
-@media (max-width: 360px) {
-  .ios-status-bar { padding-left: 18px !important; padding-right: 18px !important; }
-  .ios-status-right { gap: 5px !important; }
-  .ios-dynamic-island.expanded { width: min(220px, calc(100vw - 150px)) !important; }
-  .desktop-icons.app-grid-content { gap: 13px 5px !important; }
-  .dicon-img { width: 54px !important; height: 54px !important; }
-  .ios-widget-tags { gap: 5px !important; }
-  .ios-wtag { font-size: 10.5px !important; }
-}
-
-@media (prefers-reduced-motion: reduce) and (max-width: 768px) {
-  #desktop { animation: none !important; }
-  .ios-swipe-text, .island-waves span { animation: none !important; }
-  .ios-profile-widget, .dock-item, .dicon, .ios-dynamic-island { transition-duration: .01ms !important; }
+  .win-titlebar { background: rgba(36, 28, 22, 0.88) !important; }
 }
 
 /* ═══════════════════════════════════════════════════════════
