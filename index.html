@@ -19,7 +19,7 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-  <link rel="stylesheet" href="style.css?v=8" />
+  <link rel="stylesheet" href="style.css?v=9" />
 </head>
 <body>
 
@@ -446,6 +446,26 @@
         </div>
         <span class="dicon-label">FPS Shooter</span>
       </div>
+
+      <div class="dicon" data-app="chatbot" id="dicon-chatbot">
+        <div class="dicon-img">
+          <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="aiOrbD" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#a855f7" />
+                <stop offset="50%" stop-color="#ec4899" />
+                <stop offset="100%" stop-color="#eab308" />
+              </linearGradient>
+            </defs>
+            <rect x="4" y="4" width="40" height="40" rx="10" fill="#18130e"/>
+            <circle cx="24" cy="24" r="14" fill="url(#aiOrbD)" opacity="0.95"/>
+            <path d="M24 13 L26.5 21 L34 24 L26.5 27 L24 35 L21.5 27 L14 24 L21.5 21 Z" fill="#ffffff"/>
+            <circle cx="34" cy="14" r="2.2" fill="#fff"/>
+            <circle cx="14" cy="32" r="1.8" fill="#fff"/>
+          </svg>
+        </div>
+        <span class="dicon-label">AI Assistant</span>
+      </div>
       </div> <!-- End app-grid-content -->
     </div> <!-- End app-grid-overlay -->
 
@@ -561,6 +581,26 @@
       <div class="dock-tooltip">Snake Game</div>
       <div class="dock-indicator"></div>
     </div>
+    <div class="dock-item" data-app="chatbot" title="AI Assistant (Kimi K3)">
+      <div class="dock-icon">
+        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="aiOrb" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#9333ea" />
+              <stop offset="50%" stop-color="#ec4899" />
+              <stop offset="100%" stop-color="#f59e0b" />
+            </linearGradient>
+          </defs>
+          <rect x="4" y="4" width="40" height="40" rx="10" fill="#18130e"/>
+          <circle cx="24" cy="24" r="14" fill="url(#aiOrb)" opacity="0.9"/>
+          <path d="M24 14 L26 21 L33 24 L26 27 L24 34 L22 27 L15 24 L22 21 Z" fill="#ffffff"/>
+          <circle cx="33" cy="15" r="2" fill="#fff" opacity="0.8"/>
+          <circle cx="15" cy="31" r="1.5" fill="#fff" opacity="0.8"/>
+        </svg>
+      </div>
+      <div class="dock-tooltip">AI Assistant</div>
+      <div class="dock-indicator"></div>
+    </div>
     <div class="dock-item show-apps" id="show-apps-btn" title="All Apps">
       <div class="dock-icon">
         <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
@@ -594,6 +634,7 @@
     <div id='comp-game'></div>
     <div id='comp-flappy'></div>
     <div id='comp-shooter'></div>
+    <div id='comp-chatbot'></div>
   </div><!-- /windows-layer -->
 
   <!-- iOS Bottom Home Indicator (Mobile Only) -->
@@ -609,6 +650,6 @@
 
 </div><!-- /desktop -->
 
-<script src="script.js?v=4"></script>
+<script src="script.js?v=5"></script>
 </body>
 </html>

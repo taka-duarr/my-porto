@@ -1,0 +1,111 @@
+    <!-- AI CHATBOT WINDOW -->
+    <div class="window" id="win-chatbot" data-app="chatbot" style="display:none; top:70px; left:160px; width:740px; height:560px;">
+      <div class="win-titlebar">
+        <div class="win-controls">
+          <button class="win-btn win-close" data-win="chatbot" title="Close"></button>
+          <button class="win-btn win-minimize" data-win="chatbot" title="Minimize"></button>
+          <button class="win-btn win-maximize" data-win="chatbot" title="Maximize"></button>
+        </div>
+        <span class="win-title"><i class="fas fa-wand-magic-sparkles"></i> &nbsp;AI Assistant — Kimi K3</span>
+        <div class="win-title-spacer"></div>
+      </div>
+      <div class="win-body chatbot-win-body">
+        <div class="sidebar-nav chatbot-sidebar">
+          <div class="sidebar-section">Asisten AI</div>
+          <div class="sidebar-item active" id="chat-tab-main">
+            <i class="fas fa-comments"></i> <span>Chat Room</span>
+          </div>
+          <div class="sidebar-section">Topik Cepat</div>
+          <div class="sidebar-item" onclick="sendQuickPrompt('Ceritakan tentang Firman Ardiansyah dan keahliannya')">
+            <i class="fas fa-user-astronaut"></i> <span>Tentang Firman</span>
+          </div>
+          <div class="sidebar-item" onclick="sendQuickPrompt('Apa saja proyek unggulan yang pernah dibuat Firman?')">
+            <i class="fas fa-laptop-code"></i> <span>Proyek Portofolio</span>
+          </div>
+          <div class="sidebar-item" onclick="sendQuickPrompt('Sebutkan tech stack dan bahasa pemrograman yang dikuasai')">
+            <i class="fas fa-layer-group"></i> <span>Tech Stack</span>
+          </div>
+          <div class="sidebar-item" onclick="sendQuickPrompt('Bagaimana cara menghubungi Firman untuk kerja sama/proyek?')">
+            <i class="fas fa-paper-plane"></i> <span>Kontak & Kerja Sama</span>
+          </div>
+          <div class="sidebar-section">Tindakan</div>
+          <div class="sidebar-item chat-action-item" id="chat-clear-btn">
+            <i class="fas fa-trash-can"></i> <span>Bersihkan Chat</span>
+          </div>
+        </div>
+
+        <div class="win-content chatbot-content">
+          <!-- Chat Header Bar -->
+          <div class="chatbot-header">
+            <div class="chatbot-header-info">
+              <div class="chatbot-avatar">
+                <i class="fas fa-microchip"></i>
+                <span class="chatbot-status-dot" title="Online"></span>
+              </div>
+              <div class="chatbot-header-text">
+                <div class="chatbot-header-title">
+                  <strong>Kimi AI Assistant</strong>
+                  <span class="chatbot-model-badge">moonshotai/kimi-k3</span>
+                </div>
+                <div class="chatbot-header-sub">Ditenagai oleh NVIDIA API &bull; Personal Portfolio AI</div>
+              </div>
+            </div>
+            <div class="chatbot-header-actions">
+              <button type="button" class="chat-header-btn" id="chat-header-clear-btn" title="Hapus riwayat percakapan">
+                <i class="fas fa-rotate-left"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Messages Container -->
+          <div class="chatbot-messages" id="chatbot-messages">
+            <!-- Welcome Message -->
+            <div class="chat-msg chat-msg-assistant">
+              <div class="chat-msg-avatar">
+                <i class="fas fa-robot"></i>
+              </div>
+              <div class="chat-msg-bubble">
+                <div class="chat-msg-author">Kimi AI</div>
+                <div class="chat-msg-text">
+                  <p>Halo! Saya <strong>Kimi AI</strong>, asisten cerdas portofolio Firman Ardiansyah yang ditenagai oleh model <code>moonshotai/kimi-k3</code> dari <strong>NVIDIA API</strong>.</p>
+                  <p>Ada yang bisa saya bantu terkait proyek, pengalaman, skill teknis Firman, atau pertanyaan pemrograman lainnya?</p>
+                </div>
+                <div class="chat-quick-suggestions">
+                  <button type="button" class="chat-quick-chip" onclick="sendQuickPrompt('Ceritakan tentang Firman Ardiansyah')">
+                    👨‍💻 Siapa Firman?
+                  </button>
+                  <button type="button" class="chat-quick-chip" onclick="sendQuickPrompt('Jelaskan proyek PT Conbloc Indotama Quarry dan Nganime')">
+                    🚀 Proyek Utama
+                  </button>
+                  <button type="button" class="chat-quick-chip" onclick="sendQuickPrompt('Apa teknologi utama yang dikuasai Firman?')">
+                    ⚡ Skill & Tech Stack
+                  </button>
+                </div>
+                <div class="chat-msg-time">Sekarang</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Input Bar -->
+          <div class="chatbot-input-container">
+            <form id="chatbot-form" class="chatbot-input-form" onsubmit="handleChatSubmit(event)">
+              <div class="chat-input-wrapper">
+                <textarea
+                  id="chatbot-input"
+                  class="chatbot-input"
+                  placeholder="Ketik pesan atau pertanyaan untuk Kimi AI..."
+                  rows="1"
+                  required
+                ></textarea>
+                <button type="submit" class="chat-send-btn" id="chat-send-btn" title="Kirim Pesan">
+                  <i class="fas fa-paper-plane"></i>
+                </button>
+              </div>
+            </form>
+            <div class="chatbot-footer-hint">
+              <span>Model: <strong>kimi-k3</strong> via NVIDIA AI Catalog &bull; Shift + Enter untuk baris baru</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

@@ -1,5 +1,5 @@
     <!-- FPS DUNGEON SHOOTER WINDOW -->
-    <div class="window" id="win-shooter" data-app="shooter" style="display:none; top:50px; left:80px; width:560px; height:460px;">
+    <div class="window" id="win-shooter" data-app="shooter" style="display:none; top:50px; left:80px; width:760px; height:540px;">
       <div class="win-titlebar" style="background:rgba(34, 26, 20, 0.95); border-bottom: 1px solid rgba(225, 195, 145, 0.2);">
         <div class="win-controls">
           <button class="win-btn win-close" data-win="shooter" title="Close"></button>
@@ -16,12 +16,12 @@
         <div id="shooter-overlay" class="shooter-overlay" style="position:absolute; top:0; left:0; width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:rgba(18,14,10,0.92); z-index:10; color:white; text-align:center; backdrop-filter:blur(6px);">
           <div style="font-size:3rem; margin-bottom:8px;">🔫</div>
           <h2 id="shooter-overlay-title" style="font-family:'Ubuntu',sans-serif; font-size:2rem; color:#dfbd8c; text-shadow:0 0 30px #dfbd8c, 0 0 60px rgba(223,189,140,0.5); margin-bottom:8px; letter-spacing:3px;">DUNGEON SHOOTER</h2>
-          <p id="shooter-overlay-desc" style="font-size:0.85rem; color:#eedbc3; margin-bottom:16px;">Hunt down all enemies in the dungeon!</p>
+          <p id="shooter-overlay-desc" style="font-size:0.85rem; color:#eedbc3; margin-bottom:16px;">Survive 3 waves of demons. They chase you, claw you and throw fireballs — keep moving!</p>
           <div class="shooter-desktop-hints" style="display:grid; grid-template-columns:1fr 1fr; gap:6px 20px; font-size:0.75rem; color:#eedbc3; margin-bottom:16px; text-align:left;">
-            <span><span style="color:#dfbd8c; font-weight:bold;">Move:</span> W/S/A/D or Pad</span>
-            <span><span style="color:#dfbd8c; font-weight:bold;">Look:</span> Drag or Turn</span>
-            <span><span style="color:#dfbd8c; font-weight:bold;">Shoot:</span> Tap / Click / Button</span>
-            <span><span style="color:#dfbd8c; font-weight:bold;">Reload:</span> Auto or 'R'</span>
+            <span><span style="color:#dfbd8c; font-weight:bold;">Move:</span> W A S D · Shift sprint</span>
+            <span><span style="color:#dfbd8c; font-weight:bold;">Look:</span> Mouse · ← → · Q / E</span>
+            <span><span style="color:#dfbd8c; font-weight:bold;">Shoot:</span> Hold click / Space</span>
+            <span><span style="color:#dfbd8c; font-weight:bold;">Reload:</span> R · Mute: M</span>
           </div>
           <button id="shooter-start-btn" class="game-btn" style="background:linear-gradient(135deg,#dfbd8c,#a47b4d); color:#241608; border:none; padding:12px 36px; font-size:1rem; font-weight:bold; letter-spacing:2px; border-radius:18px; cursor:pointer; text-transform:uppercase; box-shadow:0 4px 16px rgba(164,123,77,0.4);">START MISSION</button>
         </div>
