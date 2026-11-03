@@ -3309,7 +3309,7 @@ img { display: block; }
 
 /* Desktop: JS handles window animations, so drop the CSS ones */
 @media (min-width: 769px) {
-  .window { animation: none; will-change: transform, opacity; }
+  .window { animation: none; }
 
   /* Smooth maximize / restore */
   .window.win-geom-anim {
@@ -3326,9 +3326,7 @@ img { display: block; }
     transform-origin: left center;
     transition: transform 0.12s ease-out;
   }
-  .dock.dock-magnify .dock-item {
-    transition: margin 0.12s ease-out, transform var(--anim-fast);
-  }
+  .dock.dock-magnify .dock-icon { will-change: transform; }
   .dock.dock-magnify .dock-item:hover { transform: none; }
   .dock-icon.dock-bounce { animation: dock-bounce 0.9s cubic-bezier(0.3, 0, 0.3, 1) !important; }
   @keyframes dock-bounce {
@@ -3350,7 +3348,7 @@ img { display: block; }
 /* ─── Boot → Lock ─── */
 .boot-screen.boot-leaving { animation: boot-leave 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
 @keyframes boot-leave {
-  to { opacity: 0; transform: scale(0.94); filter: blur(8px); }
+  to { opacity: 0; transform: scale(0.94); }
 }
 
 .lock-screen.lock-entering { animation: lock-enter 0.6s ease both; }
@@ -3387,18 +3385,18 @@ img { display: block; }
   animation: lock-unlock 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 @keyframes lock-unlock {
-  to { opacity: 0; transform: scale(1.08); filter: blur(16px); }
+  to { opacity: 0; transform: scale(1.08); }
 }
 .desktop.desktop-entering { animation: desktop-focus-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
 @keyframes desktop-focus-in {
-  from { opacity: 0; transform: scale(1.06); filter: blur(10px); }
-  to   { opacity: 1; transform: none; filter: none; }
+  from { opacity: 0; transform: scale(1.04); }
+  to   { opacity: 1; transform: none; }
 }
 
 /* ─── Lock (from power menu): desktop fades out ─── */
 .desktop.desktop-leaving { pointer-events: none; animation: desktop-leave 0.45s cubic-bezier(0.4, 0, 1, 1) forwards; }
 @keyframes desktop-leave {
-  to { opacity: 0; transform: scale(0.97); filter: blur(8px); }
+  to { opacity: 0; transform: scale(0.97); }
 }
 
 /* Mobile: iOS-style swipe-up unlock */
@@ -3423,25 +3421,26 @@ img { display: block; }
   .window.win-geom-anim { transition: none; }
 }
 
-/* ─── Balloon open/close: glossy highlight while the window is "inflating" ─── */
-.window.win-balloon::after {
-  content: '';
-  position: absolute; inset: 0; z-index: 50;
-  border-radius: inherit;
+/* ─── Liquid Glass open/close ───
+   A glass "drop" that grows out of the dock icon together with the window.
+   No backdrop blur here on purpose: it's animated every frame. */
+.win-liquid {
+  position: fixed; z-index: 1600;
   pointer-events: none;
+  transform-origin: 50% 50%;
+  border-radius: 12px;
   background:
-    radial-gradient(ellipse 38% 30% at 30% 22%, rgba(255,255,255,0.45), rgba(255,255,255,0) 70%),
-    radial-gradient(ellipse 90% 90% at 50% 50%, rgba(233,84,32,0) 55%, rgba(233,84,32,0.28) 100%);
-  animation: balloon-sheen 0.7s ease-out forwards;
-}
-@keyframes balloon-sheen {
-  0%, 35% { opacity: 1; }
-  100%    { opacity: 0; }
+    radial-gradient(120% 70% at 28% 0%, rgba(255,255,255,0.5), rgba(255,255,255,0) 55%),
+    radial-gradient(90% 60% at 80% 110%, rgba(233,84,32,0.35), rgba(233,84,32,0) 60%),
+    linear-gradient(160deg, rgba(110,80,150,0.6), rgba(36,22,48,0.78));
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,0.55),
+    inset 0 0 0 1.5px rgba(255,255,255,0.28),
+    inset 0 -10px 24px rgba(255,255,255,0.12);
 }
 
 @media (min-width: 769px) {
   /* Focused vs. background windows */
-  .window { transition: box-shadow 0.25s ease, filter 0.25s ease; }
   .window:not(.win-focused) { box-shadow: 0 16px 40px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.06); }
   .window:not(.win-focused) .win-titlebar { opacity: 0.72; transition: opacity 0.25s ease; }
   .window.win-focused .win-titlebar { opacity: 1; transition: opacity 0.25s ease; }
@@ -3482,9 +3481,8 @@ img { display: block; }
   animation: menu-spring-in 0.32s cubic-bezier(0.34, 1.45, 0.64, 1);
 }
 @keyframes menu-spring-in {
-  from { opacity: 0; transform: scale(0.6); filter: blur(4px); }
-  60%  { filter: blur(0); }
-  to   { opacity: 1; transform: scale(1); filter: none; }
+  from { opacity: 0; transform: scale(0.6); }
+  to   { opacity: 1; transform: scale(1); }
 }
 .power-menu.menu-closing,
 .context-menu.menu-closing {
@@ -3492,19 +3490,21 @@ img { display: block; }
   animation: menu-fold-out 0.16s cubic-bezier(0.4, 0, 1, 1) forwards;
 }
 @keyframes menu-fold-out {
-  to { opacity: 0; transform: scale(0.85); filter: blur(3px); }
+  to { opacity: 0; transform: scale(0.85); }
 }
 
 /* App grid backdrop zooms like macOS Launchpad */
 @media (min-width: 769px) {
   .app-grid-overlay {
-    transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), backdrop-filter 0.35s ease;
+    transition: opacity 0.3s ease;
   }
-  .app-grid-overlay.hidden { transform: scale(1.12); }
+  .app-grid-overlay.hidden { transform: none; }
+  .app-grid-overlay .app-grid-content { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+  .app-grid-overlay.hidden .app-grid-content { transform: scale(1.08); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .window.win-balloon::after, .skills-panel.active,
+  .skills-panel.active,
   .power-menu, .context-menu, .menu-closing { animation: none !important; }
   .sidebar-pill { transition: none; }
 }

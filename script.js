@@ -226,7 +226,7 @@ function dockOrigin(win, appName) {
 }
 
 // Where the user clicked to launch an app (dock icon, app grid icon, menu item…).
-// Captured on pointerdown so the balloon can inflate from that exact spot.
+// Captured on pointerdown so the window can grow out of that exact spot.
 function initLaunchOriginTracking() {
   document.addEventListener('pointerdown', e => {
     const src = e.target.closest('.dock-item[data-app], .dicon[data-app], [onclick*="openApp"]');
@@ -251,62 +251,121 @@ function getLaunchOrigin(appName) {
   return getDockAnchor(appName);
 }
 
-// Translate + start scale that put the window's center on the origin point.
-function balloonGeometry(win, origin) {
+// ─── Liquid Glass open/close (macOS Tahoe style) ──────────
+// The window grows out of its dock icon like a drop of liquid glass:
+// it starts as a small round drop, stretches while it travels, squashes,
+// bounces and settles. Closing does the reverse back into the icon.
+// A thin glass layer carries the rounded "drop" shape, while the window
+// itself only animates transform/opacity (no repaint of its contents).
+
+// Spring curve: t → p (travel 0..1), sx/sy (scale relative to full size), r (corner radius)
+const LIQUID_OPEN = [
+  { t: 0,    p: 0,    sx: null, sy: null, r: '50%' },  // null = drop the size of the icon
+  { t: 0.16, p: 0.22, sx: 0.24, sy: 0.18, r: '50%' },
+  { t: 0.42, p: 0.82, sx: 0.84, sy: 0.7,  r: '38%' },
+  { t: 0.58, p: 1,    sx: 1.06, sy: 0.93, r: '24px' },
+  { t: 0.72, p: 1,    sx: 0.975, sy: 1.035, r: '15px' },
+  { t: 0.86, p: 1,    sx: 1.01, sy: 0.992, r: '12px' },
+  { t: 1,    p: 1,    sx: 1,    sy: 1,    r: '12px' },
+];
+const LIQUID_CLOSE = [
+  { t: 0,    p: 0,    sx: 1,    sy: 1,    r: '12px' },
+  { t: 0.2,  p: 0,    sx: 1.03, sy: 0.965, r: '18px' },  // little squish before leaving
+  { t: 0.45, p: 0.32, sx: 0.64, sy: 0.74, r: '36%' },
+  { t: 0.75, p: 0.8,  sx: 0.22, sy: 0.28, r: '50%' },
+  { t: 1,    p: 1,    sx: null, sy: null, r: '50%' },
+];
+
+function liquidGeometry(win, point) {
   const r = win.getBoundingClientRect();
-  if (!origin || !r.width) return { dx: 0, dy: 60, s: 0.1 };
-  return {
-    dx: origin.x - (r.left + r.width / 2),
-    dy: origin.y - (r.top + r.height / 2),
-    s: Math.max(origin.size / Math.max(r.width, r.height), 0.03),
-  };
+  const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+  const pt = point || { x: cx, y: window.innerHeight + 40, size: 40 };
+  const size = Math.max(24, pt.size || 40);
+  return { r, dx: pt.x - cx, dy: pt.y - cy, dropX: size / r.width, dropY: size / r.height };
 }
 
-const t3 = (x, y, sx, sy = sx) => `translate(${x}px, ${y}px) scale(${sx}, ${sy})`;
-
-function playBalloon(win, frames, opts, done) {
-  win.classList.add('win-balloon');
-  win._anim = win.animate(frames, { fill: 'both', ...opts });
-  win._anim.onfinish = () => {
-    done?.();
-    win.classList.remove('win-balloon');
-    stopWindowAnimation(win);
-  };
-  win._anim.oncancel = () => win.classList.remove('win-balloon');
+// Transform for a curve point: offset from the icon toward the window, plus squash/stretch.
+// `towardIcon` is how far along the path back to the icon we are (1 = at the icon).
+function liquidTransform(g, k, towardIcon) {
+  const sx = k.sx ?? g.dropX, sy = k.sy ?? g.dropY;
+  return `translate(${g.dx * towardIcon}px, ${g.dy * towardIcon}px) scale(${sx}, ${sy})`;
 }
 
-// Open: a small balloon floats up from where it was clicked, inflates,
-// overshoots, wobbles, and settles into the window.
+// Value of the curve at time t (linear between points)
+function liquidAt(curve, t) {
+  let i = 1;
+  while (i < curve.length - 1 && curve[i].t < t) i++;
+  const a = curve[i - 1], b = curve[i];
+  const u = (t - a.t) / (b.t - a.t || 1);
+  const mix = (x, y) => x + (y - x) * u;
+  return { t, p: mix(a.p, b.p), sx: a.sx == null || b.sx == null ? null : mix(a.sx, b.sx), sy: a.sy == null || b.sy == null ? null : mix(a.sy, b.sy), r: b.r };
+}
+
+function makeLiquidLayer(r) {
+  const el = document.createElement('div');
+  el.className = 'win-liquid';
+  Object.assign(el.style, { left: `${r.left}px`, top: `${r.top}px`, width: `${r.width}px`, height: `${r.height}px` });
+  document.body.appendChild(el);
+  return el;
+}
+
 function animateWindowOpen(win, appName) {
   stopWindowAnimation(win);
   if (!canAnimateWindows()) return;
   win._origin = getLaunchOrigin(appName);
-  const { dx, dy, s } = balloonGeometry(win, win._origin);
-  const out = 'cubic-bezier(0.25, 0.8, 0.4, 1)';
-  playBalloon(win, [
-    { transformOrigin: '50% 50%', transform: t3(dx, dy, s), borderRadius: '50%', opacity: 0, easing: out },
-    { transformOrigin: '50% 50%', transform: t3(dx * 0.9, dy * 0.9, s * 2.4, s * 2.6), borderRadius: '50%', opacity: 1, offset: 0.12, easing: out },
-    { transformOrigin: '50% 50%', transform: t3(dx * 0.12, dy * 0.12, 0.74, 0.66), borderRadius: '46%', offset: 0.42, easing: out },
-    { transformOrigin: '50% 50%', transform: t3(0, 0, 1.06, 0.95), borderRadius: '30px', offset: 0.62, easing: 'ease-in-out' },
-    { transformOrigin: '50% 50%', transform: t3(0, 0, 0.97, 1.03), borderRadius: '18px', offset: 0.77, easing: 'ease-in-out' },
-    { transformOrigin: '50% 50%', transform: t3(0, 0, 1.012, 0.994), borderRadius: '13px', offset: 0.9, easing: 'ease-in-out' },
-    { transformOrigin: '50% 50%', transform: t3(0, 0, 1), borderRadius: '12px', opacity: 1 },
-  ], { duration: 760 });
+  const g = liquidGeometry(win, win._origin);
+  const T = 640, ease = 'cubic-bezier(0.33, 0, 0.4, 1)';
+
+  // Glass drop: carries the round shape, fades once the window shows through
+  const glass = makeLiquidLayer(g.r);
+  const glassFrames = LIQUID_OPEN.map(k => ({
+    offset: k.t, transform: liquidTransform(g, k, 1 - k.p), borderRadius: k.r,
+    opacity: k.t < 0.45 ? 1 : k.t < 0.72 ? 0.35 : 0, easing: ease,
+  }));
+  glassFrames[0].opacity = 0.9;
+  const ga = glass.animate(glassFrames, { duration: T, fill: 'forwards' });
+  ga.onfinish = ga.oncancel = () => glass.remove();
+
+  // The window follows the same spring, appearing once it's clear of the dock
+  const START = 0.3;
+  const pts = [liquidAt(LIQUID_OPEN, START), ...LIQUID_OPEN.filter(k => k.t > START)];
+  win._anim = win.animate(pts.map(k => ({
+    offset: (k.t - START) / (1 - START),
+    transformOrigin: '50% 50%',
+    transform: liquidTransform(g, k, 1 - k.p),
+    opacity: k.t < 0.42 ? 0 : 1,
+    easing: ease,
+  })), { duration: T * (1 - START), delay: T * START, fill: 'backwards' });
+  win._anim.onfinish = () => { win._anim = null; };
 }
 
-// Close: the window puffs up for a moment, then deflates back into its spot.
 function animateWindowClose(win, done, appName) {
   stopWindowAnimation(win);
   if (!canAnimateWindows()) { done(); return; }
-  const target = getDockAnchor(appName) || win._origin;
-  const { dx, dy, s } = balloonGeometry(win, target);
-  playBalloon(win, [
-    { transformOrigin: '50% 50%', transform: t3(0, 0, 1), borderRadius: '12px', opacity: 1, easing: 'ease-out' },
-    { transformOrigin: '50% 50%', transform: t3(0, 0, 1.045, 1.035), borderRadius: '24px', offset: 0.2, easing: 'ease-in' },
-    { transformOrigin: '50% 50%', transform: t3(dx * 0.18, dy * 0.18, 0.62, 0.68), borderRadius: '50%', offset: 0.48, easing: 'ease-in' },
-    { transformOrigin: '50% 50%', transform: t3(dx * 0.75, dy * 0.75, s * 3, s * 2.6), borderRadius: '50%', opacity: 0.9, offset: 0.8, easing: 'ease-in' },
-    { transformOrigin: '50% 50%', transform: t3(dx, dy, s), borderRadius: '50%', opacity: 0 },
-  ], { duration: 560 }, done);
+  const g = liquidGeometry(win, getDockAnchor(appName) || win._origin);
+  const T = 500, ease = 'cubic-bezier(0.45, 0, 0.6, 1)';
+
+  // Window squishes and shrinks, then hands over to the glass drop
+  const END = 0.5;
+  const pts = [...LIQUID_CLOSE.filter(k => k.t < END), liquidAt(LIQUID_CLOSE, END)];
+  win._anim = win.animate(pts.map(k => ({
+    offset: k.t / END,
+    transformOrigin: '50% 50%',
+    transform: liquidTransform(g, k, k.p),
+    opacity: k.t < 0.3 ? 1 : k.t < END ? 0.5 : 0,
+    easing: ease,
+  })), { duration: T * END, fill: 'forwards' });
+  win._anim.onfinish = () => {
+    done();
+    stopWindowAnimation(win);
+  };
+
+  const glass = makeLiquidLayer(g.r);
+  const ga = glass.animate(LIQUID_CLOSE.map(k => ({
+    offset: k.t, transform: liquidTransform(g, k, k.p), borderRadius: k.r,
+    opacity: k.t < 0.25 ? 0 : k.t < 0.9 ? 1 : 0.6, easing: ease,
+  })), { duration: T, fill: 'forwards' });
+  ga.onfinish = ga.oncancel = () => glass.remove();
 }
 
 // ─── Tidy window placement ────────────────────────────────
@@ -474,16 +533,13 @@ function openContextMenuAt(x, y) {
 
 // Genie effect: the window pinches toward the dock (on the left) and gets sucked in.
 function genieKeyframes(win, appName) {
-  const { origin, scale, oy } = dockOrigin(win, appName);
-  const cy = Math.min(Math.max(oy, 12), 88);
-  const full = 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)';
-  const pinched = `polygon(0% ${cy - 10}%, 100% 0%, 100% 100%, 0% ${cy + 10}%)`;
-  const funnel = `polygon(0% ${cy - 4}%, 100% ${cy - 30}%, 100% ${cy + 30}%, 0% ${cy + 4}%)`;
+  // Squeeze toward the dock icon (transform origin) first, then get sucked in.
+  const { origin, scale } = dockOrigin(win, appName);
   return [
-    { transformOrigin: origin, transform: 'scale(1, 1)', clipPath: full, opacity: 1 },
-    { transformOrigin: origin, transform: 'scale(0.82, 0.96)', clipPath: pinched, opacity: 1, offset: 0.35 },
-    { transformOrigin: origin, transform: `scale(${scale * 2}, ${scale * 3})`, clipPath: funnel, opacity: 0.85, offset: 0.8 },
-    { transformOrigin: origin, transform: `scale(${scale})`, clipPath: funnel, opacity: 0 },
+    { transformOrigin: origin, transform: 'scale(1, 1)', opacity: 1 },
+    { transformOrigin: origin, transform: 'scale(0.7, 0.92)', opacity: 1, offset: 0.4 },
+    { transformOrigin: origin, transform: `scale(${scale * 2.2}, ${scale * 3})`, opacity: 0.8, offset: 0.82 },
+    { transformOrigin: origin, transform: `scale(${scale})`, opacity: 0 },
   ];
 }
 
@@ -528,24 +584,32 @@ function initDockMagnify() {
   let frame = null;
   let mouseY = null;
 
+  // Item centers never move (only icons are transformed), so measure once per hover.
+  let centers = null;
   const apply = () => {
     frame = null;
     const off = mouseY === null || isMobileLayout() || prefersReducedMotion();
-    items.forEach(item => {
+    if (off) {
+      items.forEach(item => { const icon = item.querySelector('.dock-icon'); if (icon) icon.style.transform = ''; });
+      centers = null;
+      return;
+    }
+    if (!centers) centers = items.map(item => { const r = item.getBoundingClientRect(); return r.top + r.height / 2; });
+    // Grow icons near the cursor and push neighbours apart with transforms only (no layout).
+    const grows = centers.map(c => {
+      const t = Math.max(0, 1 - Math.abs(mouseY - c) / RANGE);
+      return 44 * MAX * (1 - Math.cos(t * Math.PI)) / 2;
+    });
+    let k = 0;
+    centers.forEach((c, i) => { if (Math.abs(mouseY - c) < Math.abs(mouseY - centers[k])) k = i; });
+    const cum = [];
+    grows.reduce((acc, gr, i) => (cum[i] = acc + gr / 2, acc + gr), 0);
+    items.forEach((item, i) => {
       const icon = item.querySelector('.dock-icon');
       if (!icon) return;
-      if (off) {
-        icon.style.transform = '';
-        item.style.marginBlock = '';
-        return;
-      }
-      const r = item.getBoundingClientRect();
-      const dist = Math.abs(mouseY - (r.top + r.height / 2));
-      const t = Math.max(0, 1 - dist / RANGE);
-      const s = 1 + MAX * (1 - Math.cos(t * Math.PI)) / 2;
-      const grow = icon.offsetHeight * (s - 1);
-      icon.style.transform = `translateX(${grow * 0.45}px) scale(${s})`;
-      item.style.marginBlock = `${grow / 2}px`;
+      const s = 1 + grows[i] / 44;
+      const shift = cum[i] - cum[k];
+      icon.style.transform = `translate(${grows[i] * 0.45}px, ${shift}px) scale(${s})`;
     });
   };
   const schedule = () => { if (!frame) frame = requestAnimationFrame(apply); };
@@ -880,7 +944,16 @@ function initDrag(titlebar, win) {
     state.dragging = win;
     bringToFront(win);
 
+    // Coalesce mouse events to one position update per frame
+    let lastEv = null, dragFrame = null;
     const onMove = (ev) => {
+      lastEv = ev;
+      if (!dragFrame) dragFrame = requestAnimationFrame(applyMove);
+    };
+    const applyMove = () => {
+      dragFrame = null;
+      const ev = lastEv;
+      if (!ev) return;
       const dx = ev.clientX - startX;
       const dy = ev.clientY - startY;
       let newL = startL + dx;
@@ -893,6 +966,7 @@ function initDrag(titlebar, win) {
       if (dx || dy) win.dataset.userPlaced = '1';
     };
     const onUp = () => {
+      if (dragFrame) { cancelAnimationFrame(dragFrame); applyMove(); }
       state.dragging = null;
       document.removeEventListener('mousemove', onMove);
       document.removeEventListener('mouseup', onUp);
@@ -2194,6 +2268,7 @@ const SHOOTER_WAVES = [
 const shooterGame = {
   running: false, paused: false, req: null, lastT: 0,
   W: 480, H: 360, dpr: 1,      // canvas size in CSS pixels
+  resScale: 1, frameMs: 0, adaptT: 0, ctx: null,
   RW: 320, RH: 240,            // internal 3D render resolution
   map: [], player: null,
   enemies: [], projectiles: [], pickups: [], effects: [],
@@ -2747,9 +2822,25 @@ function shooterLoop(ts) {
   if (!(dt > 0) || dt > 0.1) dt = 1 / 60;   // after a pause/tab switch
   g.lastT = ts;
   resizeShooterCanvas();
+  const t0 = performance.now();
   shooterUpdate(dt);
   if (g.running) shooterRender();
+  shooterAdaptResolution(performance.now() - t0);
   if (g.running) g.req = requestAnimationFrame(shooterLoop);
+}
+
+// Dynamic resolution: if a frame takes too long, render the 3D view with
+// fewer pixels; if there's headroom, sharpen it again.
+function shooterAdaptResolution(ms) {
+  const g = shooterGame;
+  g.frameMs = g.frameMs ? g.frameMs * 0.92 + ms * 0.08 : ms;
+  g.adaptT = (g.adaptT || 0) + 1;
+  if (g.adaptT < 45) return;
+  g.adaptT = 0;
+  const prev = g.resScale;
+  if (g.frameMs > 9 && g.resScale > 0.5) g.resScale = Math.max(0.5, g.resScale - 0.1);
+  else if (g.frameMs < 4.5 && g.resScale < 1) g.resScale = Math.min(1, g.resScale + 0.1);
+  if (g.resScale !== prev) g.buf32 = null; // forces resizeShooterCanvas to rebuild buffers
 }
 
 // ─────────────────────────────── World helpers ─────────────
@@ -3336,7 +3427,7 @@ function shooterRender() {
   const g = shooterGame, p = g.player;
   const canvas = document.getElementById('shooter-canvas');
   if (!canvas || !g.buf32) return;
-  const ctx = canvas.getContext('2d');
+  const ctx = g.ctx || canvas.getContext('2d');
   const W = g.W, H = g.H;
 
   shooterRenderScene();
@@ -3360,15 +3451,13 @@ function shooterRender() {
   const cx = W / 2, cy = H / 2;
   // Crosshair widens while firing
   const gap = 5 + p.spread * 9, len = 7;
-  ctx.strokeStyle = 'rgba(255,255,255,0.9)'; ctx.lineWidth = 2;
-  ctx.shadowColor = 'rgba(0,0,0,0.8)'; ctx.shadowBlur = 3;
   ctx.beginPath();
   ctx.moveTo(cx - gap - len, cy); ctx.lineTo(cx - gap, cy);
   ctx.moveTo(cx + gap, cy); ctx.lineTo(cx + gap + len, cy);
   ctx.moveTo(cx, cy - gap - len); ctx.lineTo(cx, cy - gap);
   ctx.moveTo(cx, cy + gap); ctx.lineTo(cx, cy + gap + len);
-  ctx.stroke();
-  ctx.shadowBlur = 0;
+  ctx.strokeStyle = 'rgba(0,0,0,0.6)'; ctx.lineWidth = 4; ctx.stroke();
+  ctx.strokeStyle = 'rgba(255,255,255,0.92)'; ctx.lineWidth = 2; ctx.stroke();
   // Hit marker
   if (g.hitMarker > 0 || g.killMarker > 0) {
     const kill = g.killMarker > 0;
@@ -3460,9 +3549,10 @@ function shooterRender() {
     const b = g.banner, k = b.t / b.life;
     ctx.globalAlpha = Math.min(1, b.t * 4, (1 - k) * 4);
     ctx.font = `900 ${Math.round(34 * ui)}px Ubuntu, sans-serif`;
-    ctx.fillStyle = '#ffd9a0'; ctx.shadowColor = 'rgba(255,120,40,0.8)'; ctx.shadowBlur = 24;
+    ctx.fillStyle = 'rgba(255,120,40,0.45)';
+    ctx.fillText(b.text, cx + 2, H * 0.24 + 3);
+    ctx.fillStyle = '#ffd9a0';
     ctx.fillText(b.text, cx, H * 0.24);
-    ctx.shadowBlur = 0;
     ctx.font = `600 ${Math.round(13 * ui)}px Ubuntu, sans-serif`;
     ctx.fillStyle = '#f3e2c4';
     ctx.fillText(b.sub, cx, H * 0.24 + 44 * ui);
@@ -3510,8 +3600,9 @@ function resizeShooterCanvas() {
   canvas.width = Math.round(W * dpr);
   canvas.height = Math.round(H * dpr);
   // 3D view renders at a lower resolution and is scaled up (chunky retro pixels, fast)
-  g.RW = Math.max(200, Math.min(400, Math.round(W / 2)));
+  g.RW = Math.max(160, Math.round(Math.min(380, W / 2) * g.resScale));
   g.RH = Math.max(140, Math.round(g.RW * H / W));
+  g.ctx = canvas.getContext('2d', { alpha: false });
   if (!g.bufCanvas) g.bufCanvas = document.createElement('canvas');
   g.bufCanvas.width = g.RW; g.bufCanvas.height = g.RH;
   g.bufCtx = g.bufCanvas.getContext('2d');
