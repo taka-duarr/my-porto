@@ -11,3 +11,8 @@ test_payload.json
 # OS files
 .DS_Store
 Thumbs.db
+
+# Rendered promo videos and recording frames
+promo/*.mp4
+promo/clip_*/
+promo/*_sheet.jpg

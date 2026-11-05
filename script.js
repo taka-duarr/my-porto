@@ -692,7 +692,7 @@ function openApp(appName) {
   if (appName === 'flappy') {
     initFlappyGame();
     if (typeof flappyGame !== 'undefined' && flappyGame.running) {
-      flappyGame.paused = false;
+      flappyResume();
     }
   }
   if (appName === 'shooter') {
@@ -713,7 +713,7 @@ function openApp(appName) {
 // Games pause on minimize; pick them back up when the window comes back.
 function resumeGameAfterRestore(appName) {
   if (appName === 'game' && typeof snakeGame !== 'undefined' && snakeGame.running) snakeGame.paused = false;
-  if (appName === 'flappy' && typeof flappyGame !== 'undefined' && flappyGame.running) flappyGame.paused = false;
+  if (appName === 'flappy' && typeof flappyGame !== 'undefined' && flappyGame.running) flappyResume();
   if (appName === 'shooter' && shooterGame.running) {
     shooterGame.paused = false;
     shooterGame.lastT = 0;
@@ -807,7 +807,7 @@ function toggleTorch(btn) {
   document.body.classList.toggle('ios-torch-on');
   if (typeof notif === 'function') {
     const isOn = document.body.classList.contains('ios-torch-on');
-    notif(isOn ? 'Flashlight On 🔦' : 'Flashlight Off');
+    notif(isOn ? 'Flashlight On' : 'Flashlight Off');
   }
 }
 window.toggleTorch = toggleTorch;
@@ -820,11 +820,11 @@ function togglePlayPause() {
     if (isPlaying) {
       btn.innerHTML = '<i class="fas fa-play"></i>';
       if (waves) waves.style.opacity = '0.3';
-      if (typeof notif === 'function') notif('Music Paused ⏸️');
+      if (typeof notif === 'function') notif('Music Paused');
     } else {
       btn.innerHTML = '<i class="fas fa-pause"></i>';
       if (waves) waves.style.opacity = '1';
-      if (typeof notif === 'function') notif('Playing: Coding in Surabaya 🎵');
+      if (typeof notif === 'function') notif('Playing: Coding in Surabaya');
     }
   }
 }
@@ -1097,7 +1097,7 @@ function setAboutLang(lang) {
 // ─── Contact Form ─────────────────────────────────────────
 function handleContactForm(e) {
   e.preventDefault();
-  showToast('Message sent! I\'ll get back to you soon. 🎉');
+  showToast('Message sent! I\'ll get back to you soon.');
   e.target.reset();
 }
 
@@ -1192,7 +1192,7 @@ const termCommands = {
     { cls: 'term-yellow', text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━' },
     { cls: 'term-orange', text: '  Firman Ardiansyah' },
     { cls: 'term-output', text: '  Full Stack Developer & Network Engineer' },
-    { cls: 'term-output', text: '  Surabaya, Indonesia 🇮🇩' },
+    { cls: 'term-output', text: '  Surabaya, Indonesia' },
     { cls: 'term-output', text: '  ITATS — Informatic Engineering (2023)' },
     { cls: 'term-yellow', text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━' },
   ],
@@ -1206,19 +1206,19 @@ const termCommands = {
     { cls: 'term-yellow', text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━' },
     { cls: 'term-orange', text: '  Networking & Server Skills' },
     { cls: 'term-yellow', text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━' },
-    { cls: 'term-cyan', text: '  🌐 Internet & Routing   : Cisco Packet Tracer, RIP, OSPF, Static Routing' },
-    { cls: 'term-cyan', text: '  🔒 Security             : Firewall (iptables), ACL, VPN basics' },
-    { cls: 'term-green', text: '  🐧 Linux Server Admin   : Ubuntu Server, Debian, user & permission mgmt' },
-    { cls: 'term-green', text: '  🌍 Web Server           : Apache2, Nginx, SSL/TLS (Let\'s Encrypt)' },
-    { cls: 'term-blue', text: '  📡 Services             : DNS, DHCP, FTP, SSH, Samba' },
+    { cls: 'term-cyan', text: '  Internet & Routing   : Cisco Packet Tracer, RIP, OSPF, Static Routing' },
+    { cls: 'term-cyan', text: '  Security             : Firewall (iptables), ACL, VPN basics' },
+    { cls: 'term-green', text: '  Linux Server Admin   : Ubuntu Server, Debian, user & permission mgmt' },
+    { cls: 'term-green', text: '  Web Server           : Apache2, Nginx, SSL/TLS (Let\'s Encrypt)' },
+    { cls: 'term-blue', text: '  Services             : DNS, DHCP, FTP, SSH, Samba' },
     { cls: 'term-yellow', text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━' },
   ],
   'cat contact': () => [
-    { cls: 'term-output', text: '📧 firman@example.com' },
-    { cls: 'term-green', text: '📱 +62 813-5739-8265 (WhatsApp)' },
-    { cls: 'term-blue', text: '🐙 github.com/taka-duarr' },
-    { cls: 'term-blue', text: '💼 linkedin.com/in/firman-ardiansyah-700786284' },
-    { cls: 'term-blue', text: '📸 instagram.com/lord_takaa' },
+    { cls: 'term-output', text: 'busfirman9@gmail.com' },
+    { cls: 'term-green', text: '+62 813-5739-8265 (WhatsApp)' },
+    { cls: 'term-blue', text: 'github.com/taka-duarr' },
+    { cls: 'term-blue', text: 'linkedin.com/in/firman-ardiansyah2004' },
+    { cls: 'term-blue', text: 'instagram.com/lord_takaa' },
   ],
   'open about': () => { openApp('about'); return [{ cls: 'term-green', text: 'Opening About Me...' }]; },
   'open projects': () => { openApp('projects'); return [{ cls: 'term-green', text: 'Opening Projects...' }]; },
@@ -1244,7 +1244,7 @@ function runNeofetch() {
     { cls: 'term-yellow', text: '                                   Name: Firman Ardiansyah' },
     { cls: 'term-yellow', text: '                                   Role: Full Stack Developer' },
     { cls: 'term-blue',   text: '                                   Stack: PHP · Laravel · React' },
-    { cls: 'term-output', text: '                                   Location: Surabaya, ID 🇮🇩' },
+    { cls: 'term-output', text: '                                   Location: Surabaya, ID' },
     { cls: 'term-output', text: '' },
     { cls: 'term-output', text: '  Type \x1b[33mhelp\x1b[0m to see available commands.' },
   ];
@@ -1980,30 +1980,39 @@ function handleSnakeInput(e) {
 
 
 // ─── Flappy Bird Game ─────────────────────────────────────
-const flappyGame = {
-  running: false,
-  paused: false,
-  req: null,
-  canvas: null,
-  ctx: null,
-  score: 0,
-  highScore: 0,
-  frames: 0,
-  bird: {
-    x: 50,
-    y: 150,
-    width: 20,
-    height: 20,
-    velocity: 0,
-    gravity: 0.25,
-    jump: -5.5,
-    radius: 10
-  },
-  pipes: [],
-  pipeWidth: 40,
-  pipeGap: 120,
-  dx: 2 // speed of pipes
+// Time-based physics (px and seconds), so it plays the same at 60, 120 or 144 Hz.
+//   gravity pulls the bird down, a flap sets an upward velocity, falling speed
+//   is capped (terminal velocity), and the bird tilts with its velocity.
+// Difficulty ramps up smoothly: the scroll speed eases toward a target that
+// rises with the score, and the gap narrows a little with every pipe.
+const FLAPPY = {
+  GRAVITY: 1250,       // px/s^2
+  FLAP: -355,          // px/s, upward velocity set by a flap
+  MAX_FALL: 600,       // px/s, terminal velocity
+  BASE_SPEED: 105,     // px/s at the start
+  MAX_SPEED: 240,
+  SPEED_PER_PIPE: 5,   // target speed gained per pipe passed
+  SPEED_EASE: 0.7,     // how quickly the speed follows its target (1/s)
+  GAP_START: 135,
+  GAP_MIN: 104,
+  GAP_SHRINK: 1.4,     // px per pipe
+  PIPE_W: 46,
+  GROUND_H: 26,
+  STEP: 1 / 120,       // fixed physics step
 };
+
+const flappyGame = {
+  running: false, paused: false, dead: false, req: null, lastT: 0, acc: 0,
+  canvas: null, ctx: null,
+  score: 0, highScore: 0, time: 0,
+  speed: FLAPPY.BASE_SPEED, targetSpeed: FLAPPY.BASE_SPEED,
+  distance: 0, nextPipeAt: 0, gap: FLAPPY.GAP_START, lastCenter: null,
+  groundOffset: 0, flapT: 0, finishT: 0, deathMsg: '', shake: 0,
+  bird: { x: 72, y: 190, vy: 0, radius: 11, angle: 0 },
+  pipes: [], clouds: [], particles: [],
+};
+
+function flappyGroundY() { return flappyGame.canvas.height - FLAPPY.GROUND_H; }
 
 let flappyInitialized = false;
 function initFlappyGame() {
@@ -2013,12 +2022,17 @@ function initFlappyGame() {
 
   if (flappyInitialized) return;
   flappyInitialized = true;
+  flappyResetWorld();
+  flappyRender();
 
   const startBtn = document.getElementById('flappy-start-btn');
   if (startBtn) {
+    let lastStart = 0;
     const handleStart = (e) => {
       e.preventDefault();
       e.stopPropagation();
+      if (performance.now() - lastStart < 400) return; // pointerdown + click both fire
+      lastStart = performance.now();
       startFlappyGame();
     };
     startBtn.addEventListener('pointerdown', handleStart);
@@ -2030,180 +2044,277 @@ function initFlappyGame() {
     const handleTap = (e) => {
       e.preventDefault();
       e.stopPropagation();
-      if (!flappyGame.running) {
-        startFlappyGame();
-      } else {
-        handleFlappyJump();
-      }
+      if (!flappyGame.running) startFlappyGame(); else handleFlappyJump();
     };
     tapBtn.addEventListener('pointerdown', handleTap);
-    tapBtn.addEventListener('click', handleTap);
   }
 
   const overlay = document.getElementById('flappy-overlay');
   if (overlay) overlay.style.display = 'flex';
 
+  // One flap per touch, even though a tap fires pointer, touch and mouse events
+  let lastTap = 0;
   const handleCanvasTap = (e) => {
     e.preventDefault();
+    const now = performance.now();
+    if (now - lastTap < 60) return;
+    lastTap = now;
     if (!flappyGame.running) {
-      if (document.getElementById('flappy-overlay')?.style.display !== 'none') {
-        startFlappyGame();
-      }
+      if (document.getElementById('flappy-overlay')?.style.display !== 'none') startFlappyGame();
     } else {
       handleFlappyJump();
     }
   };
-
   flappyGame.canvas.addEventListener('pointerdown', handleCanvasTap);
   flappyGame.canvas.addEventListener('touchstart', handleCanvasTap, { passive: false });
-  flappyGame.canvas.addEventListener('mousedown', handleCanvasTap);
 
   document.addEventListener('keydown', handleFlappyInput);
 }
 
-function startFlappyGame() {
-  flappyGame.running = true;
-  flappyGame.paused = false;
-  flappyGame.score = 0;
-  flappyGame.frames = 0;
-  flappyGame.pipes = [];
-  
-  flappyGame.bird.y = 150;
-  flappyGame.bird.velocity = 0;
+function flappyResetWorld() {
+  const g = flappyGame, c = g.canvas;
+  g.dead = false; g.score = 0; g.time = 0; g.acc = 0; g.lastT = 0;
+  g.speed = g.targetSpeed = FLAPPY.BASE_SPEED;
+  g.distance = 0; g.nextPipeAt = 0; g.gap = FLAPPY.GAP_START; g.lastCenter = null;
+  g.groundOffset = 0; g.flapT = 0; g.finishT = 0; g.shake = 0;
+  g.pipes = []; g.particles = [];
+  g.bird.y = flappyGroundY() * 0.45; g.bird.vy = 0; g.bird.angle = 0;
+  g.clouds = [0, 1, 2, 3].map(i => ({ x: i * (c.width / 3), y: 30 + Math.random() * 120, s: 0.7 + Math.random() * 0.7 }));
+}
 
+function startFlappyGame() {
+  const g = flappyGame;
+  if (!g.canvas) return;
+  flappyResetWorld();
+  g.running = true;
+  g.paused = false;
   document.getElementById('flappy-score').textContent = '0';
   document.getElementById('flappy-overlay').style.display = 'none';
+  handleFlappyJump(); // the first flap starts the run in the air
+  if (g.req) cancelAnimationFrame(g.req);
+  g.req = requestAnimationFrame(flappyLoop);
+}
 
-  if (flappyGame.req) cancelAnimationFrame(flappyGame.req);
-  flappyLoop();
+// Restart the loop after the window was minimised or hidden
+function flappyResume() {
+  const g = flappyGame;
+  if (!g.running) return;
+  g.paused = false;
+  g.lastT = 0;
+  if (g.req) cancelAnimationFrame(g.req);
+  g.req = requestAnimationFrame(flappyLoop);
 }
 
 function stopFlappyGame(msg) {
-  flappyGame.running = false;
-  cancelAnimationFrame(flappyGame.req);
+  const g = flappyGame;
+  g.running = false;
+  cancelAnimationFrame(g.req);
   const overlay = document.getElementById('flappy-overlay');
   const title = document.getElementById('flappy-overlay-title');
   const desc = document.getElementById('flappy-overlay-desc');
   if (overlay && title && desc) {
     title.textContent = 'GAME OVER';
-    desc.textContent = msg || 'You hit something!';
+    desc.textContent = `${msg || 'You hit something!'}  Score: ${g.score}`;
     overlay.style.display = 'flex';
   }
 }
 
-function flappyLoop() {
-  if (!flappyGame.running || flappyGame.paused) return;
+// The bird dies: scrolling stops and it tumbles to the ground under gravity
+function flappyDie(msg) {
+  const g = flappyGame;
+  if (g.dead) return;
+  g.dead = true;
+  g.deathMsg = msg;
+  g.shake = 0.25;
+  g.bird.vy = Math.min(g.bird.vy, -140); // small knock-back
+  for (let i = 0; i < 10; i++) {
+    const a = Math.random() * Math.PI * 2, v = 60 + Math.random() * 120;
+    g.particles.push({ x: g.bird.x, y: g.bird.y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 60, life: 0.6 });
+  }
+}
 
-  const ctx = flappyGame.ctx;
-  const canvas = flappyGame.canvas;
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+function flappySpawnPipe() {
+  const g = flappyGame, c = g.canvas;
+  const top = 46, bottom = flappyGroundY() - 46;
+  const half = g.gap / 2;
+  let lo = top + half, hi = bottom - half;
+  if (g.lastCenter !== null) {           // keep consecutive gaps within reach
+    lo = Math.max(lo, g.lastCenter - 125);
+    hi = Math.min(hi, g.lastCenter + 125);
+  }
+  const center = lo + Math.random() * Math.max(0, hi - lo);
+  g.lastCenter = center;
+  g.pipes.push({ x: c.width + 4, top: center - half, bottom: center + half, passed: false });
+  g.gap = Math.max(FLAPPY.GAP_MIN, g.gap - FLAPPY.GAP_SHRINK);
+}
 
-  flappyGame.frames++;
+function flappyStep(dt) {
+  const g = flappyGame, b = g.bird, c = g.canvas;
+  g.time += dt;
+  g.flapT = Math.max(0, g.flapT - dt);
+  g.shake = Math.max(0, g.shake - dt);
 
-  // Bird physics
-  flappyGame.bird.velocity += flappyGame.bird.gravity;
-  flappyGame.bird.y += flappyGame.bird.velocity;
+  // Bird physics: semi-implicit Euler with terminal velocity
+  b.vy = Math.min(FLAPPY.MAX_FALL, b.vy + FLAPPY.GRAVITY * dt);
+  b.y += b.vy * dt;
+  const targetAngle = Math.max(-0.5, Math.min(1.4, b.vy / 400));
+  b.angle += (targetAngle - b.angle) * (1 - Math.exp(-dt * (b.vy < 0 ? 22 : 9)));
 
-  // Draw bird (simple yellow circle with eye)
-  ctx.fillStyle = '#f1c40f';
-  ctx.beginPath();
-  ctx.arc(flappyGame.bird.x, flappyGame.bird.y, flappyGame.bird.radius, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.fillStyle = '#fff';
-  ctx.beginPath();
-  ctx.arc(flappyGame.bird.x + 4, flappyGame.bird.y - 3, 3, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.fillStyle = '#000';
-  ctx.beginPath();
-  ctx.arc(flappyGame.bird.x + 5, flappyGame.bird.y - 3, 1.5, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.fillStyle = '#e67e22'; // Beak
-  ctx.beginPath();
-  ctx.moveTo(flappyGame.bird.x + 8, flappyGame.bird.y);
-  ctx.lineTo(flappyGame.bird.x + 15, flappyGame.bird.y + 2);
-  ctx.lineTo(flappyGame.bird.x + 8, flappyGame.bird.y + 4);
-  ctx.fill();
+  const groundY = flappyGroundY();
+  if (b.y - b.radius < 0) { b.y = b.radius; if (b.vy < 0) b.vy = 0; } // bonk on the ceiling
 
-  // Floor collision
-  if (flappyGame.bird.y + flappyGame.bird.radius >= canvas.height) {
-    flappyGame.bird.y = canvas.height - flappyGame.bird.radius;
-    stopFlappyGame('Fell down!');
+  if (g.dead) {
+    if (b.y + b.radius >= groundY) {
+      b.y = groundY - b.radius;
+      if (b.vy > 160) b.vy = -b.vy * 0.28; // one small bounce
+      else { b.vy = 0; g.finishT += dt; }
+    }
+    for (const p of g.particles) { p.vy += 600 * dt; p.x += p.vx * dt; p.y += p.vy * dt; p.life -= dt; }
+    g.particles = g.particles.filter(p => p.life > 0);
+    if (g.finishT > 0.55) stopFlappyGame(g.deathMsg);
     return;
   }
-  // Ceiling collision (optional, can just block going too high)
-  if (flappyGame.bird.y - flappyGame.bird.radius <= 0) {
-    flappyGame.bird.y = flappyGame.bird.radius;
-    flappyGame.bird.velocity = 0;
+
+  // World scrolls at a speed that eases toward a target that grows with the score
+  g.targetSpeed = Math.min(FLAPPY.MAX_SPEED, FLAPPY.BASE_SPEED + g.score * FLAPPY.SPEED_PER_PIPE);
+  g.speed += (g.targetSpeed - g.speed) * (1 - Math.exp(-dt * FLAPPY.SPEED_EASE));
+  const dx = g.speed * dt;
+  g.distance += dx;
+  g.groundOffset = (g.groundOffset + dx) % 24;
+  for (const cl of g.clouds) { cl.x -= dx * 0.25 * cl.s; if (cl.x < -60) { cl.x = c.width + 20; cl.y = 30 + Math.random() * 120; } }
+
+  // Pipe spacing is based on time, so faster scrolling means wider spacing but less reaction time
+  if (g.distance >= g.nextPipeAt) {
+    flappySpawnPipe();
+    const progress = (g.speed - FLAPPY.BASE_SPEED) / (FLAPPY.MAX_SPEED - FLAPPY.BASE_SPEED);
+    g.nextPipeAt = g.distance + g.speed * (1.75 - 0.5 * Math.max(0, Math.min(1, progress)));
   }
 
-  // Manage Pipes
-  if (flappyGame.frames % 100 === 0) {
-    // Generate new pipe
-    const minHeight = 50;
-    const maxHeight = canvas.height - flappyGame.pipeGap - minHeight;
-    const topHeight = Math.floor(Math.random() * (maxHeight - minHeight + 1) + minHeight);
-    
-    flappyGame.pipes.push({
-      x: canvas.width,
-      top: topHeight,
-      bottom: topHeight + flappyGame.pipeGap,
-      passed: false
-    });
-  }
-
-  ctx.fillStyle = '#2ecc71';
-  for (let i = 0; i < flappyGame.pipes.length; i++) {
-    let p = flappyGame.pipes[i];
-    p.x -= flappyGame.dx;
-
-    // Draw Top Pipe
-    ctx.fillRect(p.x, 0, flappyGame.pipeWidth, p.top);
-    // Draw Bottom Pipe
-    ctx.fillRect(p.x, p.bottom, flappyGame.pipeWidth, canvas.height - p.bottom);
-
-    // Collision detection
-    if (
-      flappyGame.bird.x + flappyGame.bird.radius > p.x &&
-      flappyGame.bird.x - flappyGame.bird.radius < p.x + flappyGame.pipeWidth
-    ) {
-      if (
-        flappyGame.bird.y - flappyGame.bird.radius < p.top ||
-        flappyGame.bird.y + flappyGame.bird.radius > p.bottom
-      ) {
-        stopFlappyGame('Hit a pipe!');
-        return;
-      }
+  for (const p of g.pipes) {
+    p.x -= dx;
+    // Circle vs. rectangle collision
+    const nx = Math.max(p.x, Math.min(b.x, p.x + FLAPPY.PIPE_W));
+    for (const [y0, y1] of [[0, p.top], [p.bottom, groundY]]) {
+      const ny = Math.max(y0, Math.min(b.y, y1));
+      if ((b.x - nx) ** 2 + (b.y - ny) ** 2 < (b.radius - 1) ** 2) { flappyDie('Hit a pipe!'); return; }
     }
-
-    // Score update
-    if (p.x + flappyGame.pipeWidth < flappyGame.bird.x - flappyGame.bird.radius && !p.passed) {
-      flappyGame.score++;
+    if (!p.passed && p.x + FLAPPY.PIPE_W < b.x - b.radius) {
       p.passed = true;
-      document.getElementById('flappy-score').textContent = flappyGame.score;
-      if (flappyGame.score > flappyGame.highScore) {
-        flappyGame.highScore = flappyGame.score;
-        document.getElementById('flappy-high-score').textContent = flappyGame.highScore;
+      g.score++;
+      document.getElementById('flappy-score').textContent = g.score;
+      if (g.score > g.highScore) {
+        g.highScore = g.score;
+        document.getElementById('flappy-high-score').textContent = g.highScore;
       }
     }
   }
+  g.pipes = g.pipes.filter(p => p.x > -FLAPPY.PIPE_W - 4);
 
-  // Remove off-screen pipes
-  if (flappyGame.pipes.length > 0 && flappyGame.pipes[0].x < -flappyGame.pipeWidth) {
-    flappyGame.pipes.shift();
+  if (b.y + b.radius >= groundY) { b.y = groundY - b.radius; flappyDie('Fell down!'); }
+}
+
+function flappyLoop(ts) {
+  const g = flappyGame;
+  if (!g.running || g.paused) return;
+  let dt = g.lastT ? (ts - g.lastT) / 1000 : 1 / 60;
+  g.lastT = ts;
+  if (!(dt > 0)) dt = 1 / 60;
+  g.acc += Math.min(dt, 0.1);
+  while (g.acc >= FLAPPY.STEP && g.running) {
+    flappyStep(FLAPPY.STEP);
+    g.acc -= FLAPPY.STEP;
+  }
+  flappyRender();
+  if (g.running) g.req = requestAnimationFrame(flappyLoop);
+}
+
+function flappyRender() {
+  const g = flappyGame, c = g.canvas, ctx = g.ctx;
+  if (!ctx) return;
+  const W = c.width, H = c.height, groundY = flappyGroundY();
+  ctx.save();
+  if (g.shake > 0) ctx.translate((Math.random() - 0.5) * 24 * g.shake, (Math.random() - 0.5) * 24 * g.shake);
+
+  const sky = ctx.createLinearGradient(0, 0, 0, groundY);
+  sky.addColorStop(0, '#4ec0ca'); sky.addColorStop(1, '#bfeaf0');
+  ctx.fillStyle = sky; ctx.fillRect(-10, -10, W + 20, H + 20);
+
+  ctx.fillStyle = 'rgba(255,255,255,0.75)';
+  for (const cl of g.clouds) {
+    ctx.beginPath();
+    ctx.arc(cl.x, cl.y, 14 * cl.s, 0, Math.PI * 2);
+    ctx.arc(cl.x + 16 * cl.s, cl.y + 3, 11 * cl.s, 0, Math.PI * 2);
+    ctx.arc(cl.x - 16 * cl.s, cl.y + 4, 10 * cl.s, 0, Math.PI * 2);
+    ctx.fill();
   }
 
-  flappyGame.req = requestAnimationFrame(flappyLoop);
+  // Pipes with shading and caps
+  for (const p of g.pipes) {
+    const body = ctx.createLinearGradient(p.x, 0, p.x + FLAPPY.PIPE_W, 0);
+    body.addColorStop(0, '#5fbf2c'); body.addColorStop(0.35, '#9be85a'); body.addColorStop(1, '#3f8f1c');
+    ctx.fillStyle = body;
+    ctx.fillRect(p.x, 0, FLAPPY.PIPE_W, p.top);
+    ctx.fillRect(p.x, p.bottom, FLAPPY.PIPE_W, groundY - p.bottom);
+    ctx.fillRect(p.x - 3, p.top - 16, FLAPPY.PIPE_W + 6, 16);
+    ctx.fillRect(p.x - 3, p.bottom, FLAPPY.PIPE_W + 6, 16);
+    ctx.strokeStyle = '#2c6a12'; ctx.lineWidth = 2;
+    ctx.strokeRect(p.x, -2, FLAPPY.PIPE_W, p.top + 2);
+    ctx.strokeRect(p.x, p.bottom, FLAPPY.PIPE_W, groundY - p.bottom);
+    ctx.strokeRect(p.x - 3, p.top - 16, FLAPPY.PIPE_W + 6, 16);
+    ctx.strokeRect(p.x - 3, p.bottom, FLAPPY.PIPE_W + 6, 16);
+  }
+
+  // Ground
+  ctx.fillStyle = '#ded895'; ctx.fillRect(0, groundY, W, FLAPPY.GROUND_H);
+  ctx.fillStyle = '#7bc043'; ctx.fillRect(0, groundY, W, 6);
+  ctx.fillStyle = '#5a9e2f';
+  for (let x = -g.groundOffset; x < W; x += 24) {
+    ctx.beginPath(); ctx.moveTo(x, groundY); ctx.lineTo(x + 12, groundY); ctx.lineTo(x + 6, groundY + 6); ctx.fill();
+  }
+
+  // Bird, tilted by its vertical velocity
+  const b = g.bird;
+  ctx.save();
+  ctx.translate(b.x, b.y);
+  ctx.rotate(b.angle);
+  ctx.fillStyle = '#f7c531';
+  ctx.beginPath(); ctx.ellipse(0, 0, b.radius + 2, b.radius, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = '#a8761a'; ctx.lineWidth = 1.5; ctx.stroke();
+  const flap = g.flapT > 0 ? Math.sin((1 - g.flapT / 0.25) * Math.PI) : 0;
+  ctx.fillStyle = '#e8a317';
+  ctx.beginPath(); ctx.ellipse(-3, 2 - flap * 5, 6, 4 + flap * 2, -0.3 - flap * 0.6, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(5, -4, 4, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#111'; ctx.beginPath(); ctx.arc(6.3, -4, 1.8, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#e86a1a';
+  ctx.beginPath(); ctx.moveTo(9, -1); ctx.lineTo(17, 1.5); ctx.lineTo(9, 4.5); ctx.closePath(); ctx.fill();
+  ctx.restore();
+
+  ctx.fillStyle = '#fff';
+  for (const p of g.particles) { ctx.globalAlpha = Math.max(0, p.life / 0.6); ctx.fillRect(p.x - 2, p.y - 2, 4, 4); }
+  ctx.globalAlpha = 1;
+
+  // Level / speed readout
+  if (g.running) {
+    const label = `Level ${Math.floor(g.score / 5) + 1}   Speed ${Math.round(g.speed)}`;
+    ctx.font = '700 12px Ubuntu, sans-serif'; ctx.textAlign = 'left';
+    ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.fillText(label, 11, 21);
+    ctx.fillStyle = '#fff'; ctx.fillText(label, 10, 20);
+  }
+  ctx.restore();
 }
 
 function handleFlappyJump() {
-  if (!flappyGame.running || flappyGame.paused) return;
-  flappyGame.bird.velocity = flappyGame.bird.jump;
+  const g = flappyGame;
+  if (!g.running || g.paused || g.dead) return;
+  g.bird.vy = FLAPPY.FLAP;
+  g.flapT = 0.25;
 }
 
 function handleFlappyInput(e) {
-  if (e.code === 'Space') {
-    if (state.openWindows.has('flappy') && getWindow('flappy')?.style.display !== 'none') {
+  if (e.code === 'Space' || e.code === 'ArrowUp') {
+    if (state.openWindows.has('flappy') && getWindow('flappy')?.style.display !== 'none' && state.focusedWin === getWindow('flappy')) {
       e.preventDefault(); // Stop scrolling
+      if (e.repeat) return;
       if (flappyGame.running && !flappyGame.paused) {
         handleFlappyJump();
       } else if (!flappyGame.running && document.getElementById('flappy-overlay').style.display !== 'none') {
@@ -2920,7 +3031,7 @@ function shooterDamagePlayer(dmg, srcX, srcY) {
   shooterSfx('hurt');
   if (p.hp <= 0) {
     g.ended = true;
-    setTimeout(() => stopShooterGame('YOU DIED 💀'), 700);
+    setTimeout(() => stopShooterGame('YOU DIED'), 700);
   }
 }
 
@@ -3051,7 +3162,7 @@ function shooterUpdate(dt) {
       if (g.wave >= SHOOTER_WAVES.length) {
         g.ended = true;
         g.banner = { text: 'DUNGEON CLEARED', sub: 'Well done, soldier', t: 0, life: 3 };
-        setTimeout(() => stopShooterGame('MISSION COMPLETE! 🎖️'), 1800);
+        setTimeout(() => stopShooterGame('MISSION COMPLETE!'), 1800);
       } else {
         g.banner = { text: 'WAVE CLEARED', sub: 'Next wave incoming…', t: 0, life: 2.6 };
       }
@@ -3496,7 +3607,7 @@ function shooterRender() {
   ctx.fillStyle = 'rgba(10,8,6,0.6)'; shooterRoundRect(ctx, hx, hy, 170 * ui, 40 * ui, 10); ctx.fill();
   ctx.fillStyle = p.hp > 60 ? '#5ef08a' : p.hp > 30 ? '#f6c344' : '#ff4d4d';
   ctx.font = `800 ${Math.round(22 * ui)}px Ubuntu, sans-serif`; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
-  ctx.fillText(`✚ ${Math.ceil(p.hp)}`, hx + 10 * ui, hy + 16 * ui);
+  ctx.fillText(`HP ${Math.ceil(p.hp)}`, hx + 10 * ui, hy + 16 * ui);
   ctx.fillStyle = 'rgba(255,255,255,0.12)'; ctx.fillRect(hx + 10 * ui, hy + 30 * ui, 150 * ui, 4 * ui);
   ctx.fillStyle = p.hp > 60 ? '#5ef08a' : p.hp > 30 ? '#f6c344' : '#ff4d4d';
   ctx.fillRect(hx + 10 * ui, hy + 30 * ui, 150 * ui * p.hp / 100, 4 * ui);
@@ -3627,7 +3738,7 @@ Informasi Lengkap Firman Ardiansyah:
   - Email: busfirman9@gmail.com
   - WhatsApp: +62 813-5739-8265
   - GitHub: https://github.com/taka-duarr
-  - LinkedIn: https://www.linkedin.com/in/firman-ardiansyah-700786284
+  - LinkedIn: https://www.linkedin.com/in/firman-ardiansyah2004
 - Keahlian Teknis (Tech Stack):
   - Frontend: JavaScript (ES6+), React.js, Vue.js, Tailwind CSS, Bootstrap, HTML5, CSS3/Vanilla CSS.
   - Backend: PHP, Laravel, Node.js, Express, RESTful API.
@@ -3747,7 +3858,7 @@ function sendQuickPrompt(promptText) {
 
 function getPhpStaticServerHelpMessage() {
   return (
-    `⚠️ **Server Lokal Belum Menjalankan PHP**\n\n` +
+    `**Server Lokal Belum Menjalankan PHP**\n\n` +
     `Web portofolio ini saat ini dibuka melalui **static web server** (port 3000 / Live Server), sehingga file backend \`api/chat.php\` tidak dieksekusi oleh PHP melainkan terbaca sebagai file teks mentah.\n\n` +
     `**Cara Mengaktifkan AI di Komputer Lokal:**\n` +
     `1. Buka terminal di folder project ini (\`c:\\codingan\\new porto\`)\n` +
@@ -3756,7 +3867,7 @@ function getPhpStaticServerHelpMessage() {
     `php -S localhost:8000\n` +
     `\`\`\`\n` +
     `3. Buka link **http://localhost:8000** di browser Anda.\n\n` +
-    `*💡 Catatan: Saat website ini di-upload ke server hosting (cPanel/VPS) yang menjalankan Apache/Nginx + PHP, fitur AI ini akan langsung bekerja secara otomatis tanpa langkah tambahan.*`
+    `*Catatan: Saat website ini di-upload ke server hosting (cPanel/VPS) yang menjalankan Apache/Nginx + PHP, fitur AI ini akan langsung bekerja secara otomatis tanpa langkah tambahan.*`
   );
 }
 
@@ -3950,13 +4061,13 @@ function clearChatHistory() {
         </div>
         <div class="chat-quick-suggestions">
           <button type="button" class="chat-quick-chip" onclick="sendQuickPrompt('Ceritakan tentang Firman Ardiansyah')">
-            👨‍💻 Siapa Firman?
+            Siapa Firman?
           </button>
           <button type="button" class="chat-quick-chip" onclick="sendQuickPrompt('Jelaskan proyek PT Conbloc Indotama Quarry dan Nganime')">
-            🚀 Proyek Utama
+            Proyek Utama
           </button>
           <button type="button" class="chat-quick-chip" onclick="sendQuickPrompt('Apa teknologi utama yang dikuasai Firman?')">
-            ⚡ Skill & Tech Stack
+            Skill & Tech Stack
           </button>
         </div>
         <div class="chat-msg-time">Sekarang</div>
