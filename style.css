@@ -3508,3 +3508,34 @@ img { display: block; }
   .power-menu, .context-menu, .menu-closing { animation: none !important; }
   .sidebar-pill { transition: none; }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   PROJECTS: fill wide windows with columns / ALL APPS: always on top
+   ═══════════════════════════════════════════════════════════ */
+.projects-content { container-type: inline-size; container-name: projects; }
+
+@container projects (min-width: 700px) {
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    align-items: stretch;
+  }
+  .proj-card { display: flex; flex-direction: column; }
+  .proj-img-wrap { height: clamp(150px, 17vh, 210px); flex-shrink: 0; }
+  .proj-img-wrap.proj-img-dual { height: clamp(150px, 17vh, 210px); }
+  .proj-info { display: flex; flex-direction: column; flex: 1; padding: 14px 16px; }
+  .proj-desc { margin-bottom: 10px; }
+  .proj-tech-row { margin-bottom: 10px; }
+  .proj-links-row { margin-top: auto; }
+}
+@container projects (min-width: 1500px) {
+  .projects-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* The grid overlay lives inside .desktop-area, which is painted before .windows-layer.
+   While the grid is open, lift the whole desktop-area above every window. */
+@media (min-width: 769px) {
+  .desktop-area { z-index: 0; transition: z-index 0s linear 0.35s; }
+  .desktop-area:has(> .app-grid-overlay:not(.hidden)) { z-index: 1500; transition-delay: 0s; }
+}
