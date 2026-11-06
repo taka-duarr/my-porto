@@ -726,6 +726,7 @@ function closeApp(appName) {
   const win = getWindow(appName);
   if (!win) return;
   if (appName === 'shooter' && document.pointerLockElement) document.exitPointerLock();
+  if (appName === 'chatbot') window.VoiceAvatar?.stop();
   state.openWindows.delete(appName);
   state.minimizedWindows.delete(appName);
   const hide = () => {
@@ -863,6 +864,7 @@ function minimizeApp(appName) {
   const win = getWindow(appName);
   if (!win) return;
   if (appName === 'shooter' && document.pointerLockElement) document.exitPointerLock();
+  if (appName === 'chatbot') window.VoiceAvatar?.stop();
   state.minimizedWindows.add(appName);
   const hide = () => {
     // Skip if the window was restored while the animation was running
@@ -3724,11 +3726,11 @@ function resizeShooterCanvas() {
 }
 
 // ═══════════════════════════════════════════════════════════
-//    AI CHATBOT (KIMI K3 via NVIDIA API)
+//    AI CHATBOT (via NVIDIA API)
 // ═══════════════════════════════════════════════════════════
 const chatbotConfig = {
-  model: 'moonshotai/kimi-k3',
-  systemPrompt: `Kamu adalah Kimi AI, asisten AI pribadi yang cerdas, santun, ramah, dan profesional untuk website portofolio Firman Ardiansyah.
+  model: 'mistralai/mistral-large-4-1t-a52b',
+  systemPrompt: `Kamu adalah Katou AI, asisten AI pribadi yang cerdas, santun, ramah, dan profesional untuk website portofolio Firman Ardiansyah.
 
 Informasi Lengkap Firman Ardiansyah:
 - Nama Lengkap: Firman Ardiansyah (biasa disapa Firman / Farel).
@@ -3754,8 +3756,27 @@ Pedoman Menjawab:
 1. Jawab pertanyaan pengunjung seputar Firman, portofolio, proyek, dan skill-nya secara akurat dan menarik.
 2. Kamu juga bisa menjawab pertanyaan pemrograman umum (PHP, Laravel, React, JS, database, dll) dengan solusi teknis yang jelas.
 3. Selalu ramah, sopan, antusias, dan gunakan format markdown (bold, bullet points, code block) agar pesan rapi dan mudah dibaca.
-4. Gunakan bahasa Indonesia secara default, atau sesuaikan jika pengguna bertanya dalam bahasa lain.`
+4. Gunakan bahasa Indonesia secara default, atau sesuaikan jika pengguna bertanya dalam bahasa lain.
+5. Karakter maskot bernama Katou akan membacakan SELURUH jawabanmu dengan suara bahasa Jepang. Karena itu, di baris paling akhir setiap balasan, tulis tepat satu baris dengan format:
+[[JP|emosi|terjemahan Jepang]]
+   - emosi: salah satu dari normal, happy, sad.
+   - terjemahan Jepang: terjemahan LENGKAP dan setia dari seluruh jawabanmu ke bahasa Jepang yang natural, ditulis sebagai kalimat-kalimat pendek yang dipisah dengan "。". Tanpa romaji, tanpa markdown, tanpa emoji.
+   - Jangan membacakan blok kode, URL, atau alamat email. Ganti dengan satu kalimat singkat, misalnya "コードは画面をご覧ください。".
+   - Panjang maksimal sekitar 600 karakter Jepang.
+   - Jangan menjelaskan atau menyebut baris ini kepada pengguna.
+6. Jangan memakai emoji dalam balasan.
+7. Jaga jawaban tetap ringkas, maksimal sekitar 8 kalimat, kecuali pengguna meminta penjelasan yang detail.`
 };
+
+// Splits the hidden "[[JP|emotion|text]]" voice line from the visible reply.
+// Also hides a half-streamed tag so it never flashes in the chat bubble.
+function splitVoiceTag(text) {
+  const full = /\[\[JP\|([a-z]*)\|([\s\S]*?)\]\]/i;
+  const m = text.match(full);
+  let clean = text.replace(/\s*\[\[JP\|[\s\S]*?\]\]\s*/gi, '\n').replace(/\s*\[\[[^\]]*$/, '').trim();
+  if (clean.endsWith('[')) clean = clean.slice(0, -1).trim();
+  return { clean, jp: m ? m[2].trim() : '', emo: m ? m[1].toLowerCase() : 'normal' };
+}
 
 let chatbotMessages = [
   { role: 'system', content: chatbotConfig.systemPrompt }
@@ -3768,6 +3789,7 @@ function initChatbot() {
   const input = document.getElementById('chatbot-input');
   if (!form || !input) return;
 
+  window.VoiceAvatar?.mount();
   if (chatbotInitialized) return;
   chatbotInitialized = true;
 
@@ -3799,6 +3821,7 @@ function handleChatSubmit(e) {
 
   input.value = '';
   input.style.height = 'auto';
+  setChatHeroMode(false);
 
   // Append user message
   appendChatMessage('user', userText);
@@ -3808,6 +3831,11 @@ function handleChatSubmit(e) {
   showChatTyping();
   isChatbotLoading = true;
 
+  // Audio must be unlocked inside this user gesture; the character starts "thinking"
+  window.VoiceAvatar?.unlock();
+  window.VoiceAvatar?.stop();
+  window.VoiceAvatar?.setThinking(true);
+
   let assistantMsgEl = null;
 
   // Call AI API with streaming callbacks
@@ -3815,33 +3843,41 @@ function handleChatSubmit(e) {
     chatbotMessages,
     (fullText) => {
       hideChatTyping();
+      const shown = splitVoiceTag(fullText).clean;
+      if (!shown) return;
       if (!assistantMsgEl) {
-        assistantMsgEl = appendChatMessage('assistant', fullText);
+        assistantMsgEl = appendChatMessage('assistant', shown);
       } else {
-        updateChatMessageText(assistantMsgEl, fullText);
+        updateChatMessageText(assistantMsgEl, shown);
       }
     },
     () => {
       const typingLabel = document.querySelector('#chat-typing-indicator .chat-typing-label');
       if (typingLabel) {
-        typingLabel.textContent = 'Kimi AI sedang berpikir & menalar...';
+        typingLabel.textContent = 'Katou AI sedang berpikir & menalar...';
       }
     }
   )
     .then((reply) => {
       hideChatTyping();
+      const parsed = splitVoiceTag(reply);
+      const shown = parsed.clean || reply;
       if (!assistantMsgEl) {
-        appendChatMessage('assistant', reply);
+        appendChatMessage('assistant', shown);
       } else {
-        updateChatMessageText(assistantMsgEl, reply);
+        updateChatMessageText(assistantMsgEl, shown);
       }
       chatbotMessages.push({ role: 'assistant', content: reply });
+      window.VoiceAvatar?.setThinking(false);
+      if (parsed.jp) window.VoiceAvatar?.speak({ jp: parsed.jp, emo: parsed.emo });
     })
     .catch((err) => {
       hideChatTyping();
+      window.VoiceAvatar?.setThinking(false);
       console.error('Chatbot API Error:', err);
       const errorMsg = err.message || 'Maaf, terjadi kendala saat menghubungi server AI. Pastikan server terhubung ke internet atau coba beberapa saat lagi.';
       appendChatMessage('assistant', errorMsg);
+      window.VoiceAvatar?.speak({ jp: 'ごめんなさい、うまく答えられませんでした。', emo: 'sad' });
     })
     .finally(() => {
       isChatbotLoading = false;
@@ -3880,7 +3916,8 @@ async function requestAIChat(messages, onChunk, onThinking) {
       model: chatbotConfig.model,
       messages: messages,
       temperature: 0.7,
-      max_tokens: 1500,
+      max_tokens: 3000,
+      reasoning_effort: 'low',
       stream: true
     })
   });
@@ -3903,9 +3940,10 @@ async function requestAIChat(messages, onChunk, onThinking) {
   }
 
   // If static server served raw PHP file with 200 OK
+  let preRead = null;
   if (contentType.includes('php') || contentType.includes('text/plain')) {
-    const rawText = await res.text();
-    if (rawText.trim().startsWith('<?php') || rawText.includes('loadEnvFile(')) {
+    preRead = await res.text();
+    if (preRead.trim().startsWith('<?php') || preRead.includes('loadEnvFile(')) {
       throw new Error(getPhpStaticServerHelpMessage());
     }
   }
@@ -3916,12 +3954,15 @@ async function requestAIChat(messages, onChunk, onThinking) {
     const decoder = new TextDecoder('utf-8');
     let fullReply = '';
     let buffer = '';
+    let rawAll = '';
 
     while (true) {
       const { done, value } = await reader.read();
       if (done) break;
 
-      buffer += decoder.decode(value, { stream: true });
+      const chunkText = decoder.decode(value, { stream: true });
+      rawAll += chunkText;
+      buffer += chunkText;
       const lines = buffer.split('\n');
       buffer = lines.pop(); // Retain incomplete line
 
@@ -3959,20 +4000,29 @@ async function requestAIChat(messages, onChunk, onThinking) {
     if (fullReply.trim()) {
       return fullReply;
     }
+    // The upstream API may answer a streaming request with a plain JSON error
+    preRead = rawAll;
+    if (rawAll.trim().startsWith('data:')) {
+      throw new Error('Model kehabisan batas token sebelum selesai menjawab. Silakan coba kirim ulang pertanyaan Anda.');
+    }
   }
 
-  // Fallback to plain JSON
-  const rawText = await res.text();
+  // Fallback to plain JSON (the body may already have been consumed above)
+  const rawText = preRead !== null ? preRead : await res.text();
   if (rawText.trim().startsWith('<?php') || rawText.includes('loadEnvFile(')) {
     throw new Error(getPhpStaticServerHelpMessage());
   }
 
-  const data = JSON.parse(rawText);
+  let data;
+  try { data = JSON.parse(rawText); } catch (e) { throw new Error('Balasan server AI tidak dapat dibaca.'); }
   if (data.choices && data.choices[0]?.message?.content) {
     return data.choices[0].message.content;
   }
   if (data.error) {
-    throw new Error(data.error);
+    throw new Error(typeof data.error === 'string' ? data.error : (data.error.message || 'Terjadi kesalahan pada layanan AI.'));
+  }
+  if (data.detail || data.title) {
+    throw new Error('Layanan AI sedang tidak tersedia: ' + (data.detail || data.title));
   }
   return 'Tidak ada balasan dari model.';
 }
@@ -4001,7 +4051,7 @@ function appendChatMessage(role, text) {
     ? '<div class="chat-msg-avatar"><i class="fas fa-user"></i></div>'
     : '<div class="chat-msg-avatar"><i class="fas fa-robot"></i></div>';
 
-  const authorName = isUser ? 'Anda' : 'Kimi AI';
+  const authorName = isUser ? 'Anda' : 'Katou AI';
   const formattedText = formatChatText(text);
 
   const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -4033,7 +4083,7 @@ function showChatTyping() {
       <div class="chat-typing-dots">
         <span></span><span></span><span></span>
       </div>
-      <span class="chat-typing-label">Kimi AI sedang berpikir...</span>
+      <span class="chat-typing-label">Katou AI sedang berpikir...</span>
     </div>
   `;
   container.appendChild(typingDiv);
@@ -4046,34 +4096,19 @@ function hideChatTyping() {
 }
 
 function clearChatHistory() {
+  window.VoiceAvatar?.stop();
   chatbotMessages = [{ role: 'system', content: chatbotConfig.systemPrompt }];
   const container = document.getElementById('chatbot-messages');
   if (!container) return;
-  container.innerHTML = `
-    <div class="chat-msg chat-msg-assistant">
-      <div class="chat-msg-avatar">
-        <i class="fas fa-robot"></i>
-      </div>
-      <div class="chat-msg-bubble">
-        <div class="chat-msg-author">Kimi AI</div>
-        <div class="chat-msg-text">
-          <p>Riwayat percakapan telah dibersihkan. Ada yang ingin Anda tanyakan seputar Firman Ardiansyah atau topik lainnya?</p>
-        </div>
-        <div class="chat-quick-suggestions">
-          <button type="button" class="chat-quick-chip" onclick="sendQuickPrompt('Ceritakan tentang Firman Ardiansyah')">
-            Siapa Firman?
-          </button>
-          <button type="button" class="chat-quick-chip" onclick="sendQuickPrompt('Jelaskan proyek PT Conbloc Indotama Quarry dan Nganime')">
-            Proyek Utama
-          </button>
-          <button type="button" class="chat-quick-chip" onclick="sendQuickPrompt('Apa teknologi utama yang dikuasai Firman?')">
-            Skill & Tech Stack
-          </button>
-        </div>
-        <div class="chat-msg-time">Sekarang</div>
-      </div>
-    </div>
-  `;
+  container.innerHTML = '';
+  setChatHeroMode(true);
+  document.getElementById('chatbot-input')?.focus();
+}
+
+// Empty state shows the headline and the character centered; once chatting starts the
+// conversation takes over (the character stays on the right).
+function setChatHeroMode(on) {
+  document.querySelector('#win-chatbot .chatbot-content')?.classList.toggle('kc-hero', !!on);
 }
 
 function formatChatText(str) {

@@ -1,5 +1,27 @@
 <?php
-header('Access-Control-Allow-Origin: *');
+// CORS Protection: Hanya izinkan domain sendiri dan local environment
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+$host = $_SERVER['HTTP_HOST'] ?? '';
+
+$isAllowed = false;
+if (empty($origin)) {
+    // Same-origin request langsung dari browser (tanpa header Origin)
+    $isAllowed = true;
+    header('Access-Control-Allow-Origin: *');
+} else {
+    $originHost = parse_url($origin, PHP_URL_HOST);
+    $serverHost = parse_url('http://' . $host, PHP_URL_HOST);
+    
+    $isLocal = in_array($originHost, ['localhost', '127.0.0.1', '::1'], true) ||
+               preg_match('/^192\.168\./', $originHost) ||
+               preg_match('/^10\./', $originHost);
+
+    if ($originHost === $serverHost || $isLocal) {
+        $isAllowed = true;
+        header("Access-Control-Allow-Origin: {$origin}");
+    }
+}
+
 header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization');
 
@@ -8,11 +30,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
+if (!$isAllowed) {
+    http_response_code(403);
+    echo json_encode(['error' => 'Forbidden: Cross-origin request tidak diizinkan.']);
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(['error' => 'Method Not Allowed']);
     exit;
 }
+
+// ----------------------------------------------------------------------
+// Rate Limiter Sederhana (Maksimal 30 request / menit per alamat IP)
+// ----------------------------------------------------------------------
+$clientIp = $_SERVER['HTTP_CF_CONNECTING_IP'] 
+    ?? $_SERVER['HTTP_X_FORWARDED_FOR'] 
+    ?? $_SERVER['REMOTE_ADDR'] 
+    ?? '127.0.0.1';
+if (strpos($clientIp, ',') !== false) {
+    $clientIp = trim(explode(',', $clientIp)[0]);
+}
+
+$rateDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'porto_ratelimit';
+if (!is_dir($rateDir)) {
+    @mkdir($rateDir, 0777, true);
+}
+$rateFile = $rateDir . DIRECTORY_SEPARATOR . md5($clientIp) . '.json';
+$now = time();
+$window = 60; // 60 detik
+$maxRequests = 30; // Max 30 request/menit
+
+$rateData = ['reqs' => []];
+if (file_exists($rateFile)) {
+    $content = @file_get_contents($rateFile);
+    if ($content) {
+        $parsed = json_decode($content, true);
+        if (is_array($parsed) && isset($parsed['reqs']) && is_array($parsed['reqs'])) {
+            $rateData = $parsed;
+        }
+    }
+}
+$rateData['reqs'] = array_values(array_filter($rateData['reqs'], function($ts) use ($now, $window) {
+    return ($now - $ts) < $window;
+}));
+
+if (count($rateData['reqs']) >= $maxRequests) {
+    http_response_code(429);
+    echo json_encode(['error' => 'Terlalu banyak permintaan (Rate limit). Silakan tunggu sebentar.']);
+    exit;
+}
+$rateData['reqs'][] = $now;
+@file_put_contents($rateFile, json_encode($rateData), LOCK_EX);
 
 /**
  * Load environment variables from .env file
@@ -58,28 +128,59 @@ $apiKey = getenv('NVIDIA_API_KEY') ?: ($_ENV['NVIDIA_API_KEY'] ?? ($_SERVER['NVI
 
 if (empty($apiKey)) {
     http_response_code(500);
-    echo json_encode(['error' => 'NVIDIA_API_KEY tidak ditemukan di .env atau server environment variables. Silakan buat file .env dengan format NVIDIA_API_KEY=...']);
+    echo json_encode(['error' => 'NVIDIA_API_KEY tidak ditemukan di .env atau server environment variables.']);
     exit;
 }
 
+// Batasi ukuran payload JSON (Maksimal 64 KB untuk mencegah buffer abuse)
 $rawInput = file_get_contents('php://input');
+if (strlen($rawInput) > 65536) {
+    http_response_code(413);
+    echo json_encode(['error' => 'Ukuran payload pesan terlalu besar.']);
+    exit;
+}
+
 $data = json_decode($rawInput, true);
 
-if (!$data || !isset($data['messages'])) {
+if (!$data || !isset($data['messages']) || !is_array($data['messages'])) {
     http_response_code(400);
-    echo json_encode(['error' => 'Invalid JSON payload. "messages" array is required.']);
+    echo json_encode(['error' => 'Format JSON tidak valid atau data "messages" tidak ditemukan.']);
     exit;
 }
+
+// Batasi riwayat pesan maksimal 30 pesan terakhir agar hemat token
+if (count($data['messages']) > 30) {
+    $data['messages'] = array_slice($data['messages'], -30);
+}
+
+// Validasi model yang diizinkan
+$allowedModels = [
+    'mistralai/mistral-large-4-1t-a52b',
+    'meta/llama-3.1-70b-instruct',
+    'meta/llama-3.3-70b-instruct'
+];
+
+$model = (isset($data['model']) && in_array($data['model'], $allowedModels, true))
+    ? $data['model']
+    : 'mistralai/mistral-large-4-1t-a52b';
+
+$maxTokens = min(max(1, (int)($data['max_tokens'] ?? 2048)), 4096);
+$temperature = min(max(0.0, (float)($data['temperature'] ?? 0.7)), 2.0);
 
 $invokeUrl = 'https://integrate.api.nvidia.com/v1/chat/completions';
 
 $payload = [
-    'model' => $data['model'] ?? 'moonshotai/kimi-k3',
+    'model' => $model,
     'messages' => $data['messages'],
-    'max_tokens' => (int)($data['max_tokens'] ?? 2048),
-    'temperature' => (float)($data['temperature'] ?? 0.7),
+    'max_tokens' => $maxTokens,
+    'temperature' => $temperature,
     'stream' => !empty($data['stream'])
 ];
+
+// Limit reasoning effort
+if (isset($data['reasoning_effort']) && in_array($data['reasoning_effort'], ['low', 'medium', 'high'], true)) {
+    $payload['reasoning_effort'] = $data['reasoning_effort'];
+}
 
 $ch = curl_init($invokeUrl);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
